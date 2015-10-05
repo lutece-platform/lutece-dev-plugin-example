@@ -1,0 +1,581 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>lutece-global-pom</artifactId>
+        <groupId>fr.paris.lutece.tools</groupId>
+        <version>2.4</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fr.paris.lutece</groupId>
+    <artifactId>lutece-parent-pom</artifactId>
+    <name>Lutece default Project</name>
+    <url>http://dev.lutece.paris.fr/</url>
+    <packaging>pom</packaging>
+    <version>3.7-SNAPSHOT</version>
+    <properties>
+		<lutece.plugin.version>3.0.5</lutece.plugin.version>
+		<sonar.host.url>http://dev.lutece.paris.fr/sonar</sonar.host.url>
+		<targetJdk>1.6</targetJdk>
+    </properties>
+    <organization>
+        <name>Mairie de Paris</name>
+        <url>http://lutece.paris.fr</url>
+    </organization>
+    <dependencies>
+ 
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.paris.lutece.plugins</groupId>
+            <artifactId>library-lutece-unit-testing</artifactId>
+            <version>2.0.7</version>
+			<type>jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+       
+    </dependencies>
+    <build>
+        <sourceDirectory>src/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/java</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                    <exclude>**/.svn/**</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>fr.paris.lutece.tools</groupId>
+                <artifactId>lutece-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <version>${lutece.plugin.version}</version>
+                <configuration>
+                    <localConfDirectory>${localConfDirectory}</localConfDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jalopy-maven-plugin</artifactId>
+                <version>1.0-alpha-1</version>
+                <configuration>
+                    <convention>lutece-parent-pom/jalopy_mdp.xml</convention>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+				<version>2.9</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/MainTest.java</exclude>
+                        <exclude>**/TestRunner.java</exclude>
+                        <exclude>**/LuteceTestCase.java</exclude>
+                    </excludes>
+                    <systemProperties>
+                        <property>
+                            <name>net.sourceforge.cobertura.datafile</name>
+                            <value>target/cobertura/cobertura.ser</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.5.2</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.12.4</version>
+                <configuration>
+                    <showSuccess>true</showSuccess>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.2</version>
+                <configuration>
+                    <tasks>
+                        <ant antfile="${basedir}/target/lutece/WEB-INF/sql/build.xml" dir="${basedir}/target/lutece/WEB-INF/sql/">
+                            <target name="all"/>
+                        </ant>
+                    </tasks>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant</groupId>
+                        <artifactId>ant-optional</artifactId>
+                        <version>1.5.3-1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+			
+			<!-- This declaration allows redifinition of webapp path. We don't use the war plugin directly, 
+			but this definition has been found useful in some cases (eg mevenide import)  -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <warSourceDirectory>webapp</warSourceDirectory>
+                </configuration>
+            </plugin>
+			<plugin>
+	            <groupId>org.codehaus.mojo</groupId>
+	            <artifactId>dashboard-maven-plugin</artifactId>
+				<version>1.0.0-beta-1</version>
+
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.0.5</version>
+					</dependency>
+				</dependencies>
+				<!--  configuration for dashboard history -->
+				<configuration>
+					<dialect>org.hibernate.dialect.MySQLDialect</dialect>
+					<driverClass>org.gjt.mm.mysql.Driver</driverClass>
+					<connectionUrl>jdbc:mysql://localhost:3307/dashboard_history?autoReconnect=true&amp;useUnicode=yes&amp;characterEncoding=utf8</connectionUrl>
+					<username>${dashboard.username}</username>
+					<password>${dashboard.password}</password>				
+				</configuration>
+			</plugin>
+        </plugins>
+		<pluginManagement>
+	      	<plugins>
+		        <plugin>
+		          <groupId>org.apache.maven.plugins</groupId>
+		          <artifactId>maven-checkstyle-plugin</artifactId>
+		          <version>2.9.1</version>
+		          <configuration>
+		              <minmemory>128m</minmemory>
+		              <maxmemory>728m</maxmemory>
+		              <configLocation>lutece-parent-pom/lutece_checks.xml</configLocation>
+		              <headerLocation>lutece-parent-pom/checkstyle-header.txt</headerLocation>
+		          </configuration>
+		        </plugin>
+		        <plugin>
+		          <groupId>org.codehaus.mojo</groupId>
+		          <artifactId>findbugs-maven-plugin</artifactId>
+		          <version>2.5.2</version>
+		          <configuration>
+		              <xmlOutput>true</xmlOutput>
+		              <threshold>Normal</threshold>
+		              <effort>Max</effort>
+		          </configuration>
+		        </plugin>
+			</plugins>
+		</pluginManagement>
+    </build>
+    <profiles>
+		<profile>
+			<id>continuum</id>	
+			<build>
+				<plugins>
+				<plugin>
+					<groupId>fr.paris.lutece.tools</groupId>
+					<artifactId>lutece-maven-plugin</artifactId>
+					<extensions>true</extensions>
+					<version>${lutece.plugin.version}</version>
+					<configuration>
+						<outputDirectory>${outputDirectory}</outputDirectory>
+					</configuration>
+				</plugin>
+				</plugins>
+			</build>
+		  </profile>
+		<profile>
+			<id>integration-test</id>
+			<dependencies>
+				<dependency>
+				    <groupId>org.hsqldb</groupId>
+				    <artifactId>hsqldb</artifactId>
+				    <version>1.8.0.10</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+		    <id>multi-project</id>
+			<modules>
+				<module>lutece-core</module>
+				<module>plugins</module> 
+				<module>plugin-bp-TP</module> 
+				<module>plugins/search/library-lucene</module>
+				<module>plugins/auth/plugin-mylutece</module>	
+				<module>plugins/extends/plugin-extend</module>	
+				<module>plugins/extends/module-extend-rating</module>
+				<module>plugins/extends/module-extend-comment</module>
+					<module>plugins/auth/module-mylutece-database</module>
+					<module>plugins/myapps/plugin-avatar</module>
+					<module>plugins/myapps/plugin-mydashboard</module>
+					<module>plugins/auth/plugin-mylutecetest</module>
+                <module>plugins/tech/plugin-rest</module>
+		
+				
+	
+
+
+
+
+
+
+
+				
+				
+				 <!-- lutece plugin pom -->
+				<!-- <module>site</module> --><!-- site chapeau / remove for maven 3 -->
+				<!-- APPLICATIONS folder -->
+				<!-- <module>plugins/applications/library-stock</module> -->
+			<!-- 	<module>plugins/applications/module-crm-form</module>
+				<module>plugins/applications/module-crm-formengine</module>
+				<module>plugins/applications/module-crm-mylutece</module>
+				<module>plugins/applications/module-crm-mylutecedatabase</module>
+				<module>plugins/applications/module-crm-mylutecedirectory</module>
+				<module>plugins/applications/module-crm-rest</module>
+				<module>plugins/applications/module-formengine-outputws</module>
+				<module>plugins/applications/module-formengine-sample</module>
+				<module>plugins/applications/module-stock-billetterie</module>
+				<module>plugins/applications/module-stock-solr</module>
+				<module>plugins/applications/module-stock-tickets</module>
+				<module>plugins/applications/plugin-appstore</module>
+				<module>plugins/applications/plugin-crm</module>
+				<module>plugins/applications/plugin-crmclient</module>
+				<module>plugins/applications/plugin-formengine</module>
+				<module>plugins/applications/plugin-stock</module>
+				AUTHENTICATION folder
+				<module>plugins/authentication/module-myapps-database</module>
+				<module>plugins/authentication/module-myapps-wsso</module>
+				<module>plugins/authentication/module-mylutece-cas</module>
+				<module>plugins/authentication/module-mylutece-casexternal</module>
+				<module>plugins/authentication/module-mylutece-database</module>			
+				<module>plugins/authentication/module-mylutece-directory</module>
+				<module>plugins/authentication/module-mylutece-external</module> This module is deprecated. See MYLUTECE-13
+				<module>plugins/authentication/module-mylutece-ldapdatabase</module>
+				<module>plugins/authentication/module-mylutece-notification</module>
+				<module>plugins/authentication/module-mylutece-oauth</module>
+				<module>plugins/authentication/module-mylutece-openid</module>
+				<module>plugins/authentication/module-mylutece-openiddatabase</module>
+				<module>plugins/authentication/module-mylutece-opensso</module>
+				<module>plugins/authentication/module-mylutece-persona</module>
+				<module>plugins/authentication/module-mylutece-rest</module>
+				<module>plugins/authentication/module-mylutece-saml</module>
+				<module>plugins/authentication/module-mylutece-webserver</module>
+				<module>plugins/authentication/module-mylutece-wssodatabase</module>				
+				<module>plugins/authentication/plugin-adminauthenticationdatabase</module>
+				<module>plugins/authentication/plugin-adminauthenticationwsso</module>
+				<module>plugins/authentication/plugin-myapps</module>
+				<module>plugins/authentication/plugin-mylutece</module>	
+				<module>plugins/authentication/plugin-mylutecetest</module>
+				<module>plugins/authentication/plugin-selfregistration</module>
+				<module>plugins/authentication/plugin-userws</module>			
+				 CMS folder
+				<module>plugins/cms/module-calendar-document</module>
+				<module>plugins/cms/module-calendar-solr</module>
+				<module>plugins/cms/module-dbpage-jasper</module>
+				<module>plugins/cms/module-document-cmis</module>
+				<module>plugins/cms/module-document-export</module>
+				<module>plugins/cms/module-document-include-opengraph</module>
+				<module>plugins/cms/module-document-multirootindexers</module>
+				<module>plugins/cms/module-document-rest</module>
+				<module>plugins/cms/module-document-solr</module>
+				<module>plugins/cms/module-documenttocalendar</module>
+				<module>plugins/cms/module-htmlpage-solr</module>
+				<module>plugins/cms/module-jsr170-solr</module> This module provides an old version of Spring
+				<module>plugins/cms/module-myportal-mytasks</module>
+				<module>plugins/cms/module-myportal-rss</module>
+				<module>plugins/cms/plugin-calendar</module>
+				<module>plugins/cms/plugin-captcha</module>
+				<module>plugins/cms/plugin-childpages</module>
+				<module>plugins/cms/plugin-contact</module>
+				<module>plugins/cms/plugin-contextinclude</module>
+				<module>plugins/cms/plugin-dbpage</module>
+				<module>plugins/cms/plugin-document</module>
+				<module>plugins/cms/plugin-files2docs</module>
+				<module>plugins/cms/plugin-folderlisting</module>
+				<module>plugins/cms/plugin-googleapi</module>
+				<module>plugins/cms/plugin-greetingscard</module>
+				<module>plugins/cms/plugin-html</module>
+				<module>plugins/cms/plugin-htmlpage</module>
+				<module>plugins/cms/plugin-insertajax</module>				
+				<module>plugins/cms/plugin-insertalbum</module>
+				<module>plugins/cms/plugin-insertmap</module>				
+				<module>plugins/cms/plugin-jasper</module>
+				<module>plugins/cms/plugin-jsr168</module>
+				<module>plugins/cms/plugin-jsr170</module>	This module provides an old version of Spring
+				<module>plugins/cms/plugin-jsr286</module>				
+				<module>plugins/cms/plugin-library</module>
+				<module>plugins/cms/plugin-linkpages</module>
+				<module>plugins/cms/plugin-links</module>
+				<module>plugins/cms/plugin-menus</module>
+				<module>plugins/cms/plugin-myportal</module>
+				<module>plugins/cms/plugin-mytasks</module>
+				<module>plugins/cms/plugin-newsletter</module>
+				<module>plugins/cms/plugin-pagelinkservice</module>
+				<module>plugins/cms/plugin-phraseanet</module>
+				<module>plugins/cms/plugin-quicklinks</module>
+				<module>plugins/cms/plugin-rating</module>
+				<module>plugins/cms/plugin-rss</module>
+				<module>plugins/cms/plugin-sponsoredlinks</module>
+				<module>plugins/cms/plugin-stock</module>This module is not used anymore. It is replaced by the one in the application folder
+				<module>plugins/cms/plugin-tagcloud</module>
+				<module>plugins/cms/plugin-theme</module>
+				<module>plugins/cms/plugin-webappcontainer</module>
+				<module>plugins/cms/plugin-whatsnew</module>	
+				<module>plugins/cms/plugin-wrapper</module>
+				<module>plugins/cms/plugin-xmlpage</module>
+				<module>plugins/cms/plugin-xpagelinkservice</module>
+				<module>plugins/cms/plugin-xpageportlet</module>
+				 COLLABORATION folder
+				<module>plugins/collaboration/module-advert-solr</module>
+				<module>plugins/collaboration/module-digglike-jasper</module>
+				<module>plugins/collaboration/module-digglike-solr</module>
+				<module>plugins/collaboration/module-helpdesk-solr</module>
+				<module>plugins/collaboration/module-quiz-games</module>
+				<module>plugins/collaboration/module-quiz-rest</module>
+				<module>plugins/collaboration/plugin-advert</module>
+				<module>plugins/collaboration/plugin-chat</module>
+				<module>plugins/collaboration/plugin-digglike</module>
+				<module>plugins/collaboration/plugin-helpdesk</module>
+				<module>plugins/collaboration/plugin-mypage</module>
+				<module>plugins/collaboration/plugin-quiz</module>
+				<module>plugins/collaboration/plugin-wiki</module>
+				 DIRECTORY-FORM-WORKFLOW folder				
+				<module>plugins/directory-form-workflow/module-directory-address</module>				
+				<module>plugins/directory-form-workflow/module-directory-googlemaps</module>
+				<module>plugins/directory-form-workflow/module-directory-pdfproducer</module>
+				<module>plugins/directory-form-workflow/module-directory-pdfproducer-archive</module>
+				<module>plugins/directory-form-workflow/module-directory-rest</module>
+				<module>plugins/directory-form-workflow/module-directory-solr</module>
+				<module>plugins/directory-form-workflow/module-fdw-wizard</module>
+				<module>plugins/directory-form-workflow/module-fdw-wizard-exportdirectory</module>
+				<module>plugins/directory-form-workflow/module-fdw-wizard-pdfproducer</module>
+				<module>plugins/directory-form-workflow/module-form-address</module>
+				<module>plugins/directory-form-workflow/module-form-compare-validators</module>
+				<module>plugins/directory-form-workflow/module-form-date-validators</module>
+				<module>plugins/directory-form-workflow/module-form-exportdatabase</module>
+				<module>plugins/directory-form-workflow/module-form-exportdirectory</module>
+				<module>plugins/directory-form-workflow/module-form-googlemaps</module>
+				<module>plugins/directory-form-workflow/module-form-include-opengraph</module>
+				<module>plugins/directory-form-workflow/module-solrserver-directory</module> It seems that module uses JdK 1.5
+				<module>plugins/directory-form-workflow/module-workflow-alert</module>
+				<module>plugins/directory-form-workflow/module-workflow-archive</module>
+				<module>plugins/directory-form-workflow/module-workflow-automatic-assignment</module>
+				<module>plugins/directory-form-workflow/module-workflow-createpdf</module>
+				<module>plugins/directory-form-workflow/module-workflow-editrecord</module>
+				<module>plugins/directory-form-workflow/module-workflow-evaluation</module>
+				<module>plugins/directory-form-workflow/module-workflow-fillingdirectory</module>
+				<module>plugins/directory-form-workflow/module-workflow-formincrement</module>
+				<module>plugins/directory-form-workflow/module-workflow-mappings</module>
+				<module>plugins/directory-form-workflow/module-workflow-mylutece-validation</module>
+				<module>plugins/directory-form-workflow/module-workflow-notifycrm</module>
+				<module>plugins/directory-form-workflow/module-workflow-notifydirectory</module>
+				<module>plugins/directory-form-workflow/module-workflow-notifymylutece</module>
+				<module>plugins/directory-form-workflow/module-workflow-previewnotification</module>
+				<module>plugins/directory-form-workflow/module-workflow-reassignment</module>
+				<module>plugins/directory-form-workflow/module-workflow-rest</module>
+				<module>plugins/directory-form-workflow/plugin-directory</module>
+				<module>plugins/directory-form-workflow/plugin-form</module>
+				<module>plugins/directory-form-workflow/plugin-workflow</module>
+				EXTENDS folder
+				<module>plugins/extends/module-extend-comment</module>
+				<module>plugins/extends/module-extend-feedback</module>
+				<module>plugins/extends/module-extend-opengraph</module>
+				<module>plugins/extends/module-extend-rating</module>
+				<module>plugins/extends/module-extend-statistics</module>
+				<module>plugins/extends/plugin-extend</module>
+				 LIBRARY folder
+				<module>plugins/library/library-analyzer</module>
+				<module>plugins/library/library-archive</module>
+				<module>plugins/library/library-crmclient</module>
+				<module>plugins/library/library-documentclient</module>
+				<module>plugins/library/library-freemarker</module>
+				<module>plugins/library/library-guice</module>
+				<module>plugins/library/library-httpaccess</module>
+				<module>plugins/library/library-image</module>
+				<module>plugins/library/library-indexer</module>
+				<module>plugins/library/library-jsr286-pluto</module>
+				<module>plugins/library/library-lucene</module>
+				<module>plugins/library/library-providercustomer</module>
+				<module>plugins/library/library-lutece-unit-testing</module>
+				<module>plugins/library/library-rss</module>
+				<module>plugins/library/library-rbac-api</module>
+				<module>plugins/library/library-updater</module>
+				<module>plugins/library/library-updatercli</module>
+				<module>plugins/library/library-signrequest</module>
+				<module>plugins/library/library-workflow-core</module>
+				<module>plugins/library/library-workflow-notify</module>
+				<module>plugins/library/library-workgroup-api</module>
+				 SEO folder
+	        	<module>plugins/seo/module-seo-document</module>
+	        	<module>plugins/seo/module-seo-robots</module>
+	        	<module>plugins/seo/plugin-searchstats</module>
+	        	<module>plugins/seo/plugin-seo</module>
+				<module>plugins/seo/plugin-sitemap</module>
+				<module>plugins/seo/plugin-urlrewriter</module>
+				<module>plugins/seo/plugin-urlrewriteradmin</module>
+				 SYSTEM folder
+				<module>plugins/system/module-unittree-profiles</module>
+				<module>plugins/system/module-urlrewriteradmin-document</module>
+				<module>plugins/system/plugin-antexecuter</module>
+				<module>plugins/system/plugin-disconnection</module>
+				<module>plugins/system/plugin-hipolite</module>
+				<module>plugins/system/plugin-profiles</module>
+				<module>plugins/system/plugin-shorturl</module>
+				<module>plugins/system/plugin-systeminfo</module>
+				<module>plugins/system/plugin-unittree</module>
+				<module>plugins/system/plugin-updater</module>
+				<module>plugins/system/plugin-updatercatalog</module>
+				<module>plugins/system/plugin-upload</module>
+				<module>plugins/system/plugin-wurfl</module> Cannot create inner bean 'net.sourceforge.wurfl.core.resource.SpringXMLResource
+				 TECHNICAL folder
+				<module>plugins/technical/module-address-autocomplete</module>
+				<module>plugins/technical/module-archive-rest</module>
+				<module>plugins/technical/module-blobstore-rest</module>
+				<module>plugins/technical/module-comarquage-solr</module>
+				<module>plugins/technical/module-formengine-gis</module>
+				<module>plugins/technical/module-gis-address</module>
+				<module>plugins/technical/module-html-rest</module>
+				<module>plugins/technical/module-jpa-hibernate</module>
+				<module>plugins/technical/plugin-address</module>
+				<module>plugins/technical/plugin-adminquery</module>				
+				<module>plugins/technical/plugin-adminsql</module>
+				<module>plugins/technical/plugin-archive</module>
+				<module>plugins/technical/plugin-archive-client</module>
+				<module>plugins/technical/plugin-blobstore</module>
+				<module>plugins/technical/plugin-blobstoreclient</module>
+				<module>plugins/technical/plugin-codewizard</module>
+				<module>plugins/technical/plugin-comarquage</module>
+				<module>plugins/technical/plugin-deployment</module>
+				<module>plugins/technical/plugin-fileexportfromdb</module>
+				<module>plugins/technical/plugin-ganalytics</module>
+				<module>plugins/technical/plugin-gis</module>
+				<module>plugins/technical/plugin-limitconnectedusers</module>
+				<module>plugins/technical/plugin-parisvideo</module>
+				<module>plugins/technical/plugin-pluginwizard</module> -->
+				<!-- <module>plugins/technical/plugin-portalrest</module> -->
+			<!-- 	<module>plugins/technical/plugin-regularexpression</module> -->
+				<!-- <module>plugins/technical/plugin-rest</module> -->
+			<!-- 	<module>plugins/technical/plugin-solr</module> -->
+				<!-- <module>plugins/technical/plugin-solr-nutch</module> -->
+				<!-- <module>plugins/technical/plugin-solrserver</module> --> <!-- It seems that modules uses Jdk 1.5  -->
+				<!-- REMOVED FROM PLUGINS : Moved To plugins/application folder
+				<module>plugins/plugin-formengine</module>
+				<module>plugins/module-formengine-saisine</module>
+				<module>plugins/module-formengine-etatcivil</module>
+				<module>plugins/plugin-parisalacarte</module>-->				
+			</modules>
+		</profile>
+
+		<profile>
+			<id>generate-metamodel</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-jpamodelgen</artifactId>
+					<version>1.1.1.Final</version>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.bsc.maven</groupId>
+						<artifactId>maven-processor-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>process</id>
+								<goals>
+									<goal>process</goal>
+								</goals>
+								<phase>generate-source</phase>
+								<configuration>
+									<!-- source output directory -->
+									<outputDirectory>target/generated-sources</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+    </profiles>
+	
+    <scm>
+        <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/trunk</connection>
+        <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/trunk</developerConnection>
+        <url>http://dev.lutece.paris.fr/viewvc/portal/trunk</url>
+    </scm>
+	
+	<repositories>
+	    <repository>
+			<id>luteceSnapshot</id>
+			<name>luteceSnapshot</name>
+			<url>http://dev.lutece.paris.fr/snapshot_repository</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+	    </repository>
+	    <repository>
+	      	<id>lutece</id>
+	     	<name>luteceRepository</name>
+	      	<url>http://dev.lutece.paris.fr/maven_repository</url>
+	      	<snapshots>
+		    	<enabled>false</enabled>
+		  	</snapshots>
+		  	<releases>
+		  		<enabled>true</enabled>
+		  	</releases>
+		</repository>
+	</repositories>
+  
+	<distributionManagement>
+		<repository>
+			<id>lutece_releases_repository</id>
+			<url>http://dev.lutece.paris.fr/nexus/content/repositories/lutece_releases_repository</url>
+		</repository>
+		
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>lutece_snapshots_repository</id>
+			<url>http://dev.lutece.paris.fr/nexus/content/repositories/lutece_snapshots_repository</url>
+		</snapshotRepository>
+    </distributionManagement>
+	
+</project>
