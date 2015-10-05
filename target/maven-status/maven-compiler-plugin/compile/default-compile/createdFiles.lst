@@ -1,9 +1,0 @@
-fr/paris/lutece/plugins/bp/business/ProjectHome.class
-fr/paris/lutece/plugins/bp/web/ProjectXPage.class
-fr/paris/lutece/plugins/bp/business/IProjectDAO.class
-fr/paris/lutece/plugins/bp/business/Project.class
-fr/paris/lutece/plugins/bp/service/rest/ProjectRest.class
-fr/paris/lutece/plugins/bp/web/ProjectJspBean.class
-fr/paris/lutece/plugins/bp/service/resource/ProjectExtendableResourceService.class
-fr/paris/lutece/plugins/bp/business/ProjectDAO.class
-fr/paris/lutece/plugins/bp/web/ManageBpJspBean.class
