@@ -1,0 +1,65 @@
+<#include "managebp_tabs.html" />
+<@tabs tab="project" />
+
+<@rowBox>
+    <@boxHeader i18nTitleKey="bp.manage_projects.tableLabel">
+        <@headerButtons>
+
+        
+        <form class="form-inline pull-right" method="post" name="manage_projects" action="jsp/admin/plugins/bp/ManageProjects.jsp">
+            <!-- Add pull-right to class1 -->
+            <@actionButtons button1Name="view_createProject" icon1="icon-plus icon-white" i18nValue1Key="bp.manage_projects.buttonAdd" />
+        </form>
+        
+    </@headerButtons>
+    </@boxHeader>
+    <@boxBody>    
+    <@messages infos=infos />
+    <@paginationAdmin paginator=paginator combo=1 />
+    
+    <@table>
+        <tr>
+            <input type="hidden" id="id" name="id"/>
+            <th>#i18n{bp.manage_projects.columnName}</th>
+            <th>#i18n{bp.manage_projects.columnDescription}</th>
+            <th>#i18n{bp.manage_projects.columnImageUrl}</th>
+            <th>#i18n{bp.manage_projects.columnCout}</th>
+            <th>#i18n{portal.util.labelActions}</th>
+             
+        </tr>
+        <@tableHeadBodySeparator />
+            <#list project_list as project >
+        <tr>
+            <input type="hidden" id="id" name="id"/>
+            <td>
+                ${project.name}
+            </td>
+            <td>
+                ${project.description}
+            </td>
+            <td>
+                ${project.imageUrl}
+            </td>
+             <td>
+                ${project.cout}
+            </td>
+        <td>
+            <a href="jsp/admin/plugins/bp/ManageProjects.jsp?view=modifyProject&id=${project.id}"
+               class="btn btn-primary btn-small" title="#i18n{portal.util.labelModify}">
+                <i class="fa fa-pencil"></i>
+            </a>
+
+            <a href="jsp/admin/plugins/bp/ManageProjects.jsp?action=confirmRemoveProject&id=${project.id}"
+               class="btn btn-danger btn-small" title="#i18n{portal.util.labelDelete}" >
+                <i class="fa fa-trash"></i>
+            </a>
+        </td>
+        </tr>
+        </#list>
+    </@table>
+
+    <@paginationAdmin paginator=paginator />
+
+  </@boxBody>
+</@rowBox>
+

@@ -1,0 +1,26 @@
+
+
+<div class="row">
+
+ <#list project_list as project >
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="thumbnail">
+     <img src="${project.imageUrl}" alt="${project.name}"  class="img-thumbnail img-responsive">
+      <div class="caption">
+ <a href="jsp/site/Portal.jsp?page=project&view=detailsProject&id=${project.id}">
+        <h3>
+        ${project.name}
+        </h3>
+</a>
+<h4>Vues <span class="label label-default">@Extender[${project.id},project,hit,{show:true,increment:false}]@</span> </h4>
+<h4>Votes : @Extender[${project.id},project,rating,{show:"vote"}]@</h4>
+
+
+      </div>
+    </div>
+  </div>
+ </#list>
+</div>
+
+
+  

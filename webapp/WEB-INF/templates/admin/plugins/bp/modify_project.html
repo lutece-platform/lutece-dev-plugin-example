@@ -1,0 +1,31 @@
+<#include "managebp_tabs.html" />
+<@tabs tab="project" />
+
+<@rowBoxHeader i18nTitleKey="bp.modify_project.pageTitle">
+    <form class="form-horizontal" method="post" name="modify_project" action="jsp/admin/plugins/bp/ManageProjects.jsp">
+        <@messages errors=errors />
+        <input type="hidden" id="id" name="id" value="${project.id}"/>
+        
+        <@fieldInputText i18nLabelKey="bp.modify_project.labelName" inputName="name" mandatory=true value="${project.name}" i18nHelpBlockKey="bp.modify_project.labelName.help" />
+        <@fieldInputText i18nLabelKey="bp.modify_project.labelDescription" inputName="description" mandatory=true value="${project.description}" i18nHelpBlockKey="bp.modify_project.labelDescription.help" />
+        <@fieldInputText i18nLabelKey="bp.modify_project.labelImageUrl" inputName="image_url" mandatory=true value="${project.imageUrl}" i18nHelpBlockKey="bp.modify_project.labelImageUrl.help" />
+           <@fieldInputText i18nLabelKey="bp.create_project.labelCout" inputName="cout" mandatory=true value="${project.cout!''}"  i18nHelpBlockKey="bp.create_project.labelCout.help" />
+    
+      
+        <@actionButtons button1Name="action_modifyProject" button2Name="view_manageProjects"/>
+    </form>
+</@rowBoxHeader>
+
+
+<@rowBoxHeader i18nTitleKey="bp.modify_project.pageTitle">
+   
+
+      <div class="form-group text-center">
+    ${extendableResourceActionsHtml!}
+
+
+<br/><br/><br/><br/><br/>
+      </div>
+
+
+</@rowBoxHeader>

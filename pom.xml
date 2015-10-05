@@ -1,42 +1,65 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <parent>
-        <artifactId>lutece-site-pom</artifactId>
+        <artifactId>lutece-global-pom</artifactId>
         <groupId>fr.paris.lutece.tools</groupId>
-        <version>2.0.4</version>
+        <version>3.0.3</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
-    <groupId>fr.paris.lutece</groupId>
-    <artifactId>lutece-TP</artifactId>
-    <packaging>lutece-site</packaging>
-    <name>lutece-TP</name>
+    <groupId>fr.paris.lutece.plugins</groupId>
+    <artifactId>plugin-bp</artifactId>
+    <packaging>lutece-plugin</packaging>
     <version>1.0.0-SNAPSHOT</version>
+    <name>Lutece bp plugin</name>
+
     <repositories>
         <repository>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
             <id>lutece</id>
             <name>luteceRepository</name>
             <url>http://dev.lutece.paris.fr/maven_repository</url>
             <layout>default</layout>
         </repository>
     </repositories>
+
     <dependencies>
+    
+     <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-multipart</artifactId>
+            <version>1.1.5</version>
+        </dependency>
+   
+        
         <dependency>
             <groupId>fr.paris.lutece</groupId>
             <artifactId>lutece-core</artifactId>
-            <version>5.0.1</version>
+            <version>[5.0.0,)</version>
             <type>lutece-core</type>
         </dependency>
+        
         <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
-            <artifactId>plugin-pluginwizard</artifactId>
-            <version>4.1.1</version>
-            <type>lutece-plugin</type>
+            <artifactId>library-httpaccess</artifactId>
+            <version>[2.2.9-SNAPSHOT,3.0.0-SNAPSHOT)</version>
+            <type>jar</type>
         </dependency>
+        
+        
+         <dependency>
+            <groupId>fr.paris.lutece.plugins</groupId>
+	            <artifactId>plugin-rest</artifactId>
+	            <version>[1.0.0,)</version>
+	            <type>lutece</type>
+	        </dependency>
+
+        
     </dependencies>
+    
+
+    <properties>
+        <componentName>bp</componentName>
+        <jiraProjectName>BP</jiraProjectName>
+        <jiraComponentId></jiraComponentId>
+    </properties>
 </project>
