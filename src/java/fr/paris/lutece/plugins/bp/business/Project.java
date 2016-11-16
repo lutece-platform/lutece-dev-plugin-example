@@ -30,13 +30,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * License 1.0
- */ 
+ */
 package fr.paris.lutece.plugins.bp.business;
+
+import org.hibernate.validator.constraints.*;
 
 import java.util.Locale;
 
 import javax.validation.constraints.*;
-import org.hibernate.validator.constraints.*;
 
 import fr.paris.lutece.portal.service.i18n.Localizable;
 import fr.paris.lutece.portal.service.resource.IExtendableResource;
@@ -44,23 +45,22 @@ import fr.paris.lutece.portal.service.resource.IExtendableResource;
 
 /**
  * This is the business class for the object Project
- */ 
+ */
 public class Project implements Localizable, IExtendableResource
 {
-
+    
     // Variables declarations 
     private int _nId;
     
     @NotEmpty( message = "#i18n{bp.validation.project.Name.notEmpty}" )
-    @Size( max = 50 , message = "#i18n{bp.validation.project.Name.size}" ) 
+    @Size( max = 50, message = "#i18n{bp.validation.project.Name.size}" )
     private String _strName;
-    
     @NotEmpty( message = "#i18n{bp.validation.project.Description.notEmpty}" )
-    @Size( max = 255 , message = "#i18n{bp.validation.project.Description.size}" ) 
+    @Size( max = 255, message = "#i18n{bp.validation.project.Description.size}" )
     private String _strDescription;
-    @URL(message = "#i18n{portal.validation.message.url}")
+    @URL( message = "#i18n{portal.validation.message.url}" )
     @NotEmpty( message = "#i18n{bp.validation.project.ImageUrl.notEmpty}" )
-    @Size( max = 255 , message = "#i18n{bp.validation.project.ImageUrl.size}" ) 
+    @Size( max = 255, message = "#i18n{bp.validation.project.ImageUrl.size}" )
     private String _strImageUrl;
     
 
@@ -75,24 +75,27 @@ public class Project implements Localizable, IExtendableResource
     private static final String PROPERTY_RESOURCE_TYPE = "project";
 
     
-    public static String getPropertyRessourceType() {
-		return PROPERTY_RESOURCE_TYPE;
-	}
+    public static String getPropertyRessourceType(  )
+    {
+        return PROPERTY_RESOURCE_TYPE;
+    }
     
     
-    public int getCout() {
-		return _nCout;
-	}
+    public int getCout(  )
+    {
+        return _nCout;
+    }
 
-	public void setCout(int _nCout) {
-		this._nCout = _nCout;
-	}
+    public void setCout( int _nCout )
+    {
+        this._nCout = _nCout;
+    }
 
-	/**
+    /**
      * Returns the Id
      * @return The Id
      */
-    public int getId( )
+    public int getId(  )
     {
         return _nId;
     }
@@ -100,7 +103,7 @@ public class Project implements Localizable, IExtendableResource
     /**
      * Sets the Id
      * @param nId The Id
-     */ 
+     */
     public void setId( int nId )
     {
         _nId = nId;
@@ -110,7 +113,7 @@ public class Project implements Localizable, IExtendableResource
      * Returns the Name
      * @return The Name
      */
-    public String getName( )
+    public String getName(  )
     {
         return _strName;
     }
@@ -118,16 +121,17 @@ public class Project implements Localizable, IExtendableResource
     /**
      * Sets the Name
      * @param strName The Name
-     */ 
+     */
     public void setName( String strName )
     {
         _strName = strName;
     }
+
     /**
      * Returns the Description
      * @return The Description
      */
-    public String getDescription( )
+    public String getDescription(  )
     {
         return _strDescription;
     }
@@ -135,16 +139,17 @@ public class Project implements Localizable, IExtendableResource
     /**
      * Sets the Description
      * @param strDescription The Description
-     */ 
+     */
     public void setDescription( String strDescription )
     {
         _strDescription = strDescription;
     }
+
     /**
      * Returns the ImageUrl
      * @return The ImageUrl
      */
-    public String getImageUrl( )
+    public String getImageUrl(  )
     {
         return _strImageUrl;
     }
@@ -152,56 +157,52 @@ public class Project implements Localizable, IExtendableResource
     /**
      * Sets the ImageUrl
      * @param strImageUrl The ImageUrl
-     */ 
+     */
     public void setImageUrl( String strImageUrl )
     {
         _strImageUrl = strImageUrl;
     }
 
-	@Override
-	public String getExtendableResourceDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String getExtendableResourceDescription(  )
+    {
+        return null;
+    }
 
+    @Override
+    public String getExtendableResourceType(  )
+    {
+        return PROPERTY_RESOURCE_TYPE;
+    }
 
+    @Override
+    public String getIdExtendableResource(  )
+    {
+        return Integer.toString( getId(  ) );
+    }
 
-	@Override
-	public String getExtendableResourceType() {
-		// TODO Auto-generated method stub
-		return PROPERTY_RESOURCE_TYPE;
-	}
+    @Override
+    public void setLocale( Locale arg0 )
+    {
+        
+    }
 
-	@Override
-	public String getIdExtendableResource() {
-		// TODO Auto-generated method stub
-		return Integer.toString(getId());
-	}
+    @Override
+    public String getExtendableResourceImageUrl(  )
+    {
+        return getImageUrl(  );
+    }
 
-	@Override
-	public void setLocale(Locale arg0) {
-		// TODO Auto-generated method stub
-	
-	}
+    @Override
+    public String getExtendableResourceName(  )
+    {
+        return getName(  );
+    }
 
-	@Override
-	public String getExtendableResourceImageUrl() {
-		// TODO Auto-generated method stub
-		return getImageUrl();
-	}
-
-	@Override
-	public String getExtendableResourceName() {
-		// TODO Auto-generated method stub
-		return getName();
-	}
-
-
-	@Override
-	public String toString() {
-		return "Project [_nId=" + _nId + ", _strName=" + _strName + ", _strDescription=" + _strDescription
-				+ ", _strImageUrl=" + _strImageUrl + ", _nCout=" + _nCout + "]";
-	}
-    
-    
+    @Override
+    public String toString(  )
+    {
+        return "Project [_nId=" + _nId + ", _strName=" + _strName + ", _strDescription=" + _strDescription
+            + ", _strImageUrl=" + _strImageUrl + ", _nCout=" + _nCout + "]";
+    }
 }

@@ -31,8 +31,6 @@
  *
  * License 1.0
  */
-
- 
 package fr.paris.lutece.plugins.bp.web;
 
 import fr.paris.lutece.plugins.bp.business.Project;
@@ -48,7 +46,6 @@ import fr.paris.lutece.util.url.UrlItem;
 import java.util.List;
 import java.util.Map;
 
-
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -58,7 +55,6 @@ import javax.servlet.http.HttpServletRequest;
 @Controller( controllerJsp = "ManageProjects.jsp", controllerPath = "jsp/admin/plugins/bp/", right = "BP_MANAGEMENT" )
 public class ProjectJspBean extends ManageBpJspBean
 {
-
     ////////////////////////////////////////////////////////////////////////////
     // Constants
 
@@ -67,10 +63,9 @@ public class ProjectJspBean extends ManageBpJspBean
     private static final String TEMPLATE_CREATE_PROJECT = "/admin/plugins/bp/create_project.html";
     private static final String TEMPLATE_MODIFY_PROJECT = "/admin/plugins/bp/modify_project.html";
 
-
     // Parameters
     private static final String PARAMETER_ID_PROJECT = "id";
-    private static final String PARAMETER_COUT_PROJECT = "cout";
+    private static final String PARAMETER_COUT_PROJET = "cout";
 
     // Properties for page titles
     private static final String PROPERTY_PAGE_TITLE_MANAGE_PROJECTS = "bp.manage_projects.pageTitle";
@@ -80,13 +75,11 @@ public class ProjectJspBean extends ManageBpJspBean
     // Markers
     private static final String MARK_PROJECT_LIST = "project_list";
     private static final String MARK_PROJECT = "project";
-
     private static final String JSP_MANAGE_PROJECTS = "jsp/admin/plugins/bp/ManageProjects.jsp";
 
     // Properties
     private static final String MESSAGE_CONFIRM_REMOVE_PROJECT = "bp.message.confirmRemoveProject";
     private static final String PROPERTY_DEFAULT_LIST_PROJECT_PER_PAGE = "bp.listProjects.itemsPerPage";
- 
     private static final String VALIDATION_ATTRIBUTES_PREFIX = "bp.model.entity.project.attribute.";
 
     // Views
@@ -104,19 +97,18 @@ public class ProjectJspBean extends ManageBpJspBean
     private static final String INFO_PROJECT_CREATED = "bp.info.project.created";
     private static final String INFO_PROJECT_UPDATED = "bp.info.project.updated";
     private static final String INFO_PROJECT_REMOVED = "bp.info.project.removed";
-    
+
     //Error
     private static final String ERROR_PROJECT_CREATED_COUT_NOT_Modulo_5 = "bp.validation.project.Cout.style";
-    
-    
+
     // Session variable to store working values
     private Project _project;
-    
-    
+
     @View( value = VIEW_MANAGE_PROJECTS, defaultView = true )
     public String getManageProjects( HttpServletRequest request )
     {
         _project = null;
+
         List<Project> listProjects = (List<Project>) ProjectHome.getProjectsList(  );
         Map<String, Object> model = getPaginatedListModel( request, MARK_PROJECT_LIST, listProjects, JSP_MANAGE_PROJECTS );
 
@@ -143,7 +135,7 @@ public class ProjectJspBean extends ManageBpJspBean
     /**
      * Validate value of Project : It must be between 5 and 25*/
     private Boolean ValidateCost(HttpServletRequest request ) {
-    	int nCout = Integer.parseInt( request.getParameter( PARAMETER_COUT_PROJECT ) );
+    	int nCout = Integer.parseInt( request.getParameter( PARAMETER_COUT_PROJET ) );
     	Boolean B_Teste = (nCout<5 || nCout>25 || nCout % 5 !=0);
     	
     	if(B_Teste) {
@@ -162,13 +154,11 @@ public class ProjectJspBean extends ManageBpJspBean
     @Action( ACTION_CREATE_PROJECT )
     public String doCreateProject( HttpServletRequest request )
     {
-    
-    	populate( _project, request );
+        populate( _project, request );
 
         // Check constraints
-        if ( !validateBean( _project, VALIDATION_ATTRIBUTES_PREFIX ) || this.ValidateCost(request))
+        if ( !validateBean( _project, VALIDATION_ATTRIBUTES_PREFIX ) || this.ValidateCost( request ) )
         {
-        	   	
             return redirectView( request, VIEW_CREATE_PROJECT );
         }
 
@@ -225,16 +215,15 @@ public class ProjectJspBean extends ManageBpJspBean
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_PROJECT ) );
 
-        if ( _project == null || ( _project.getId(  ) != nId ))
+        if ( ( _project == null ) || ( _project.getId(  ) != nId ) )
         {
             _project = ProjectHome.findByPrimaryKey( nId );
         }
 
         Map<String, Object> model = getModel(  );
         model.put( MARK_PROJECT, _project );
-        
+
         ExtendableResourcePluginActionManager.fillModel( request, getUser( ), model, Integer.toString(nId), Project.getPropertyRessourceType());
-        
 
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_PROJECT, TEMPLATE_MODIFY_PROJECT, model );
     }
@@ -248,13 +237,12 @@ public class ProjectJspBean extends ManageBpJspBean
     @Action( ACTION_MODIFY_PROJECT )
     public String doModifyProject( HttpServletRequest request )
     {
-    	
         populate( _project, request );
 
         // Check constraints
-        if ( !validateBean( _project, VALIDATION_ATTRIBUTES_PREFIX )  || this.ValidateCost(request))
+        if ( !validateBean( _project, VALIDATION_ATTRIBUTES_PREFIX )  || this.ValidateCost( request ) )
         {
-            return redirect( request, VIEW_MODIFY_PROJECT, PARAMETER_ID_PROJECT, _project.getId( ) );
+            return redirect( request, VIEW_MODIFY_PROJECT, PARAMETER_ID_PROJECT, _project.getId(  ) );
         }
 
         ProjectHome.update( _project );

@@ -31,7 +31,6 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.bp.business;
 
 import fr.paris.lutece.test.LuteceTestCase;
@@ -49,36 +48,35 @@ public class ProjectBusinessTest extends LuteceTestCase
     public void testBusiness(  )
     {
         // Initialize an object
-        Project project = new Project();
+        Project project = new Project(  );
         project.setName( NAME1 );
         project.setDescription( DESCRIPTION1 );
         project.setImageUrl( IMAGEURL1 );
 
         // Create test
         ProjectHome.create( project );
-        Project projectStored = ProjectHome.findByPrimaryKey( project.getId( ) );
-        assertEquals( projectStored.getName() , project.getName( ) );
-        assertEquals( projectStored.getDescription() , project.getDescription( ) );
-        assertEquals( projectStored.getImageUrl() , project.getImageUrl( ) );
+
+        Project projectStored = ProjectHome.findByPrimaryKey( project.getId(  ) );
+        assertEquals( projectStored.getName(  ), project.getName(  ) );
+        assertEquals( projectStored.getDescription(  ), project.getDescription(  ) );
+        assertEquals( projectStored.getImageUrl(  ), project.getImageUrl(  ) );
 
         // Update test
         project.setName( NAME2 );
         project.setDescription( DESCRIPTION2 );
         project.setImageUrl( IMAGEURL2 );
         ProjectHome.update( project );
-        projectStored = ProjectHome.findByPrimaryKey( project.getId( ) );
-        assertEquals( projectStored.getName() , project.getName( ) );
-        assertEquals( projectStored.getDescription() , project.getDescription( ) );
-        assertEquals( projectStored.getImageUrl() , project.getImageUrl( ) );
+        projectStored = ProjectHome.findByPrimaryKey( project.getId(  ) );
+        assertEquals( projectStored.getName(  ), project.getName(  ) );
+        assertEquals( projectStored.getDescription(  ), project.getDescription(  ) );
+        assertEquals( projectStored.getImageUrl(  ), project.getImageUrl(  ) );
 
         // List test
-        ProjectHome.getProjectsList();
+        ProjectHome.getProjectsList(  );
 
         // Delete test
-        ProjectHome.remove( project.getId( ) );
-        projectStored = ProjectHome.findByPrimaryKey( project.getId( ) );
+        ProjectHome.remove( project.getId(  ) );
+        projectStored = ProjectHome.findByPrimaryKey( project.getId(  ) );
         assertNull( projectStored );
-        
     }
-
 }

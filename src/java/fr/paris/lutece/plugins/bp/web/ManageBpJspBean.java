@@ -38,8 +38,10 @@ import fr.paris.lutece.portal.util.mvc.admin.MVCAdminJspBean;
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.url.UrlItem;
+
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -50,7 +52,6 @@ public abstract class ManageBpJspBean extends MVCAdminJspBean
 {
     // Right
     public static final String RIGHT_MANAGEBP = "BP_MANAGEMENT";
-    
     private static final String PROPERTY_DEFAULT_LIST_ITEM_PER_PAGE = "bp.listItems.itemsPerPage";
     private static final String PARAMETER_PAGE_INDEX = "page_index";
     private static final String MARK_PAGINATOR = "paginator";

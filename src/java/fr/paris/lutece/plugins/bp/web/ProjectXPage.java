@@ -35,12 +35,13 @@ package fr.paris.lutece.plugins.bp.web;
 
 import fr.paris.lutece.plugins.bp.business.Project;
 import fr.paris.lutece.plugins.bp.business.ProjectHome;
+import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.web.resource.ExtendableResourcePluginActionManager;
-import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.portal.util.mvc.xpage.MVCApplication;
-import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.portal.util.mvc.xpage.annotations.Controller;
+import fr.paris.lutece.portal.web.xpages.XPage;
+
 import fr.paris.lutece.util.url.UrlItem;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -67,8 +68,7 @@ import org.apache.commons.httpclient.HttpException;
 //import com.sun.jersey.api.client.WebResource;
 
 /**
- * This class provides the user interface to manage Project xpages ( manage,
- * create, modify, remove )
+ * This class provides the user interface to manage Project xpages ( manage, create, modify, remove )
  */
 
 @Controller(xpageName = "project", pageTitleI18nKey = "bp.xpage.project.pageTitle", pagePathI18nKey = "bp.xpage.project.pagePathLabel")
