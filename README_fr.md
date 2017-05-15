@@ -99,15 +99,9 @@ Avant de déployer notre version du site sur tomcat, il faut configurer et initia
 
 
  
-* 
-Dans le dossier du site “lutece-TP-1.0.0-SNAPSHOT”, allez dans /WEB-INF/conf/ et éditez le fichier db.properties. Renommez la base de données utilisée par le site en “lutece_pwizard” en modifiant la propriété portal.url comme suit :
- `portal.url=jdbc:mysql://localhost/ **lutece_pwizard** ?autoReconnect=true&useUnicode=yes&characterEncoding=utf8` 
-* 
-Modifiez également la propriété portal.password par le mot de passe root de votre serveur mysql :
- `portal.user=root`  `portal.password=motdepasse` 
-* 
-Exécutez le script Ant d’initialisation de la base de données :
- `ant [path]/MyNamePlugin-TP/target/lutece-TP-1.0.0-SNAPSHOT/WEB-INF/sql/build.xml` 
+* Dans le dossier du site “lutece-TP-1.0.0-SNAPSHOT”, allez dans /WEB-INF/conf/ et éditez le fichier db.properties. Renommez la base de données utilisée par le site en “lutece_pwizard” en modifiant la propriété portal.url comme suit : `portal.url=jdbc:mysql://localhost/ **lutece_pwizard** ?autoReconnect=true&useUnicode=yes&characterEncoding=utf8` 
+* Modifiez également la propriété portal.password par le mot de passe root de votre serveur mysql : `portal.user=root`  `portal.password=motdepasse` 
+* Exécutez le script Ant d’initialisation de la base de données : `ant -f [path]/MyNamePlugin-TP/target/lutece-TP-1.0.0-SNAPSHOT/WEB-INF/sql/build.xml` 
 
 
 Une nouvelle base de données nommé “lutece_pwizard” est alors créée sur le serveur MySql local.
