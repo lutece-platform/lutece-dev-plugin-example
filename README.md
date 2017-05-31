@@ -3,7 +3,7 @@
 
 This tutorial aims at creating a plugin working on Lutece by means of plugin WIZARD which ensure easy project skeleton making.
 
-You have to install the following environnement on your comuter :
+You have to install the following environnement on your computer :
 
 
  
@@ -93,7 +93,7 @@ Execute this Maven command in MyNamePlugin-TP folder :
 
 It generate a “target” folder which contains a runnable site release ("lutece-TP-1.0.0-SNAPSHOT" folder).
 
-## 3) Databse initialisation :
+## 3) Database initialisation :
 
 Before deploying our site on tomcat, we need to configure and initialize its database (MySql).
 
@@ -134,11 +134,15 @@ On page displayed, click on System > Plugins management.
 
 Page corresponding to picture/step1/plugin_management.gif is displayed.
 
+![screenshot](/picture/step1/plugin_management.gif)
+
 Activate pluginwizard with click on the green button.
 
 Then go to Managers > Users management. On form displayed select Modify button in admin user.
 
 On page displayed, go to “Rights” tab as seen in picture/step1/user_rights.gif then check boxes corresponding to plugin wizard's features.
+
+![screenshot](/picture/step1/user_rights.gif)
 
 Plugin Wizard is now ready to be used by the admin user.
 
@@ -147,6 +151,8 @@ Plugin Wizard is now ready to be used by the admin user.
 In this step we use plugin Wizard in order to generate plugin participatory budget sources. On that purpose, we use the deployed site front office.
 
 Go to http://localhost:8080/wizard/jsp/site/Portal.jsp?page=pluginwizard. Screen corresponding to picture/step2/plugin_wizard.gif is displayed.
+
+![screenshot](/picture/step2/plugin_wizard.gif)
 
 Follow form steps with this informations :
 
@@ -236,7 +242,11 @@ A Lutece plugin is divided in two parts: front office and back office.
 
 Front office is available at http://localhost:8080/bp/jsp/site/Portal.jsp. You can find a picture of this interface in picture/step3/front_office.gif.
 
+![screenshot](/picture/step3/front_office.gif)
+
 And back office at http://localhost:8080/bp/jsp/admin/AdminMenu.jsp. You can find a picture of this interface in picture/step3/back_office.gif.
+
+![screenshot](/picture/step3/back_office.gif)
 
 # Étape 4 - Front office cleaning + Bootstrap
 
@@ -252,13 +262,20 @@ In this step we add 8 projects in participatory budget plugin, improve front off
 
 You can find a picture of plugin folder tree in picture/step4/plugin_folder_tree.gif.
 
+![screenshot](/picture/step4/plugin_folder_tree.gif)
+
 In plugin-bp/webapp/WEB-INF/templates/skin/plugins/bp, delete create_project.html and modify_project.html pages.
 
 For project management, you must have a page like picture/step4/project_management.gif. This page is located at http://localhost:8080/bp/jsp/admin/plugins/bp/ManageProjects.jsp?view=manageProjects.
 
+![screenshot](/picture/step4/project_management.gif)
+
 To improve display we add Bootstrap code in manage_projets.html in order to change dynamically the page design when window is reduced.
 
 For project display, you must have a page like picture/step4/project_display.gif. This page is located at http://localhost:8080/bp/jsp/site/Portal.jsp?page=project.
+
+
+![screenshot](/picture/step4/project_display.gif)
 
 ## details_project.html page creation :
 
@@ -267,6 +284,8 @@ We add a details_project.html page which contains project informations (id, name
 This page is displayed when a user click on project.
 
 You must have a page like picture/step4/detail_project.gif. This page is located at http://localhost:8080/bp/jsp/site/Portal.jsp?page=project&view=detailsProject&id=1.
+
+![screenshot](/picture/step4/detail_project.gif)
 
 Type the following command to obtain differences between final result and preceeding step :
 
@@ -296,6 +315,8 @@ Type the following command to obtain differences between final result and precee
 In this step we create a multi project which integrate several plugins.
 
 If you correctly follow the guide, you will have a project folder as in picture/step6/project-folder.gif.
+
+![screenshot](/picture/step6/project-folder.gif)
 
 The plugin-bp-TP folder (or the other name indicate when you created the plugin in Wizard plugin) is the initial skeleton of our plugin. You can put this folder in /plugins or in a subfolder of lutece-dev folder. A pom.xml file is located in root of lutece-dev folder. It's the main pom of our multi projet. Open this file and add the following dependencies :
 
@@ -327,6 +348,9 @@ Compile the project with the following command and deploy it on Tomcat :
 
 Activate plugins on back office in System/Plugins management as in picture/step6/plugin_management_2.gif.
 
+![screenshot](/picture/step6/plugin_management_2.gif)
+
+
 Implement the extend plugin in the participatory budget plugin (You can follow this tutorial : http://fr.lutece.paris.fr/fr/wiki/howto-extend.html).
 
  **Note :** When you modify the modify_project.html template, don't insert marker in tag `<form>` because it also generate tag `<form>` 
@@ -342,7 +366,11 @@ Implement the extend plugin in the participatory budget plugin (You can follow t
 
 For projects display, you must have a page like picture/step6/project_display_2.gif.
 
+![screenshot](/picture/step6/project_display_2.gif)
+
 For any project display, you must have a page like picture/step6/detail_project_2.gif.
+
+![screenshot](/picture/step6/detail_project_2.gif)
 
 Type the following command to obtain differences between final result and preceeding step :
 
@@ -371,6 +399,8 @@ Create 2 features for the RESTful web services :
 
 
 You must have a page like picture/step7/rest_request.gif.
+
+![screenshot](/picture/step7/rest_request.gif)
 
 Type the following command to obtain differences between final result and preceeding step :
 
