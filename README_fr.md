@@ -116,7 +116,9 @@ Pour cela, dans le dossier conf de votre application Tomcat, ajoutez la ligne su
 
 Vous pouvez ensuite vérifier que l’application est bien lancée sur l’Url http://localhost:8080/wizard/ (si wizard est le chemin de contexte choisi pour l’application).
 
-La page correspond à l'image picture/step1/first_page.gif s’affiche.
+La page correspondand à l'image picture/step1/first_page.gif s’affiche.
+
+![image première page](/picture/step1/first_page.gif)
 
 ## 5) Activation du plugin :
 
@@ -134,11 +136,15 @@ Sur la page qui s’affiche, cliquez sur Système > Gestion des Plugin.
 
 La page correspondant picture/step1/plugin_management.gif s’affiche.
 
+![screenshot](/picture/step1/plugin_management.gif)
+
 Activez le pluginwizard en cliquant sur le bouton vert.
 
 Allez ensuite sur Gestionnaires > Gestion des utilisateurs. Sur l’écran qui s’affiche sélectionnez le bouton Modifier du user admin.
 
 Sur la page qui s’affiche, allez sur l’onglet “Droits” comme dans l'image picture/step1/user_rights.gif puis cochez les cases correspondant aux fonctionnalités du plugin wizard.
+
+![screenshot](/picture/step1/user_rights.gif)
 
 Le plugin Wizard est maintenant prêt à être utilisé par le compte admin.
 
@@ -147,6 +153,8 @@ Le plugin Wizard est maintenant prêt à être utilisé par le compte admin.
 Nous allons dans cette étape utiliser le plugin Wizard pour générer les sources du plugin Budget Participatif. Pour cela, nous utiliserons la partie front office du site précédemment déployé.
 
 Allez à l’adresse http://localhost:8080/wizard/jsp/site/Portal.jsp?page=pluginwizard. La fenêtre correspondant à picture/step2/plugin_wizard.gif s’affiche.
+
+![screenshot](/picture/step2/plugin_wizard.gif)
 
 Suivez les étapes du formulaire en renseignant les informations suivantes :
 
@@ -238,7 +246,11 @@ Un plugin Lutece se compose de deux parties: front office et back office.
 
 Le front office est accessible à l’url : http://localhost:8080/bp/jsp/site/Portal.jsp. Vous trouverez une image correspondante dans picture/step3/front_office.gif.
 
+![screenshot](/picture/step3/front_office.gif)
+
 Et le back office sur : http://localhost:8080/bp/jsp/admin/AdminMenu.jsp. Vous trouverez une image correspondante dans picture/step3/back_office.gif.
+
+![screenshot](/picture/step3/back_office.gif)
 
 # Étape 4 - Nettoyage Front + Bootstrap
 
@@ -252,15 +264,22 @@ Dans cette partie nous allons ajouter 8 projets dans le plugin budget participat
 * Le dossier plugin-bp/webapp/WEB-INF/templates/skin contient les modèles HTML du Front.
 
 
-Vous trouverez une image de l'arborescence du plugin dans picture/step4/plugin_folder_tree.gif.
+Vous trouverez l'image de l'arborescence du plugin dans picture/step4/plugin_folder_tree.gif.
+
+![screenshot](/picture/step4/plugin_folder_tree.gif)
 
 Dans plugin-bp/webapp/WEB-INF/templates/skin/plugins/bp, supprimez les pages create_project.html et modify_project.html.
 
 Pour l'ajout des projets, vous devez avoir une page similaire à l'image picture/step4/project_management.gif accessible à http://localhost:8080/bp/jsp/admin/plugins/bp/ManageProjects.jsp?view=manageProjects.
 
+
+![screenshot](/picture/step4/project_management.gif)
+
 Pour améliorer cette affichage nous allons ajouter du code Bootsrap dans la page manage_projets.html afin d’avoir un changement dynamique au moment de la réduction de la fenêtre.
 
 Pour l'affichage des projets, vous devez avoir une page similaire à l'image picture/step4/project_display.gif accessible à http://localhost:8080/bp/jsp/site/Portal.jsp?page=project.
+
+![screenshot](/picture/step4/project_display.gif)
 
 ## Création de la page details_project.html :
 
@@ -269,6 +288,8 @@ Nous allons ajouter une page details_project.html qui contient les informations 
 Cette page sera affichée lorsqu’un utilisateur cliquera sur un projet.
 
 Vous devez avoir une page qui ressemble à picture/step4/detail_project.gif accessible à http://localhost:8080/bp/jsp/site/Portal.jsp?page=project&view=detailsProject&id=1.
+
+![screenshot](/picture/step4/detail_project.gif)
 
 Tapez la commande suivante pour obtenir les modifications à apporter par rapport à l'étape précédente :
 
@@ -298,6 +319,8 @@ Tapez la commande suivante pour obtenir les modifications à apporter par rappor
 Dans cette partie nous allons réaliser un multi projet intègrant plusieurs plugins.
 
 Si vous suivez bien ce guide, vous devriez avoir l'arborescence décrite dans picture/step6/project-folder.gif.
+
+![screenshot](/picture/step6/project-folder.gif)
 
 Le dossier plugin-bp-TP (ou tout autre nom renseigné au moment de la création dans le plugin Wizard) est notre squelette de base pour notre plugin. On peut mettre ce dossier dans le dossier /plugins ou dans un répertoire fils de notre dossier lutece-dev. Dans la racine du dossier lutece-dev, se trouve un fichier pom.xml. Il s'agit du pom principal du multi projet. Ouvrez ce fichier et mettez les dépendances suivantes :
 
@@ -329,6 +352,8 @@ Compilez le projet grâce à la commande suivante puis déployez-le sur Tomcat :
 
 Activez les plugins sur le back office dans Système/Gestion des plugins comme dans picture/step6/plugin_management_2.gif.
 
+![screenshot](/picture/step6/plugin_management_2.gif)
+
 Implémentez le plugin extend dans le plugin bp. (Vous pouvez suivre ce tutoriel : http://fr.lutece.paris.fr/fr/wiki/howto-extend.html).
 
  **Note :** Au moment de modifier le template modify_project.html, ne pas insérer le markeur dans la balise `<form>` car celui-ci va lui-même générer des balises `<form>` 
@@ -344,7 +369,11 @@ Implémentez le plugin extend dans le plugin bp. (Vous pouvez suivre ce tutoriel
 
 Pour l'affichage des projets, vous devez avoir une page similaire à picture/step6/project_display_2.gif.
 
+![screenshot](/picture/step6/project_display_2.gif)
+
 Pour l'affichage de chaque projet, vous devez avoir une page similaire à picture/step6/detail_project_2.gif.
+
+![screenshot](/picture/step6/detail_project_2.gif)
 
 Tapez la commande suivante pour obtenir les modifications à apporter par rapport à l'étape précédente :
 
@@ -373,6 +402,8 @@ Réalisez deux fonctions en Web Service REST :
 
 
 Vous devez avoir un affichage comme dans picture/step7/rest_request.gif.
+
+![screenshot](/picture/step7/rest_request.gif)
 
 Tapez la commande suivante pour obtenir les modifications à apporter par rapport à l'étape précédente :
 
