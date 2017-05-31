@@ -1,5 +1,5 @@
 
-#Introduction
+# Introduction
 
 This tutorial aims at creating a plugin working on Lutece by means of plugin WIZARD which ensure easy project skeleton making.
 
@@ -16,7 +16,7 @@ You have to install the following environnement on your comuter :
 * Tomcat admin (not necessary but usefull for projects deployement)
 
 
-#Step 0 ñ Cloning from SVN and configuring with Git-Script
+# Step 0 ‚Äì Cloning from SVN and configuring with Git-Script
 
 Lutece project was previously versionned with SVN but was migrated to Git. Whereas some plugins are still on SVN.
 
@@ -36,7 +36,7 @@ Then copy this folder in the lutece-dev folder :
 
 Next type this command in the lutece-dev folder so that the two ranges of sources is merged :
 
- `$./lutece.sh config ñd` 
+ `$./lutece.sh config ‚Äìd` 
 
 Inform your name, login and password for https://github.com
 
@@ -46,11 +46,11 @@ After type :
 
  `$./lutece.sh sync -t https` 
 
-#Step 1 - Plugin WIZARD 4.1.1 deployement
+# Step 1 - Plugin WIZARD 4.1.1 deployement
 
-In this step we download from GitHub a "site" project containing plugin Wizard 4.1.1 release then we execute it in order to start our own plugin named ìParticipatory Budgetî.
+In this step we download from GitHub a "site" project containing plugin Wizard 4.1.1 release then we execute it in order to start our own plugin named ‚ÄúParticipatory Budget‚Äù.
 
-##1) Site POM retrieval on GitHub :
+## 1) Site POM retrieval on GitHub :
 
 To retrive the project type this command :
 
@@ -85,28 +85,28 @@ We have in particular :
 * plugin-pluginwizard : This plugin eases creation of a new lutece plugin by creating the skeleton of a JEE application working on lutece.
 
 
-##2) Project construction :
+## 2) Project construction :
 
 Execute this Maven command in MyNamePlugin-TP folder :
 
  `$mvn lutece:site-assembly` 
 
-It generate a ìtargetî folder which contains a runnable site release ("lutece-TP-1.0.0-SNAPSHOT" folder).
+It generate a ‚Äútarget‚Äù folder which contains a runnable site release ("lutece-TP-1.0.0-SNAPSHOT" folder).
 
-##3) Databse initialisation :
+## 3) Databse initialisation :
 
 Before deploying our site on tomcat, we need to configure and initialize its database (MySql).
 
 
  
-* In the ìlutece-TP-1.0.0-SNAPSHOTî folder, go to /WEB-INF/conf/ and edit the db.properties file. Rename database used for site in ìlutece_pwizardî by modifying portal.url property : `portal.url=jdbc:mysql://localhost/lutece_pwizard?autoReconnect=true&useUnicode=yes&characterEncoding=utf8` 
+* In the ‚Äúlutece-TP-1.0.0-SNAPSHOT‚Äù folder, go to /WEB-INF/conf/ and edit the db.properties file. Rename database used for site in ‚Äúlutece_pwizard‚Äù by modifying portal.url property : `portal.url=jdbc:mysql://localhost/lutece_pwizard?autoReconnect=true&useUnicode=yes&characterEncoding=utf8` 
 * Also modify portal.password property with password of your mysql server : `portal.user=root`  `portal.password=motdepasse` 
 * Execute Ant script for database initialization : `ant -f [path]/MyNamePlugin-TP/target/lutece-TP-1.0.0-SNAPSHOT/WEB-INF/sql/build.xml` 
 
 
-A new database named ìlutece_pwizardî is now created on the local MySql server.
+A new database named ‚Äúlutece_pwizard‚Äù is now created on the local MySql server.
 
-##4) Site deployment on Tomcat :
+## 4) Site deployment on Tomcat :
 
 Now we can deploy the site on Tomcat.
 
@@ -118,7 +118,7 @@ Then you can check if application is well launched at http://localhost:8080/wiza
 
 The page corresponding to picture/step1/first_page.gif is displayed.
 
-##5) Plugin activation :
+## 5) Plugin activation :
 
 In order to use the plugin Wizard, you need to activate it and assign corresponding rights to current user.
 
@@ -138,11 +138,11 @@ Activate pluginwizard with click on the green button.
 
 Then go to Managers > Users management. On form displayed select Modify button in admin user.
 
-On page displayed, go to ìRightsî tab as seen in picture/step1/user_rights.gif then check boxes corresponding to plugin wizard's features.
+On page displayed, go to ‚ÄúRights‚Äù tab as seen in picture/step1/user_rights.gif then check boxes corresponding to plugin wizard's features.
 
 Plugin Wizard is now ready to be used by the admin user.
 
-#Step 2 - Plugin participatory budget creation
+# Step 2 - Plugin participatory budget creation
 
 In this step we use plugin Wizard in order to generate plugin participatory budget sources. On that purpose, we use the deployed site front office.
 
@@ -172,8 +172,8 @@ Follow form steps with this informations :
 
 | Name| Type|
 |-----------------|-----------------|
-| Name| texte court( 50 caractËres), mandatory.|
-| Description| texte moyen 255 caractËres, mandatory.|
+| Name| texte court( 50 caract√®res), mandatory.|
+| Description| texte moyen 255 caract√®res, mandatory.|
 | image_url| URL, mandatory.|
 
 
@@ -200,11 +200,11 @@ Follow form steps with this informations :
 
 
 
-When you are in ìGÈnÈrationî step, check plugin summary then click on ìGenerate the zipî.
+When you are in ‚ÄúG√©n√©ration‚Äù step, check plugin summary then click on ‚ÄúGenerate the zip‚Äù.
 
 A zip file containing the participatory budget plugin is downloaded.
 
-#Step 3 - Participatory budget plugin deployment
+# Step 3 - Participatory budget plugin deployment
 
 In this step we deploy participatory budget plugin previously generated.
 
@@ -222,15 +222,15 @@ To build the project, execute the following Maven command :
 
  `$mvn lutece:exploded` 
 
-This commande generate a ìtargetî folder which contain the participatory budget plugin application release.
+This commande generate a ‚Äútarget‚Äù folder which contain the participatory budget plugin application release.
 
-A database must be initialized as for the Wizard plugin site. Follow instructions described in ìDatabase initializationî subsection of step 1.
+A database must be initialized as for the Wizard plugin site. Follow instructions described in ‚ÄúDatabase initialization‚Äù subsection of step 1.
 
- **Note :** the database name must be specific for each application in order not to overwrite former database. We name ìlutece_bpî the databse for participatory budget plugin.
+ **Note :** the database name must be specific for each application in order not to overwrite former database. We name ‚Äúlutece_bp‚Äù the databse for participatory budget plugin.
 
-You can now deploy the application on Tomcat (see ìSite deployment on Tomcatî subsection of step 1).
+You can now deploy the application on Tomcat (see ‚ÄúSite deployment on Tomcat‚Äù subsection of step 1).
 
-Activate the participatory budget plugin and assign rights corresponding to this plugin to admin user (see ìPlugin activationî subsection of step 1).
+Activate the participatory budget plugin and assign rights corresponding to this plugin to admin user (see ‚ÄúPlugin activation‚Äù subsection of step 1).
 
 A Lutece plugin is divided in two parts: front office and back office.
 
@@ -238,7 +238,7 @@ Front office is available at http://localhost:8080/bp/jsp/site/Portal.jsp. You c
 
 And back office at http://localhost:8080/bp/jsp/admin/AdminMenu.jsp. You can find a picture of this interface in picture/step3/back_office.gif.
 
-#…tape 4 - Front office cleaning + Bootstrap
+# √âtape 4 - Front office cleaning + Bootstrap
 
 In this step we add 8 projects in participatory budget plugin, improve front office interface and create an HTML page to display project details (id, name and description).
 
@@ -260,7 +260,7 @@ To improve display we add Bootstrap code in manage_projets.html in order to chan
 
 For project display, you must have a page like picture/step4/project_display.gif. This page is located at http://localhost:8080/bp/jsp/site/Portal.jsp?page=project.
 
-##details_project.html page creation :
+## details_project.html page creation :
 
 We add a details_project.html page which contains project informations (id, name, description and imageUrl) in front office.
 
@@ -272,7 +272,7 @@ Type the following command to obtain differences between final result and precee
 
  `$git diff step2 step3` 
 
-#Step 5 - Add a cost attributes to projects
+# Step 5 - Add a cost attributes to projects
 
 In this step we add a cost attribute in table bp_projet of the database.
 
@@ -291,7 +291,7 @@ Type the following command to obtain differences between final result and precee
 
  `$git diff step3 step4` 
 
-#Step 6 - Extend plugin integration (HIT, RATING, COMMENT)
+# Step 6 - Extend plugin integration (HIT, RATING, COMMENT)
 
 In this step we create a multi project which integrate several plugins.
 
@@ -348,7 +348,7 @@ Type the following command to obtain differences between final result and precee
 
  `$git diff step4 step5` 
 
-#Step 7 - Implementation of a RESTful web services
+# Step 7 - Implementation of a RESTful web services
 
 In this step we use the REST Lutece plugin.
 
@@ -376,7 +376,7 @@ Type the following command to obtain differences between final result and precee
 
  `$git diff step5 step6` 
 
-#…tape 8 - Cache management
+# √âtape 8 - Cache management
 
 In this step we save our Web Service responses in a Web cache.
 
@@ -388,7 +388,7 @@ Type the following command to obtain differences between final result and precee
 
  `$git diff step6 step7` 
 
-#Final project retrieve
+# Final project retrieve
 
 You can return the final project with these instructions :
 
