@@ -1,9 +1,9 @@
 
-#Introduction
+# Introduction
 
-Le but de ce TP est de réaliser un plugin fonctionnant sous Lutece, en utilisant le plugin WIZARD permettant de créer facilement le squelette de notre projet.
+Le but de ce TP est de rÃ©aliser un plugin fonctionnant sous Lutece, en utilisant le plugin WIZARD permettant de crÃ©er facilement le squelette de notre projet.
 
-Pour ce TP il est nécessaire de disposer de l’environnement suivant :
+Pour ce TP il est nÃ©cessaire de disposer de lâ€™environnement suivant :
 
 
  
@@ -13,20 +13,20 @@ Pour ce TP il est nécessaire de disposer de l’environnement suivant :
 * Ant
 * MySQL
 * Tomcat 7
-* Tomcat admin (optionnel mais très utile pour déployer les projets)
+* Tomcat admin (optionnel mais trÃ¨s utile pour dÃ©ployer les projets)
 
 
-#Étape 0 – Clone depuis SVN et Configuration Git-Script
+# Ã‰tape 0 â€“ Clone depuis SVN et Configuration Git-Script
 
-Le projet Lutece a été initialement versionné avec SVN avant de passer sur Git et certains plugins n'ont pas encore été migré vers Git.
+Le projet Lutece a Ã©tÃ© initialement versionnÃ© avec SVN avant de passer sur Git et certains plugins n'ont pas encore Ã©tÃ© migrÃ© vers Git.
 
-Pour commencer, il faut récupérer les sources depuis SVN avec la commande suivante :
+Pour commencer, il faut rÃ©cupÃ©rer les sources depuis SVN avec la commande suivante :
 
  `$svn checkout http://dev.lutece.paris.fr/svn/lutece/portal/trunk lutece-dev` 
 
-Une fois cette commande exécutée, il faut récupérer les scripts git permettant de cloner automatiquement toutes les sources de Github.
+Une fois cette commande exÃ©cutÃ©e, il faut rÃ©cupÃ©rer les scripts git permettant de cloner automatiquement toutes les sources de Github.
 
-Dans un autre répertoire faites :
+Dans un autre rÃ©pertoire faites :
 
  `$git clone https://github.com/lutece-platform/tools-git-scripts` 
 
@@ -36,27 +36,27 @@ Ensuite copiez le contenu de ce dossier scripts dans le dossier lutece-dev :
 
 Puis fusionnez les deux sources en tapant dans le dossier lutece-dev :
 
- `$./lutece.sh config –d` 
+ `$./lutece.sh config â€“d` 
 
 Donner votre nom, votre login et mot de passe (https://github.com)
 
- **Note :** si vous tapez ces commandes dans Git Bash un problème peut survenir avec le curl que Git Bash utilise par défaut. Le prompt demandant le mot de passe ne s'affiche pas.
+ **Note :** si vous tapez ces commandes dans Git Bash un problÃ¨me peut survenir avec le curl que Git Bash utilise par dÃ©faut. Le prompt demandant le mot de passe ne s'affiche pas.
 
 Ensuite tapez :
 
  `$./lutece.sh sync -t https` 
 
-#Étape 1 - Déploiement du plugin WIZARD 4.1.1
+# Ã‰tape 1 - DÃ©ploiement du plugin WIZARD 4.1.1
 
-Dans cette étape nous allons récupérer sur GitHub un projet “site” contenant le plugin Wizard version 4.1.1 puis nous allons l'exécuter pour initier notre plugin “Budget Participatif”.
+Dans cette Ã©tape nous allons rÃ©cupÃ©rer sur GitHub un projet â€œsiteâ€ contenant le plugin Wizard version 4.1.1 puis nous allons l'exÃ©cuter pour initier notre plugin â€œBudget Participatifâ€.
 
-##1) Récupération du POM de site sur GitHub :
+## 1) RÃ©cupÃ©ration du POM de site sur GitHub :
 
-Pour récupérer le projet entrez la commande suivante :
+Pour rÃ©cupÃ©rer le projet entrez la commande suivante :
 
  `$git clone https://github.com/lutece-platform/lutece-dev-TP.git MyNamePlugin-TP` 
 
-Cette commande créé le dossier MyNamePlugin-TP contenant un fichier pom.xml. Celui-ci fait apparaitre les dépendances suivantes :
+Cette commande crÃ©Ã© le dossier MyNamePlugin-TP contenant un fichier pom.xml. Celui-ci fait apparaitre les dÃ©pendances suivantes :
 
 
 ```
@@ -81,48 +81,48 @@ On a notamment :
 
 
  
-* lutece-core : C'est le coeur du CMS Lutece. Cet élément gère entre autre la coordination de tous les autres plugins
-* plugin-pluginwizard : C'est un plugin qui a pour rôle de faciliter la création d'un nouveau plugin lutece en générant le squelette d’une application JEE compatible lutece.
+* lutece-core : C'est le coeur du CMS Lutece. Cet Ã©lÃ©ment gÃ¨re entre autre la coordination de tous les autres plugins
+* plugin-pluginwizard : C'est un plugin qui a pour rÃ´le de faciliter la crÃ©ation d'un nouveau plugin lutece en gÃ©nÃ©rant le squelette dâ€™une application JEE compatible lutece.
 
 
-##2) Construction du projet :
+## 2) Construction du projet :
 
-Positionnez-vous dans le dossier MyNamePlugin-TP et exécutez la commande Maven :
+Positionnez-vous dans le dossier MyNamePlugin-TP et exÃ©cutez la commande Maven :
 
  `$mvn lutece:site-assembly` 
 
-Ceci va générer un dossier “target” contenant un livrable du site (dossier "lutece-TP-1.0.0-SNAPSHOT").
+Ceci va gÃ©nÃ©rer un dossier â€œtargetâ€ contenant un livrable du site (dossier "lutece-TP-1.0.0-SNAPSHOT").
 
-##3) Initialisation de la base de données :
+## 3) Initialisation de la base de donnÃ©es :
 
-Avant de déployer notre version du site sur tomcat, il faut configurer et initialiser la base de données (MySql) qui sera utilisée par celui-ci.
+Avant de dÃ©ployer notre version du site sur tomcat, il faut configurer et initialiser la base de donnÃ©es (MySql) qui sera utilisÃ©e par celui-ci.
 
 
  
-* Dans le dossier du site “lutece-TP-1.0.0-SNAPSHOT”, allez dans /WEB-INF/conf/ et éditez le fichier db.properties. Renommez la base de données utilisée par le site en “lutece_pwizard” en modifiant la propriété portal.url comme suit : `portal.url=jdbc:mysql://localhost/ **lutece_pwizard** ?autoReconnect=true&useUnicode=yes&characterEncoding=utf8` 
-* Modifiez également la propriété portal.password par le mot de passe root de votre serveur mysql : `portal.user=root`  `portal.password=motdepasse` 
-* Exécutez le script Ant d’initialisation de la base de données : `ant -f [path]/MyNamePlugin-TP/target/lutece-TP-1.0.0-SNAPSHOT/WEB-INF/sql/build.xml` 
+* Dans le dossier du site â€œlutece-TP-1.0.0-SNAPSHOTâ€, allez dans /WEB-INF/conf/ et Ã©ditez le fichier db.properties. Renommez la base de donnÃ©es utilisÃ©e par le site en â€œlutece_pwizardâ€ en modifiant la propriÃ©tÃ© portal.url comme suit : `portal.url=jdbc:mysql://localhost/ **lutece_pwizard** ?autoReconnect=true&useUnicode=yes&characterEncoding=utf8` 
+* Modifiez Ã©galement la propriÃ©tÃ© portal.password par le mot de passe root de votre serveur mysql : `portal.user=root`  `portal.password=motdepasse` 
+* ExÃ©cutez le script Ant dâ€™initialisation de la base de donnÃ©es : `ant -f [path]/MyNamePlugin-TP/target/lutece-TP-1.0.0-SNAPSHOT/WEB-INF/sql/build.xml` 
 
 
-Une nouvelle base de données nommé “lutece_pwizard” est alors créée sur le serveur MySql local.
+Une nouvelle base de donnÃ©es nommÃ© â€œlutece_pwizardâ€ est alors crÃ©Ã©e sur le serveur MySql local.
 
-##4) Déploiement du site sur Tomcat :
+## 4) DÃ©ploiement du site sur Tomcat :
 
-Nous pouvons à présent déployer notre site sur Tomcat.
+Nous pouvons Ã  prÃ©sent dÃ©ployer notre site sur Tomcat.
 
 Pour cela, dans le dossier conf de votre application Tomcat, ajoutez la ligne suivante dans la balise `<HOST>` du fichier server.xml :
 
  `<Context docBase="[path]/MyNamePlugin-TP/target/lutece-TP-1.0.0-SNAPSHOT" path="/wizard" workDir="[path]/MyNamePlugin-TP/target/work" />` 
 
-Vous pouvez ensuite vérifier que l’application est bien lancée sur l’Url http://localhost:8080/wizard/ (si wizard est le chemin de contexte choisi pour l’application).
+Vous pouvez ensuite vÃ©rifier que lâ€™application est bien lancÃ©e sur lâ€™Url http://localhost:8080/wizard/ (si wizard est le chemin de contexte choisi pour lâ€™application).
 
-La page correspond à l'image picture/step1/first_page.gif s’affiche.
+La page correspond Ã  l'image picture/step1/first_page.gif sâ€™affiche.
 
-##5) Activation du plugin :
+## 5) Activation du plugin :
 
-Pour pouvoir utiliser le plugin Wizard, il est d’abord nécessaire de l’activer et d’affecter les droits à l’utilisateur.
+Pour pouvoir utiliser le plugin Wizard, il est dâ€™abord nÃ©cessaire de lâ€™activer et dâ€™affecter les droits Ã  lâ€™utilisateur.
 
-Pour cela il faut aller dans la partie back office du site à l’adresse http://localhost:8080/wizard/jsp/admin/AdminLogin.jsp et s'authentifier en :
+Pour cela il faut aller dans la partie back office du site Ã  lâ€™adresse http://localhost:8080/wizard/jsp/admin/AdminLogin.jsp et s'authentifier en :
 
 
  
@@ -130,25 +130,25 @@ Pour cela il faut aller dans la partie back office du site à l’adresse http://lo
 * mot de passe : adminadmin
 
 
-Sur la page qui s’affiche, cliquez sur Système > Gestion des Plugin.
+Sur la page qui sâ€™affiche, cliquez sur SystÃ¨me > Gestion des Plugin.
 
-La page correspondant picture/step1/plugin_management.gif s’affiche.
+La page correspondant picture/step1/plugin_management.gif sâ€™affiche.
 
 Activez le pluginwizard en cliquant sur le bouton vert.
 
-Allez ensuite sur Gestionnaires > Gestion des utilisateurs. Sur l’écran qui s’affiche sélectionnez le bouton Modifier du user admin.
+Allez ensuite sur Gestionnaires > Gestion des utilisateurs. Sur lâ€™Ã©cran qui sâ€™affiche sÃ©lectionnez le bouton Modifier du user admin.
 
-Sur la page qui s’affiche, allez sur l’onglet “Droits” comme dans l'image picture/step1/user_rights.gif puis cochez les cases correspondant aux fonctionnalités du plugin wizard.
+Sur la page qui sâ€™affiche, allez sur lâ€™onglet â€œDroitsâ€ comme dans l'image picture/step1/user_rights.gif puis cochez les cases correspondant aux fonctionnalitÃ©s du plugin wizard.
 
-Le plugin Wizard est maintenant prêt à être utilisé par le compte admin.
+Le plugin Wizard est maintenant prÃªt Ã  Ãªtre utilisÃ© par le compte admin.
 
-#Étape 2 - Création du plugin budget participatif
+# Ã‰tape 2 - CrÃ©ation du plugin budget participatif
 
-Nous allons dans cette étape utiliser le plugin Wizard pour générer les sources du plugin Budget Participatif. Pour cela, nous utiliserons la partie front office du site précédemment déployé.
+Nous allons dans cette Ã©tape utiliser le plugin Wizard pour gÃ©nÃ©rer les sources du plugin Budget Participatif. Pour cela, nous utiliserons la partie front office du site prÃ©cÃ©demment dÃ©ployÃ©.
 
-Allez à l’adresse http://localhost:8080/wizard/jsp/site/Portal.jsp?page=pluginwizard. La fenêtre correspondant à picture/step2/plugin_wizard.gif s’affiche.
+Allez Ã  lâ€™adresse http://localhost:8080/wizard/jsp/site/Portal.jsp?page=pluginwizard. La fenÃªtre correspondant Ã  picture/step2/plugin_wizard.gif sâ€™affiche.
 
-Suivez les étapes du formulaire en renseignant les informations suivantes :
+Suivez les Ã©tapes du formulaire en renseignant les informations suivantes :
 
 
  
@@ -160,24 +160,24 @@ Suivez les étapes du formulaire en renseignant les informations suivantes :
 | Auteur :| Mairie de Paris|
 
 
-* Ajoutez une classe métier dans Métier :
+* Ajoutez une classe mÃ©tier dans MÃ©tier :
 
 | Rubrique| Valeur|
 |-----------------|-----------------|
-| Classe métier :| Project|
+| Classe mÃ©tier :| Project|
 | Nom de la table :| bp_project|
 
 
-* Ajoutez les attributs suivants à la classe Project :
+* Ajoutez les attributs suivants Ã  la classe Project :
 
 | Nom| Type|
 |-----------------|-----------------|
-| Name| texte court( 50 caractères), obligatoire.|
-| Description| texte moyen 255 caractères, obligatoire.|
+| Name| texte court( 50 caractÃ¨res), obligatoire.|
+| Description| texte moyen 255 caractÃ¨res, obligatoire.|
 | image_url| URL, obligatoire.|
 
 
-* Créez une fonctionnalité d’administration (adminfeature) dans Administration :
+* CrÃ©ez une fonctionnalitÃ© dâ€™administration (adminfeature) dans Administration :
 
 | Rubrique| Valeur|
 |-----------------|-----------------|
@@ -186,7 +186,7 @@ Suivez les étapes du formulaire en renseignant les informations suivantes :
 | Nom technique :| ManageBp|
 | Droit :| BP_MANAGEMENT|
 | Niveau droit :| Niveau 0|
-| Classe métier :| Project|
+| Classe mÃ©tier :| Project|
 
 
 * Ajoutez une XPage dans XPage :
@@ -195,111 +195,111 @@ Suivez les étapes du formulaire en renseignant les informations suivantes :
 |-----------------|-----------------|
 | Nom de la XPage :| project|
 | Classe de XPage :| BpApp|
-| Classe métier :| Project|
+| Classe mÃ©tier :| Project|
 
 
 
 
-Une fois à l’étape “Génération”, vérifiez le récapitulatif des sources à générer puis cliquez sur “Générer l’archive des sources”.
+Une fois Ã  lâ€™Ã©tape â€œGÃ©nÃ©rationâ€, vÃ©rifiez le rÃ©capitulatif des sources Ã  gÃ©nÃ©rer puis cliquez sur â€œGÃ©nÃ©rer lâ€™archive des sourcesâ€.
 
-Vous téléchargez ainsi un ZIP contenant le plugin bp.
+Vous tÃ©lÃ©chargez ainsi un ZIP contenant le plugin bp.
 
-#Étape 3 - Déploiement du plugin Budget Participatif
+# Ã‰tape 3 - DÃ©ploiement du plugin Budget Participatif
 
-Dans cette étape nous déployons le plugin bp qui a été généré.
+Dans cette Ã©tape nous dÃ©ployons le plugin bp qui a Ã©tÃ© gÃ©nÃ©rÃ©.
 
-Commencez par extraire le fichier zip récupéré dans l’étape précédente, et positionnez-vous dans le dossier extrait (au niveau du fichier pom.xml).
+Commencez par extraire le fichier zip rÃ©cupÃ©rÃ© dans lâ€™Ã©tape prÃ©cÃ©dente, et positionnez-vous dans le dossier extrait (au niveau du fichier pom.xml).
 
  **Note :** 
 
 
  
-* Il est nécessaire de changer dans le fichier pom.xml le numéro de version du projet parent (balise `<version>` de `<parent>` par défaut à 3.0 ; mettre 3.0.3)
-* Vous devez mettre le dossier extrait dans le dossier lutece-dev (où sont les sources de SVN et ceux de Git, nous allons utiliser le fichier pom.xml pour le mutil project)
+* Il est nÃ©cessaire de changer dans le fichier pom.xml le numÃ©ro de version du projet parent (balise `<version>` de `<parent>` par dÃ©faut Ã  3.0 ; mettre 3.0.3)
+* Vous devez mettre le dossier extrait dans le dossier lutece-dev (oÃ¹ sont les sources de SVN et ceux de Git, nous allons utiliser le fichier pom.xml pour le mutil project)
 
 
-Exécutez la commande Maven permettant de construire le projet :
+ExÃ©cutez la commande Maven permettant de construire le projet :
 
  `$mvn lutece:exploded` 
 
-Cette commande va générer un dossier “target” contenant le livrable de notre application plugin bp.
+Cette commande va gÃ©nÃ©rer un dossier â€œtargetâ€ contenant le livrable de notre application plugin bp.
 
-De la même façon que le site du plugin Wizard, nous devons initialiser une base de données pour cette l’application.
+De la mÃªme faÃ§on que le site du plugin Wizard, nous devons initialiser une base de donnÃ©es pour cette lâ€™application.
 
-Suivez donc les mêmes étapes décrites dans la partie “Initialisation de la base de données” de l’Étape 1, pour le plugin bp.
+Suivez donc les mÃªmes Ã©tapes dÃ©crites dans la partie â€œInitialisation de la base de donnÃ©esâ€ de lâ€™Ã‰tape 1, pour le plugin bp.
 
- **Note :** Le nom de la base de données à créer doit être spécifique à chaque application pour éviter d'écraser des bases existantes. Pour l’application plugin bp nous la nommerons “lutece_bp”.
+ **Note :** Le nom de la base de donnÃ©es Ã  crÃ©er doit Ãªtre spÃ©cifique Ã  chaque application pour Ã©viter d'Ã©craser des bases existantes. Pour lâ€™application plugin bp nous la nommerons â€œlutece_bpâ€.
 
-Déployez maintenant l’application sur Tomcat en utilisant le gestionnaire d’applications Web Tomcat (voir partie “Déploiement du site sur Tomcat” de l’Étape 1).
+DÃ©ployez maintenant lâ€™application sur Tomcat en utilisant le gestionnaire dâ€™applications Web Tomcat (voir partie â€œDÃ©ploiement du site sur Tomcatâ€ de lâ€™Ã‰tape 1).
 
-Activez le Plugin bp et affectez les droits d’utilisation à admin (voir partie “Activation du plugin” de l’Étape 1).
+Activez le Plugin bp et affectez les droits dâ€™utilisation Ã  admin (voir partie â€œActivation du pluginâ€ de lâ€™Ã‰tape 1).
 
 Un plugin Lutece se compose de deux parties: front office et back office.
 
-Le front office est accessible à l’url : http://localhost:8080/bp/jsp/site/Portal.jsp. Vous trouverez une image correspondante dans picture/step3/front_office.gif.
+Le front office est accessible Ã  lâ€™url : http://localhost:8080/bp/jsp/site/Portal.jsp. Vous trouverez une image correspondante dans picture/step3/front_office.gif.
 
 Et le back office sur : http://localhost:8080/bp/jsp/admin/AdminMenu.jsp. Vous trouverez une image correspondante dans picture/step3/back_office.gif.
 
-#Étape 4 - Nettoyage Front + Bootstrap
+# Ã‰tape 4 - Nettoyage Front + Bootstrap
 
-Dans cette partie nous allons ajouter 8 projets dans le plugin budget participatif, améliorer l’affichage de l’interface front et créer une page HTML pour afficher les détails d’un projet (id, name, description).
+Dans cette partie nous allons ajouter 8 projets dans le plugin budget participatif, amÃ©liorer lâ€™affichage de lâ€™interface front et crÃ©er une page HTML pour afficher les dÃ©tails dâ€™un projet (id, name, description).
 
  **Note :** 
 
 
  
-* Le dossier plugin-bp/webapp/WEB-INF/templates/admin contient les modèles HTML du Back.
-* Le dossier plugin-bp/webapp/WEB-INF/templates/skin contient les modèles HTML du Front.
+* Le dossier plugin-bp/webapp/WEB-INF/templates/admin contient les modÃ¨les HTML du Back.
+* Le dossier plugin-bp/webapp/WEB-INF/templates/skin contient les modÃ¨les HTML du Front.
 
 
 Vous trouverez une image de l'arborescence du plugin dans picture/step4/plugin_folder_tree.gif.
 
 Dans plugin-bp/webapp/WEB-INF/templates/skin/plugins/bp, supprimez les pages create_project.html et modify_project.html.
 
-Pour l'ajout des projets, vous devez avoir une page similaire à l'image picture/step4/project_management.gif accessible à http://localhost:8080/bp/jsp/admin/plugins/bp/ManageProjects.jsp?view=manageProjects.
+Pour l'ajout des projets, vous devez avoir une page similaire Ã  l'image picture/step4/project_management.gif accessible Ã  http://localhost:8080/bp/jsp/admin/plugins/bp/ManageProjects.jsp?view=manageProjects.
 
-Pour améliorer cette affichage nous allons ajouter du code Bootsrap dans la page manage_projets.html afin d’avoir un changement dynamique au moment de la réduction de la fenêtre.
+Pour amÃ©liorer cette affichage nous allons ajouter du code Bootsrap dans la page manage_projets.html afin dâ€™avoir un changement dynamique au moment de la rÃ©duction de la fenÃªtre.
 
-Pour l'affichage des projets, vous devez avoir une page similaire à l'image picture/step4/project_display.gif accessible à http://localhost:8080/bp/jsp/site/Portal.jsp?page=project.
+Pour l'affichage des projets, vous devez avoir une page similaire Ã  l'image picture/step4/project_display.gif accessible Ã  http://localhost:8080/bp/jsp/site/Portal.jsp?page=project.
 
-##Création de la page details_project.html :
+## CrÃ©ation de la page details_project.html :
 
-Nous allons ajouter une page details_project.html qui contient les informations d’un projet (id, name, description, imageUrl) coté front.
+Nous allons ajouter une page details_project.html qui contient les informations dâ€™un projet (id, name, description, imageUrl) cotÃ© front.
 
-Cette page sera affichée lorsqu’un utilisateur cliquera sur un projet.
+Cette page sera affichÃ©e lorsquâ€™un utilisateur cliquera sur un projet.
 
-Vous devez avoir une page qui ressemble à picture/step4/detail_project.gif accessible à http://localhost:8080/bp/jsp/site/Portal.jsp?page=project&view=detailsProject&id=1.
+Vous devez avoir une page qui ressemble Ã  picture/step4/detail_project.gif accessible Ã  http://localhost:8080/bp/jsp/site/Portal.jsp?page=project&view=detailsProject&id=1.
 
-Tapez la commande suivante pour obtenir les modifications à apporter par rapport à l'étape précédente :
+Tapez la commande suivante pour obtenir les modifications Ã  apporter par rapport Ã  l'Ã©tape prÃ©cÃ©dente :
 
  `$git diff step2 step3` 
 
-#Étape 5 - Ajouter un attribut coût au Projet
+# Ã‰tape 5 - Ajouter un attribut coÃ»t au Projet
 
-Dans cette partie, nous allons ajouter un attribut coût dans la table bp_projet de la base de données.
+Dans cette partie, nous allons ajouter un attribut coÃ»t dans la table bp_projet de la base de donnÃ©es.
 
 Cet attribut a trois contraintes :
 
 
  
-* La valeur du coût doit être un nombre compris entre 5 et 25.
-* La valeur doit être un multiple de 5.
-* La valeur ne doit pas être nulle.
+* La valeur du coÃ»t doit Ãªtre un nombre compris entre 5 et 25.
+* La valeur doit Ãªtre un multiple de 5.
+* La valeur ne doit pas Ãªtre nulle.
 
 
-N’oubliez pas de modifier tous les fichiers nécessaires.
+Nâ€™oubliez pas de modifier tous les fichiers nÃ©cessaires.
 
-Tapez la commande suivante pour obtenir les modifications à apporter par rapport à l'étape précédente :
+Tapez la commande suivante pour obtenir les modifications Ã  apporter par rapport Ã  l'Ã©tape prÃ©cÃ©dente :
 
  `$git diff step3 step4` 
 
-#Étape 6 - Intégration du plugin extend (HIT, RATING, COMMENT)
+# Ã‰tape 6 - IntÃ©gration du plugin extend (HIT, RATING, COMMENT)
 
-Dans cette partie nous allons réaliser un multi projet intègrant plusieurs plugins.
+Dans cette partie nous allons rÃ©aliser un multi projet intÃ¨grant plusieurs plugins.
 
-Si vous suivez bien ce guide, vous devriez avoir l'arborescence décrite dans picture/step6/project-folder.gif.
+Si vous suivez bien ce guide, vous devriez avoir l'arborescence dÃ©crite dans picture/step6/project-folder.gif.
 
-Le dossier plugin-bp-TP (ou tout autre nom renseigné au moment de la création dans le plugin Wizard) est notre squelette de base pour notre plugin. On peut mettre ce dossier dans le dossier /plugins ou dans un répertoire fils de notre dossier lutece-dev. Dans la racine du dossier lutece-dev, se trouve un fichier pom.xml. Il s'agit du pom principal du multi projet. Ouvrez ce fichier et mettez les dépendances suivantes :
+Le dossier plugin-bp-TP (ou tout autre nom renseignÃ© au moment de la crÃ©ation dans le plugin Wizard) est notre squelette de base pour notre plugin. On peut mettre ce dossier dans le dossier /plugins ou dans un rÃ©pertoire fils de notre dossier lutece-dev. Dans la racine du dossier lutece-dev, se trouve un fichier pom.xml. Il s'agit du pom principal du multi projet. Ouvrez ce fichier et mettez les dÃ©pendances suivantes :
 
 
 ```
@@ -323,82 +323,82 @@ Le dossier plugin-bp-TP (ou tout autre nom renseigné au moment de la création da
 ```
 
 
-Compilez le projet grâce à la commande suivante puis déployez-le sur Tomcat :
+Compilez le projet grÃ¢ce Ã  la commande suivante puis dÃ©ployez-le sur Tomcat :
 
  `$mvn lutece:exploded -P multi-project` 
 
-Activez les plugins sur le back office dans Système/Gestion des plugins comme dans picture/step6/plugin_management_2.gif.
+Activez les plugins sur le back office dans SystÃ¨me/Gestion des plugins comme dans picture/step6/plugin_management_2.gif.
 
-Implémentez le plugin extend dans le plugin bp. (Vous pouvez suivre ce tutoriel : http://fr.lutece.paris.fr/fr/wiki/howto-extend.html).
+ImplÃ©mentez le plugin extend dans le plugin bp. (Vous pouvez suivre ce tutoriel : http://fr.lutece.paris.fr/fr/wiki/howto-extend.html).
 
- **Note :** Au moment de modifier le template modify_project.html, ne pas insérer le markeur dans la balise `<form>` car celui-ci va lui-même générer des balises `<form>` 
+ **Note :** Au moment de modifier le template modify_project.html, ne pas insÃ©rer le markeur dans la balise `<form>` car celui-ci va lui-mÃªme gÃ©nÃ©rer des balises `<form>` 
 
  **Exercice :** 
 
 
  
-* Ajouter l'extension nombre de vues (Hit) dans chaque projet et l’afficher dans la liste des projets sans l’incrémenter.
-* Ajouter des commentaires dans la page détails de chaque projet.
-* Ajouter le vote pour chaque projet dans la page détails du projet et l'afficher dans la liste de projets.
+* Ajouter l'extension nombre de vues (Hit) dans chaque projet et lâ€™afficher dans la liste des projets sans lâ€™incrÃ©menter.
+* Ajouter des commentaires dans la page dÃ©tails de chaque projet.
+* Ajouter le vote pour chaque projet dans la page dÃ©tails du projet et l'afficher dans la liste de projets.
 
 
-Pour l'affichage des projets, vous devez avoir une page similaire à picture/step6/project_display_2.gif.
+Pour l'affichage des projets, vous devez avoir une page similaire Ã  picture/step6/project_display_2.gif.
 
-Pour l'affichage de chaque projet, vous devez avoir une page similaire à picture/step6/detail_project_2.gif.
+Pour l'affichage de chaque projet, vous devez avoir une page similaire Ã  picture/step6/detail_project_2.gif.
 
-Tapez la commande suivante pour obtenir les modifications à apporter par rapport à l'étape précédente :
+Tapez la commande suivante pour obtenir les modifications Ã  apporter par rapport Ã  l'Ã©tape prÃ©cÃ©dente :
 
  `$git diff step4 step5` 
 
-#Étape 7 - Mise en place d’un Web service REST
+# Ã‰tape 7 - Mise en place dâ€™un Web service REST
 
 Dans cette partie nous allons utiliser le plugin REST de lutece.
 
-Nous allons chercher un ensemble de données de notre base de données et les afficher sous le format JSON.
+Nous allons chercher un ensemble de donnÃ©es de notre base de donnÃ©es et les afficher sous le format JSON.
 
-Pour cela nous allons intégrer le plugin rest dans le multi projet.
+Pour cela nous allons intÃ©grer le plugin rest dans le multi projet.
 
-Notre choix de technologies est d’utiliser Jersey JAX-RS et l’API Jackson.
+Notre choix de technologies est dâ€™utiliser Jersey JAX-RS et lâ€™API Jackson.
 
 Vous pouvez suivre ce tutoriel : http://fr.lutece.paris.fr/fr/wiki/howto-rest.html
 
  **Exercice :** 
 
-Réalisez deux fonctions en Web Service REST :
+RÃ©alisez deux fonctions en Web Service REST :
 
 
  
-* La première fonction affiche par projet : le nombre total de vues, le nombre total de votes, le nombre total de commentaires publiés et non publiés.
-* La deuxième affiche le nombre total de vue, le nombre total de commentaires publiés et non publiés, le nombre total de votes de tous les projets.
+* La premiÃ¨re fonction affiche par projet : le nombre total de vues, le nombre total de votes, le nombre total de commentaires publiÃ©s et non publiÃ©s.
+* La deuxiÃ¨me affiche le nombre total de vue, le nombre total de commentaires publiÃ©s et non publiÃ©s, le nombre total de votes de tous les projets.
 
 
 Vous devez avoir un affichage comme dans picture/step7/rest_request.gif.
 
-Tapez la commande suivante pour obtenir les modifications à apporter par rapport à l'étape précédente :
+Tapez la commande suivante pour obtenir les modifications Ã  apporter par rapport Ã  l'Ã©tape prÃ©cÃ©dente :
 
  `$git diff step5 step6` 
 
-#Étape 8 - Gestion du cache
+# Ã‰tape 8 - Gestion du cache
 
-Dans cette partie nous allons sauvegarder la réponse du Web Service dans le cache.
+Dans cette partie nous allons sauvegarder la rÃ©ponse du Web Service dans le cache.
 
 Vous pouvez suivre ce tutoriel : http://fr.lutece.paris.fr/fr/wiki/cache-management.html
 
- **Note :** après avoir suivi les instructions du wiki, activez votre cache en back office dans Système/Gestion des caches.
+ **Note :** aprÃ¨s avoir suivi les instructions du wiki, activez votre cache en back office dans SystÃ¨me/Gestion des caches.
 
-Tapez la commande suivante pour obtenir les modifications à apporter par rapport à l'étape précédente :
+Tapez la commande suivante pour obtenir les modifications Ã  apporter par rapport Ã  l'Ã©tape prÃ©cÃ©dente :
 
  `$git diff step6 step7` 
 
-#Récupération du projet final
+# RÃ©cupÃ©ration du projet final
 
-Vous pouvez récupérer le projet final de la manière suivanate :
+Vous pouvez rÃ©cupÃ©rer le projet final de la maniÃ¨re suivante :
 
-Après avoir appliqué l'étape 0, tapez :
+AprÃ¨s avoir appliquÃ© l'Ã©tape 0, tapez :
 
  `$git checkout step7` 
 
-Déployez ensuite le projet comme à l'étape 3.
+DÃ©ployez ensuite le projet comme Ã  l'Ã©tape 3.
 
 
 [Maven documentation and reports](http://dev.lutece.paris.fr/plugins/lutece-TP/)
