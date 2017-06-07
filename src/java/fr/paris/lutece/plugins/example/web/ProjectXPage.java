@@ -55,10 +55,11 @@ import javax.servlet.http.HttpServletRequest;
 public class ProjectXPage extends MVCApplication
 {
     // Templates
-    private static final String TEMPLATE_MANAGE_PROJECTS = "/skin/plugins/example/manage_projects.html";
-    private static final String TEMPLATE_CREATE_PROJECT = "/skin/plugins/example/create_project.html";
-    private static final String TEMPLATE_MODIFY_PROJECT = "/skin/plugins/example/modify_project.html";
-
+    private static final String TEMPLATE_MANAGE_PROJECTS="/skin/plugins/example/manage_projects.html";
+    private static final String TEMPLATE_CREATE_PROJECT="/skin/plugins/example/create_project.html";
+    private static final String TEMPLATE_MODIFY_PROJECT="/skin/plugins/example/modify_project.html";
+    private static final String TEMPLATE_DETAIL_PROJECT="/skin/plugins/example/detail_project.html";
+    
     // JSP
     private static final String JSP_PAGE_PORTAL = "jsp/site/Portal.jsp";
 
@@ -78,6 +79,7 @@ public class ProjectXPage extends MVCApplication
     private static final String VIEW_MANAGE_PROJECTS = "manageProjects";
     private static final String VIEW_CREATE_PROJECT = "createProject";
     private static final String VIEW_MODIFY_PROJECT = "modifyProject";
+    private static final String VIEW_DETAIL_PROJECT = "detailsProject";
 
     // Actions
     private static final String ACTION_CREATE_PROJECT = "createProject";
@@ -229,4 +231,27 @@ public class ProjectXPage extends MVCApplication
 
         return redirectView( request, VIEW_MANAGE_PROJECTS );
     }
+
+    /**
+     * Returns the form to create a project
+     *
+     * @param request The Http request
+     * @return the html code of the project form
+     */
+    @View( VIEW_DETAIL_PROJECT )
+    public XPage getDetailProject( HttpServletRequest request )
+    {
+        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_PROJECT ) );
+
+        if ( _project == null  || ( _project.getId( ) != nId ))
+        {
+            _project = ProjectHome.findByPrimaryKey( nId );
+        }
+
+        Map<String, Object> model = getModel(  );
+        model.put( MARK_PROJECT, _project );
+
+        return getXPage( TEMPLATE_DETAIL_PROJECT, getLocale( request ), model );
+    }
+
 }
