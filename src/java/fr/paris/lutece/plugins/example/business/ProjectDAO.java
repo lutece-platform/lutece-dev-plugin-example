@@ -47,11 +47,11 @@ public final class ProjectDAO implements IProjectDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_project ) FROM example_project";
-    private static final String SQL_QUERY_SELECT = "SELECT id_project, name, description, image_url FROM example_project WHERE id_project = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO example_project ( id_project, name, description, image_url ) VALUES ( ?, ?, ?, ? ) ";
+    private static final String SQL_QUERY_SELECT = "SELECT id_project, name, description, image_url, cost FROM example_project WHERE id_project = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO example_project ( id_project, name, description, image_url, cost ) VALUES ( ?, ?, ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM example_project WHERE id_project = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE example_project SET id_project = ?, name = ?, description = ?, image_url = ? WHERE id_project = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_project, name, description, image_url FROM example_project";
+    private static final String SQL_QUERY_UPDATE = "UPDATE example_project SET id_project = ?, name = ?, description = ?, image_url = ?, cost = ? WHERE id_project = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_project, name, description, image_url, cost FROM example_project";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_project FROM example_project";
 
     /**
@@ -85,11 +85,12 @@ public final class ProjectDAO implements IProjectDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
         project.setId( newPrimaryKey( plugin ) );
         int nIndex = 1;
-
-        daoUtil.setInt( nIndex++, project.getId( ) );
-        daoUtil.setString( nIndex++, project.getName( ) );
-        daoUtil.setString( nIndex++, project.getDescription( ) );
-        daoUtil.setString( nIndex++, project.getImageUrl( ) );
+        
+        daoUtil.setInt( nIndex++ , project.getId( ) );
+        daoUtil.setString( nIndex++ , project.getName( ) );
+        daoUtil.setString( nIndex++ , project.getDescription( ) );
+        daoUtil.setString( nIndex++ , project.getImageUrl( ) );
+        daoUtil.setInt(nIndex++ , project.getCost( ) );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
@@ -115,6 +116,7 @@ public final class ProjectDAO implements IProjectDAO
             project.setName( daoUtil.getString( nIndex++ ) );
             project.setDescription( daoUtil.getString( nIndex++ ) );
             project.setImageUrl( daoUtil.getString( nIndex++ ) );
+            project.setCost( daoUtil.getInt( nIndex++ ) );
         }
 
         daoUtil.free( );
@@ -141,12 +143,13 @@ public final class ProjectDAO implements IProjectDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
         int nIndex = 1;
-
-        daoUtil.setInt( nIndex++, project.getId( ) );
-        daoUtil.setString( nIndex++, project.getName( ) );
-        daoUtil.setString( nIndex++, project.getDescription( ) );
-        daoUtil.setString( nIndex++, project.getImageUrl( ) );
-        daoUtil.setInt( nIndex, project.getId( ) );
+        
+        daoUtil.setInt( nIndex++ , project.getId( ) );
+        daoUtil.setString( nIndex++ , project.getName( ) );
+        daoUtil.setString( nIndex++ , project.getDescription( ) );
+        daoUtil.setString( nIndex++ , project.getImageUrl( ) );
+        daoUtil.setInt( nIndex++ , project.getCost( ) );
+        daoUtil.setInt( nIndex , project.getId( ) );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
@@ -171,6 +174,7 @@ public final class ProjectDAO implements IProjectDAO
             project.setName( daoUtil.getString( nIndex++ ) );
             project.setDescription( daoUtil.getString( nIndex++ ) );
             project.setImageUrl( daoUtil.getString( nIndex++ ) );
+            project.setCost( daoUtil.getInt( nIndex++ ) );
 
             projectList.add( project );
         }

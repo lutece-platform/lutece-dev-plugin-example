@@ -43,6 +43,8 @@ public class ProjectBusinessTest extends LuteceTestCase
     private final static String DESCRIPTION2 = "Description2";
     private final static String IMAGEURL1 = "ImageUrl1";
     private final static String IMAGEURL2 = "ImageUrl2";
+    private final static int COST1 = 1;
+    private final static int COST2 = 2;
 
     public void testBusiness( )
     {
@@ -51,23 +53,26 @@ public class ProjectBusinessTest extends LuteceTestCase
         project.setName( NAME1 );
         project.setDescription( DESCRIPTION1 );
         project.setImageUrl( IMAGEURL1 );
-
+        project.setCost( COST1 );
         // Create test
         ProjectHome.create( project );
         Project projectStored = ProjectHome.findByPrimaryKey( project.getId( ) );
-        assertEquals( projectStored.getName( ), project.getName( ) );
-        assertEquals( projectStored.getDescription( ), project.getDescription( ) );
-        assertEquals( projectStored.getImageUrl( ), project.getImageUrl( ) );
+        assertEquals( projectStored.getName() , project.getName( ) );
+        assertEquals( projectStored.getDescription() , project.getDescription( ) );
+        assertEquals( projectStored.getImageUrl() , project.getImageUrl( ) );
+        assertEquals( projectStored.getCost() , project.getCost( ) );
 
         // Update test
         project.setName( NAME2 );
         project.setDescription( DESCRIPTION2 );
         project.setImageUrl( IMAGEURL2 );
+        project.setCost( COST2 );
         ProjectHome.update( project );
         projectStored = ProjectHome.findByPrimaryKey( project.getId( ) );
-        assertEquals( projectStored.getName( ), project.getName( ) );
-        assertEquals( projectStored.getDescription( ), project.getDescription( ) );
-        assertEquals( projectStored.getImageUrl( ), project.getImageUrl( ) );
+        assertEquals( projectStored.getName() , project.getName( ) );
+        assertEquals( projectStored.getDescription() , project.getDescription( ) );
+        assertEquals( projectStored.getImageUrl() , project.getImageUrl( ) );
+        assertEquals( projectStored.getCost() , project.getCost( ) );
 
         // List test
         ProjectHome.getProjectsList( );
