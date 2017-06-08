@@ -6,5 +6,6 @@
 
     <bean id="example.projectDAO" class="fr.paris.lutece.plugins.example.business.ProjectDAO" />
     <bean id="example.ProjectRest" class="fr.paris.lutece.plugins.example.web.rs.ProjectRest" />
+    <bean id="example.ProjectExtendableResourceService" class="fr.paris.lutece.plugins.example.service.ProjectExtendableResourceService" />
 
 </beans>
