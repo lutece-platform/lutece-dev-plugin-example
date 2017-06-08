@@ -1,5 +1,3 @@
-<#include "manageproject_tabs.html" />
-<@tabs tab="project" />
 
 <@box>
     <@boxHeader i18nTitleKey="example.create_project.title"></@boxHeader>
@@ -16,7 +14,10 @@
         <@formGroup labelKey='#i18n{example.create_project.labelImageUrl}' helpKey='#i18n{example.create_project.labelImageUrl.help}' mandatory=true>
 	        <@input type='text' name='image_url' value=project.imageUrl!'' />
 	</@formGroup>
-
+        <@formGroup labelKey='#i18n{example.create_project.labelCost}' helpKey='#i18n{example.create_project.labelCost.help}' mandatory=true>
+	        <@input type='text' name='cost' value=project.cost!'' />
+	</@formGroup>
+        
         <@actionButtons button1Name="action_createProject" button2Name="view_manageProjects"/>
     </@tform>
     </@boxBody>

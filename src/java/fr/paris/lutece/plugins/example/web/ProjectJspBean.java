@@ -165,6 +165,14 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
         {
             return redirectView( request, VIEW_CREATE_PROJECT );
         }
+        
+        // Specific constraint : cost must be a multiple of 5
+        if ( !_project.isCostValid() ) {
+            addError( _project.MESSAGE_INVALID_COST );
+            
+            return  redirectView( request, VIEW_CREATE_PROJECT );
+        }
+        
 
         ProjectHome.create( _project );
         addInfo( INFO_PROJECT_CREATED, getLocale( ) );
@@ -225,7 +233,14 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
             _project = ProjectHome.findByPrimaryKey( nId );
         }
 
-        Map<String, Object> model = getModel( );
+        // Specific constraint 
+        if ( !_project.isCostValid() ) {
+            addError( _project.MESSAGE_INVALID_COST );
+            
+            return  redirectView( request, VIEW_CREATE_PROJECT );
+        }
+        
+        Map<String, Object> model = getModel(  );
         model.put( MARK_PROJECT, _project );
 
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_PROJECT, TEMPLATE_MODIFY_PROJECT, model );
@@ -247,6 +262,13 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
         if ( !validateBean( _project, VALIDATION_ATTRIBUTES_PREFIX ) )
         {
             return redirect( request, VIEW_MODIFY_PROJECT, PARAMETER_ID_PROJECT, _project.getId( ) );
+        }
+
+        // Specific constraint : cost must be a multiple of 5
+        if ( !_project.isCostValid() ) {
+            addError( _project.MESSAGE_INVALID_COST );
+            
+            return  redirectView( request, VIEW_CREATE_PROJECT );
         }
 
         ProjectHome.update( _project );
