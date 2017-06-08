@@ -15,6 +15,12 @@
                     <p class="list-group-item">#i18n{example.create_project.labelImageUrl} : ${project.imageUrl} </p>
                     <p class="list-group-item">#i18n{example.create_project.labelCost} : ${project.cost} </p>
                     <p class="list-group-item"><img src="${project.imageUrl}" class="img-responsive"></p>
+                    <p class="list-group-item">
+                        #i18n{example.extend.resource.hitNbLabel} :
+                        <span class="label label-default">
+                            @Extender[${project.id},project_resource_type,hit,{show:true,increment:true}]@
+                        </span>
+                    </p>
                 </div>
             </div>
         </div>

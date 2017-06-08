@@ -45,6 +45,7 @@ import fr.paris.lutece.util.url.UrlItem;
 import fr.paris.lutece.portal.service.message.SiteMessageService;
 import fr.paris.lutece.portal.service.message.SiteMessage;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
+import fr.paris.lutece.portal.web.resource.ExtendableResourcePluginActionManager;
 
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
