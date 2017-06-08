@@ -12,6 +12,18 @@
                 <h3>${project.name}</h3>
             </div>
         </a>
+        <p>
+            #i18n{example.extend.resource.hitNbLabel} : 
+            <span class="label label-default">    
+                @Extender[${project.id},project_resource_type,hit,{show:true,increment:false}]@
+            </span>
+        </p>
+        <p>
+            #i18n{example.extend.resource.commentLabel} : 
+            <span class="label label-default">
+                @Extender[${project.id},project_resource_type,comment]@
+            </span>
+	</p>
     </div>
 
     </#list>

@@ -49,8 +49,11 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.paris.lutece.plugins.example.business.ExtendedProject;
 import fr.paris.lutece.plugins.example.business.Project;
 import fr.paris.lutece.plugins.example.business.ProjectHome;
+import fr.paris.lutece.plugins.extend.modules.hit.business.Hit;
+import fr.paris.lutece.plugins.extend.modules.hit.service.HitService;
 import fr.paris.lutece.plugins.rest.service.RestConstants;
 import fr.paris.lutece.plugins.rest.util.json.JSONUtil;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
@@ -63,7 +66,7 @@ public class ProjectRest
 	private ObjectMapper _mapper = new ObjectMapper();
 	static final Logger LOGGER = Logger.getLogger( RestConstants.REST_LOGGER );
 
-    /**
+   /**
      * get project list
      *
      * @return the json file of the project list
@@ -101,5 +104,58 @@ public class ProjectRest
             return JSONUtil.formatError( "project not found", 1 );
         }
     }
+
+    /**
+     * get project stats
+     * 
+     * @param nId
+     * @return the json file of the project stats
+     * @throws SiteMessageException 
+     */
+    @GET
+    @Path("/projects_stats/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getProjectStatsById(@PathParam("id") int nId) throws SiteMessageException {
+
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+                    
+            return mapper.writeValueAsString( getExtendedProject( ProjectHome.findByPrimaryKey(nId) ) );
+            
+        } catch (NumberFormatException e) {
+            return JSONUtil.formatError("Invalid project number", 3);
+        } catch (Exception e) {
+            return JSONUtil.formatError("project not found", 1);
+        }
+    }
+
+    /**
+     * get project stats 
+     * 
+     * @param project
+     * @return the extended project
+     */
+    private ExtendedProject getExtendedProject(Project project) {
+        
+        // get the HitService in the spring context
+        HitService hs = SpringContextService.getBean(HitService.BEAN_SERVICE);
+
+        String strIdExtendableResource = String.valueOf(project.getId()); // extend resource ID
+        String strExtendableResourceType = Project.PROPERTY_RESOURCE_TYPE; // extend resource type
+
+        // search nb of hits
+        Hit hit = hs.findByParameters(strIdExtendableResource, strExtendableResourceType);
+        if (hit == null) {
+            hit = new Hit();
+        }
+        
+        ExtendedProject extProject = (ExtendedProject)project;
+        extProject.setHit(hit);
+        
+        return extProject;
+    }
+
+ 
 
 }
