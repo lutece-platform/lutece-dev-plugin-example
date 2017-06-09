@@ -35,7 +35,7 @@ package fr.paris.lutece.plugins.example.web;
 
 import fr.paris.lutece.plugins.example.business.Project;
 import fr.paris.lutece.plugins.example.business.ProjectHome;
-//import fr.paris.lutece.plugins.example.service.ProjectCacheService;
+import fr.paris.lutece.plugins.example.service.ProjectCacheService;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.portal.util.mvc.xpage.MVCApplication;
@@ -251,8 +251,7 @@ public class ProjectXPage extends MVCApplication
 
         if ( _project == null  || ( _project.getId( ) != nId ))
         {
-            //_project =  ProjectCacheService.getInstance().getResource(String.valueOf(nId), null);
-            _project = ProjectHome.findByPrimaryKey( nId );
+            _project =  ProjectCacheService.getInstance().getResource(String.valueOf(nId), null);
         }
 
         Map<String, Object> model = getModel(  );
