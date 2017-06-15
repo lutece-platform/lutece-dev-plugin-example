@@ -9,9 +9,18 @@ Le but de ce tutoriel est de réaliser une application basique fonctionnant sous
 * modification des pages de l'application
 * modification du modèle de données
 * lancement du plug-in au sein d'un site lutece utilisant d'autres plugins
-* ajout d'une fonctionnalité de vote / commentaires aux pages
+* ajout d'une fonctionnalité de vote / commentaires aux pages du plugin
 * ajout d'un webservice REST
 * ajout de l'implémentation d'un système de cache
+* finalisation du plugin (formatage, tests, packaging...)
+
+Les branches GIT de ce projet sont utilisées de la façon suivante :
+* branches step0 à step6 : branches correspondant aux états successifs des sources du plugin à chaque ajout de fonctionnalité
+* branche develop : version complète du plugin
+* branche Master : branche initiale du projet contenant ce fichier
+
+
+Pour toute question ou suggestion, vous pouvez utiliser le forum Lutèce à l'adresse suivante :  http://fr.lutece.paris.fr/fr/jsp/site/Portal.jsp?page=digg&id_digg=1
 
 # 2. Prérequis
 Pour ce TP il est nécessaire de disposer de l’environnement suivant :
@@ -24,7 +33,14 @@ Pour ce TP il est nécessaire de disposer de l’environnement suivant :
 * Git & svn
 * NetBeans ou Eclipse
 
-Pour commencer, créez un répertoire de travail pour le projet, par exemple : `.../lutece-dev`.
+L'usage suivant de GIT pour le suivi de version des sources de ce projet est proposé :
+
+* Pour commencer, créez un répertoire de travail pour le projet, par exemple : `.../lutece-dev`.
+* Clonez le projet plugin-example dans ce répertoire (commande : `git clone https://github.com/lutece-platform/lutece-dev-example.git`)
+* Créez une branche locale de travail à partir de la branche Master : `git checkout -b myWork master`
+
+
+A chaque étape du tutoriel, vous pourrez comparer votre code avec le code proposé dans les branches origin/stepX correspondantes, par exemple  avec  : `git diff myWork origin/step0`, ou dans l'IDE de votre choix.
 
 
 
@@ -91,23 +107,9 @@ Une fois à l’étape “Génération”, vérifiez le récapitulatif des sourc
 Vous téléchargez ainsi un ZIP contenant le plugin `plugin-example`.
 
 
-Une fois le fichier ZIP téléchargé, de-zippez le dans le répertoire `lutece-dev` créé précedemment.
+Une fois le fichier ZIP téléchargé, décompressez les fichiers et copiez les fichiers dans votre répertoire `plugin-example` créé précedemment (toujours dans la branche de travail GIT 'myWork').
 
-**Suivi des modifications :**
-
- Dans le répertoire  `plugin-example`, initialisez le suivi GIT pour démarrer le suivi des modifications de votre projet :
-
- `$ git init`
-
-Récupérez ensuite  les sources du projet, ce qui permettra de faire des comparaisons entre les étapes successives d'ajout ou modification des fichiers.
-
-`$ git clone https://github.com(...)`
-
-Créez votre branche de travail à partir du tag "init" pour démarrer le projet à l'état initial (vide !) :
-
-`$ git checkout -b mybranch init`
-
-
+> Attention à ne pas créer de second répertoire "plugin-example" dans un autre répertoire "plugin-example" !
 
 
 
@@ -235,15 +237,25 @@ http://localhost:8084/example/jsp/admin/plugins/example/ManageProjects.jsp?view=
 
 Félicitations, vous avez créé  votre premier plugin lutèce !
 
-Vous pouvez consulter le wiki de présentation des plugin Lutece pour comprendre l'organisation du code généré :
+>  Vous pouvez lancer un premier commit afin de comparer les fichiers générés à l'aide des commandes suivantes :
+>
+> `$ git add --all`
+>
+> `$ git commit -a -m"premier commit"`
+>
+> `$ git diff myWork origin/step0`
+
+
+Vous pouvez également consulter le wiki de présentation des plugin Lutece pour comprendre l'organisation du code généré :
 http://fr.lutece.paris.fr/fr/wiki/howto-create-plugin.html
+
+... ou encore consulter le wiki sur l'architecture logicielle de Lutèce :
+http://fr.lutece.paris.fr/fr/wiki/architecture-overview.html
 
 
 Nous allons maintenant modifier le code de ce plugin pour ajouter des fonctionnalités à cette application.
 
 
-
-> La version initiale des sources du plugin se situe dans la branche 'step0' du projet sur Github.
 
 
 # 5. Ajout de fonctionnalités au plugin example
@@ -252,32 +264,35 @@ Nous allons maintenant modifier le code de ce plugin pour ajouter des fonctionna
 
 Dans cette partie nous allons ajouter 8 projets, améliorer l’affichage de l’interface front et créer une page HTML pour afficher les détails d’un projet (id, name, description).
 
- **Note :**
-* Le dossier plugin-example/webapp/WEB-INF/templates/admin contient les modèles HTML du Back.
+**Note :**
 * Le dossier plugin-example/webapp/WEB-INF/templates/skin contient les modèles HTML du Front.
+* Le dossier plugin-example/webapp/WEB-INF/templates/admin contient les modèles HTML du Back.
+
 
 
 Vous trouverez l'image de l'arborescence du plugin dans picture/plugin_folder_tree.gif.
 
 ![screenshot](/picture/plugin_folder_tree.gif)
 
+L'adresse de la page d'affichage public de la liste des projets est la suivante : http://localhost:8084/example/jsp/site/Portal.jsp?page=project
 
-Pour l'ajout des projets, vous devez avoir une page similaire à l'image picture/project_management.gif accessible à http://localhost:8084/example/jsp/site/Portal.jsp?page=project
-
-Créez les 8 projets via l'interface d'administration des projets.
+Pour l'ajout des projets, vous devez avoir une page similaire à l'image picture/project_management.gif
 
 ![screenshot](/picture/project_management.gif)
 
-Pour améliorer cette affichage nous allons modifier la page manage_projets.html afin d’avoir un changement dynamique au moment de la réduction de la fenêtre (comportement 'responsive').
 
-Faire le nécessaire pour obtenir  une page similaire à l'image picture/project_display.gif accessible à http://localhost:8084/example/jsp/site/Portal.jsp?page=project.
+Ajoutez  8 projets (choisissez n'importe quelles  URL d'images ).
+
+Pour améliorer cette affichage nous allons modifier la page "manage_projets.html" afin d’avoir un affichage par blocs et un changement dynamique au moment de la réduction de la fenêtre (comportement 'responsive'), et ainsi obtenir  une page similaire à l'image picture/project_display.gif.
 
 ![screenshot](/picture/project_display.gif)
 
-Wiki lutèce concernant l'utilisation de bootstrap et les macros Freemarker :
+Utilisez les macros Freemarker proposées par Lutèce, en vous aidant du Wiki lutèce concernant l'utilisation de bootstrap et les macros Freemarker :
 http://fr.lutece.paris.fr/fr/wiki/bo-bootstrap.html
 
-> Pour contrôler votre code, vous pouvez le comparer à la nouvelle version de l'application qui se trouve dans la branche git `step1` du projet.
+Le fichier de déclaration des macros freemarker peut être consulté dans le répertoire  : `.../lutece-dev/plugin-example/target/lutece/WEB-INF/templates/commons.html` ou sur github (https://github.com/lutece-platform/lutece-core/blob/develop/webapp/WEB-INF/templates/commons.html)
+
+> Pour contrôler votre code, vous pouvez le comparer à la nouvelle version de l'application qui se trouve dans la branche git `origin/step1` du projet.
 
 ## 5.2. Etape 2 : Création de la page de détail d'un projet
 
@@ -289,6 +304,9 @@ Vous devez avoir une page qui ressemble à l'image picture/detail_project.gif,  
 
 ![screenshot](/picture/detail_project.gif)
 
+**Note :**
+* La classe java :  plugin-example/src/java/fr/paris/lutece/plugins/example/web/ProjectXPage gère les vues et actions du front-office.
+* La classe java :  plugin-example/src/java/fr/paris/lutece/plugins/example/web/ProjectJSPBean gère les vues et actions du back-office.
 
 
 En cas de problème liés aux labels et messages, vous pouvez consulter le wiki lutèce  http://fr.lutece.paris.fr/fr/wiki/i18n.html
@@ -303,7 +321,6 @@ Cet attribut a trois contraintes :
 
 * La valeur du coût doit être un nombre compris entre 5 et 25.
 * La valeur doit être un multiple de 5.
-* La valeur ne doit pas être nulle.
 
 Modifiez la table example_projet de la base de données, ainsi que tous les fichiers nécessaires, notamment les fichiers SQL, les DAOs, les templates, les tests unitaires...
 
@@ -465,14 +482,14 @@ Ceci va générer un dossier “target” contenant un livrable du site : dossie
 
 Une autre alternative de construction du site lutèce consiste à utiliser le mode multi-projet.
 
-Dans cette partie nous allons réaliser un multi projet intègrant plusieurs plugins.  Ce mode nécessite le téléchargement préalable des sources de Lutèce.
+Dans cette partie nous allons réaliser un multi projet intègrant plusieurs plugins.  Ce mode nécessite le téléchargement préalable des sources de Lutèce ainsi que de ses principaux plugins.
 
 
 ### 6.2.1. Récupération complète des sources de Lutèce
 
 Le projet Lutèce a été initialement versionné avec SVN avant de passer sur Git et certains plugins n'ont pas encore été migrés vers Git.
 
-Pour commencer, il faut récupérer les sources depuis SVN avec la commande suivante :
+Pour commencer, positionnez vous au dessus du répertoire `lutece-dev` et téléchargez les sources Lutèce depuis SVN avec la commande suivante :
 
  `$ svn checkout http://dev.lutece.paris.fr/svn/lutece/portal/trunk lutece-dev`
 
@@ -490,40 +507,91 @@ Puis fusionnez les deux sources en tapant dans le dossier lutece-dev :
 
  `$ ./lutece.sh config –d`
 
-Donner votre nom, votre login et mot de passe github (https://github.com)
-
- **Note :** Si vous tapez ces commandes dans Git Bash sur windows, un problème peut survenir avec le curl que Git Bash utilise par défaut (Le prompt demandant le mot de passe ne s'affiche pas). Pour contourner le problème, vous pouvez tenter la commande :  `winpty bash`
+Donnez votre nom, votre login et mot de passe github (créez un compte si nécessaire sur https://github.com)
 
 Ensuite tapez :
 
  `$ ./lutece.sh sync -t https`
 
+ **Note :** Si vous tapez ces commandes dans Git Bash sur windows, un problème peut survenir avec le curl que Git Bash utilise par défaut (Le prompt demandant le mot de passe ne s'affiche pas). Pour contourner le problème, vous pouvez tenter la commande :  `winpty bash`
+
+
+
 ### 6.2.2. Configuration du mode "multi-projet"
 
 
-Le dossier `plugin-example` se trouve normalement dans  notre dossier `lutece-dev`. A la racine du dossier `lutece-dev`, se trouve un fichier pom.xml. Il s'agit du pom principal du site dans lequel nous allons ajouter le mode multi projet.
+Le dossier `plugin-example` se trouve normalement dans  notre dossier `lutece-dev`. A la racine du dossier `lutece-dev`, se trouve un fichier pom.xml. Il s'agit du pom principal du site utilisé précedemment pour le mode "site".
 
-Ouvrez ce fichier et ajoutez le bloc 'profile' suivant :
+Renommez le par exemple en pom.xml.dependencies (pour le conserver).
+
+Créez un nouveau fichier pom.xml, et copiez dedans le contenu ci-dessous, qui permet de déclarer les différents modules qui seront utilisés.
+
+
 
 
 ```
-<profile>
-    <id>multi-project</id>
-    <modules>
-        <module>lutece-core</module>
-        <module>plugin-example</module>
-        <module>plugins/search/library-lucene</module>
-        <module>plugins/auth/plugin-mylutece</module>
-        <module>plugins/extends/plugin-extend</module>
-        <module>plugins/extends/module-extend-rating</module>
-        <module>plugins/extends/module-extend-comment</module>
-        <module>plugins/auth/module-mylutece-database</module>
-        <module>plugins/myapps/plugin-avatar</module>
-        <module>plugins/myapps/plugin-mydashboard</module>
-        <module>plugins/auth/plugin-mylutecetest</module>
-        <module>plugins/tech/plugin-rest</module>
-    </modules>
-</profile>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>lutece-global-pom</artifactId>
+        <groupId>fr.paris.lutece.tools</groupId>
+        <version>4.0.3</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fr.paris.lutece</groupId>
+    <artifactId>lutece-multi-project-pom</artifactId>
+    <name>Lutece Multi-project Project</name>
+    <url>http://dev.lutece.paris.fr/</url>
+    <packaging>pom</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <repositories>
+        <repository>
+            <id>luteceSnapshot</id>
+            <name>luteceSnapshot</name>
+            <url>http://dev.lutece.paris.fr/snapshot_repository</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>lutece</id>
+            <name>luteceRepository</name>
+            <url>http://dev.lutece.paris.fr/maven_repository</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <profiles>    
+      <profile>
+          <id>multi-project</id>
+          <modules>
+              <module>lutece-core</module>
+              <module>plugin-example</module>
+              <module>plugins/search/library-lucene</module>
+              <module>plugins/auth/plugin-mylutece</module>
+              <module>plugins/extends/plugin-extend</module>
+              <module>plugins/extends/module-extend-rating</module>
+              <module>plugins/extends/module-extend-comment</module>
+              <module>plugins/auth/module-mylutece-database</module>
+              <module>plugins/myapps/plugin-avatar</module>
+              <module>plugins/myapps/plugin-mydashboard</module>
+              <module>plugins/auth/plugin-mylutecetest</module>
+              <module>plugins/tech/plugin-rest</module>
+          </modules>
+      </profile>
+    </profiles>
+
+</project>
 ```
 
 
@@ -566,7 +634,7 @@ Relancez un build  du site depuis le répertoire ``<lutece-dev>`` (comme préced
 Un fichier Ant `build.xml` a été généré dans le répertoire :
 ``...target/lutece-test-1.0.0/WEB-INF/sql/build.xml``.
 
-Dans le répertoire ''...target/lutece-test-1.0.0/WEB-INF/sql/', lancez Ant  : `` ant -f build.xml`` pour construire la nouvelle  base de données.
+Dans le répertoire ''...target/lutece-test-1.0.0/WEB-INF/sql/', lancez Ant  : `` ant -f build.xml`` pour construire la nouvelle  base de données avec les tables correspondant à tous les plugins sélectionés.
 
 Une nouvelle base de données nommée “lutece_test2” est alors créée sur le serveur MySql local.
 
@@ -578,7 +646,7 @@ Pour cela, dans le dossier conf de votre application Tomcat, ajoutez la ligne su
 
  `<Context docBase="[path]/lutece-dev/target/lutece-test-1.0.0-SNAPSHOT" path="/lutece-test" workDir="[path]/lutece-dev/target/work" />`
 
-Vous pouvez ensuite vérifier que le site est bien accessible sur l’Url http://localhost:8080/lutece-test/ (si le tomcat utilise le port 8080).
+Démarrez le Tomcat, vous pouvez ensuite vérifier que le site est bien accessible sur l’Url http://localhost:8080/lutece-test/ (si le tomcat utilise le port 8080).
 
 La page correspondand à l'image picture/first_page.gif s’affiche.
 
@@ -620,7 +688,7 @@ Pour l'affichage de chaque projet, vous devez avoir une page similaire à pictur
 
 Tapez la commande suivante pour obtenir les modifications à apporter par rapport à l'étape précédente :
 
- `$git diff step3 step4`
+ `$ git diff origin/step3 origin/step4`
 
 ## 6.5. Etape 5 - Mise en place d’un Web service REST
 
@@ -630,7 +698,7 @@ Nous allons chercher un ensemble de données de notre base de données et les af
 
 Notre choix de technologies est d’utiliser Jersey JAX-RS et l’API Jackson.
 
-Vous pouvez suivre ce tutoriel : http://fr.lutece.paris.fr/fr/wiki/howto-rest.html
+Vous pouvez suivre ce tutoriel sur la mise en place d'un service REST Lutèce : http://fr.lutece.paris.fr/fr/wiki/howto-rest.html
 
  **Exercice :**
 
@@ -667,7 +735,7 @@ exemple : l'URL `http://localhost:8084/lutece-test/rest/example/projects` doit r
 
 Tapez la commande suivante pour obtenir les modifications à apporter par rapport à l'étape précédente :
 
- `$git diff step4 step5`
+ `$ git diff origin/step4 origin/step5`
 
 ## 6.6. Etape 6 : Gestion du cache
 
@@ -684,14 +752,16 @@ Vous pouvez suivre ce tutoriel : http://fr.lutece.paris.fr/fr/wiki/cache-managem
 
 Tapez la commande suivante pour obtenir les modifications à apporter par rapport à l'étape précédente :
 
- `$git diff step5 step6`
+ `$ git diff origin/step5 origin/step6`
 
 # 7. Finalisation du plugin
 
 
 ## 7.1. Formatage des sources
 
-Pour formater correctement les fichiers sources du plugin, utilisez la commande maven :
+Pour ajouter les entêtes et formater correctement les fichiers sources du plugin, utilisez les commandes maven :
+
+`mvn license:format`
 
 `mvn formatter:format`
 
