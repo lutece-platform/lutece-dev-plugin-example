@@ -754,30 +754,34 @@ Tapez la commande suivante pour obtenir les modifications à apporter par rappor
 
  `$ git diff origin/step5 origin/step6`
 
-# 7. Finalisation du plugin
+ # 7. Finalisation du plugin
 
 
-## 7.1. Formatage des sources
+ ## 7.1. Formatage des sources
 
-Pour ajouter les entêtes et formater correctement les fichiers sources du plugin, utilisez les commandes maven :
+ Pour ajouter les entêtes et formater correctement les fichiers sources du plugin, utilisez les commandes maven :
 
-`mvn license:format`
+ `mvn license:format`
 
-`mvn formatter:format`
+ `mvn formatter:format`
 
-Vérification des règles de nommage :
+ Construction du site maven (tests, checkstyle, PMD...) :
 
-`mvn checkstyle:check`
+ `mvn site`
 
-## 7.2. Tests
+ Génération du fichier  README.md à partir du fichier site.xml :
 
-Pour tester automatiquement le plugin (test unitaires), on peut utiliser la commande suivante:
+ `mvn xdoc2md`
 
-`mvn lutece:exploded antrun:run test`
+ ## 7.2. Tests
 
-## 7.3. Packaging
+ Pour tester automatiquement le plugin (test unitaires), on peut utiliser la commande suivante:
+
+ `mvn lutece:exploded antrun:run test`
+
+ ## 7.3. Packaging
 
 
-Génération d'une distribution du plugin :
+ Génération d'une distribution du plugin :
 
-`mvn lutece:assembly`
+ `mvn lutece:assembly` 
