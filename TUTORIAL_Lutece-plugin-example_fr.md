@@ -36,11 +36,19 @@ Pour ce TP il est nécessaire de disposer de l’environnement suivant :
 L'usage suivant de GIT pour le suivi de version des sources de ce projet est proposé :
 
 * Pour commencer, créez un répertoire de travail pour le projet, par exemple : `.../lutece-dev`.
-* Clonez le projet plugin-example dans ce répertoire (commande : `git clone https://github.com/lutece-platform/lutece-dev-example.git`)
+* Clonez le projet plugin-example dans ce répertoire (commande : `git clone https://github.com/lutece-platform/lutece-dev-example.git plugin-example`)
 * Créez une branche locale de travail à partir de la branche Master : `git checkout -b myWork master`
 
 
 A chaque étape du tutoriel, vous pourrez comparer votre code avec le code proposé dans les branches origin/stepX correspondantes, par exemple  avec  : `git diff myWork origin/step0`, ou dans l'IDE de votre choix.
+
+> vous pouvez aussi créer un fichier `ignore` dans votre répertoire `$HOME/.config/git/` contenant les exclusions ci-dessous afin de ne suivre avec Git que les sources de vos projets :
+```
+.classpath
+.project
+.settings/
+target/
+```
 
 
 
@@ -505,15 +513,15 @@ Ensuite copiez le contenu de ce dossier scripts dans le dossier lutece-dev :
 
 Puis fusionnez les deux sources en tapant dans le dossier lutece-dev :
 
- `$ ./lutece.sh config –d`
+ `$ ./lutece.sh config -k -d`
 
 Donnez votre nom, votre login et mot de passe github (créez un compte si nécessaire sur https://github.com)
 
 Ensuite tapez :
 
- `$ ./lutece.sh sync -t https`
+ `$ ./lutece.sh sync -k -t https`
 
- **Note :** Si vous tapez ces commandes dans Git Bash sur windows, un problème peut survenir avec le curl que Git Bash utilise par défaut (Le prompt demandant le mot de passe ne s'affiche pas). Pour contourner le problème, vous pouvez tenter la commande :  `winpty bash`
+ **Note :** Si vous tapez ces commandes dans Git Bash sur windows, un problème peut survenir avec le curl que Git Bash utilise par défaut (Le prompt demandant le mot de passe ne s'affiche pas). Pour contourner le problème, vous pouvez utiliser la commande :  `winpty bash`
 
 
 
@@ -773,6 +781,10 @@ Tapez la commande suivante pour obtenir les modifications à apporter par rappor
 
  `mvn xdoc2md`
 
+ ou
+
+ `mvn fr.paris.lutece.tools:xdoc2md-maven-plugin:readme`
+
  ## 7.2. Tests
 
  Pour tester automatiquement le plugin (test unitaires), on peut utiliser la commande suivante:
@@ -784,4 +796,4 @@ Tapez la commande suivante pour obtenir les modifications à apporter par rappor
 
  Génération d'une distribution du plugin :
 
- `mvn lutece:assembly` 
+ `mvn lutece:assembly`
