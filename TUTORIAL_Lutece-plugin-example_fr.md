@@ -762,6 +762,25 @@ Tapez la commande suivante pour obtenir les modifications à apporter par rappor
 
  `$ git diff origin/step5 origin/step6`
 
+## 6.7. Etape 7 : Production de données pour Kibana avec le plugin ElasticData
+
+Dans cette partie nous allons générer des graphes modélisant les données produites au cours du tutoriel. Vous aurez pour cela besoin des plugins ElasticData et Kibana.
+
+Vous pouvez suivre les instructions du wiki pour la création d'un dataObject :
+http://fr.lutece.paris.fr/fr/wiki/howto-elasticdata.html
+
+Les dataObjects seront écrits dans un module "module-example-elastic" généré par le plugin-wizard.
+
+ **Exercice :**
+
+*  Créer un dashboard contenant des graphes représentant le coût des projets et le nombre de vues.
+
+Vous pouvez également consulter les instructions du site d'Elastic pour comprendre le fonctionnement de Kibana et ElasticSearch : https://www.elastic.co/fr/
+
+**Note :** Ne pas oublier de créer la table kibana_dashboard (fichier kibana.properties) pour pouvoir stocker les dashboards créés. Ne pas oublier également d'activer les nouveaux plugins.
+
+Une fois les dashboards créés depuis kibana sur localhost:5601, vous pouvez les importer depuis la page http://localhost:8084/lutece-test/jsp/admin/plugins/kibana/ManageDashboards.jsp, puis les afficher depuis http://localhost:8084/lutece-test/jsp/admin/plugins/kibana/KibanaDashboard.jsp.
+
  # 7. Finalisation du plugin
 
 
