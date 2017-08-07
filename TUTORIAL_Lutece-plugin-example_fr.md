@@ -764,23 +764,31 @@ Tapez la commande suivante pour obtenir les modifications à apporter par rappor
 
 ## 6.7. Etape 7 : Production de données pour Kibana avec le plugin ElasticData
 
-Dans cette partie nous allons générer des graphes modélisant les données produites au cours du tutoriel. Vous aurez pour cela besoin des plugins ElasticData et Kibana.
+Dans cette partie nous allons générer des graphes modélisant les données produites au cours du tutoriel. Vous aurez pour cela besoin des plugins ElasticData (https://github.com/lutece-platform/lutece-elk-plugin-elasticdata) pour indexer les données et Kibana (https://github.com/lutece-platform/lutece-elk-plugin-kibana) pour importer et visualiser les graphes.
 
-Vous pouvez suivre les instructions du wiki pour la création d'un dataObject :
-http://fr.lutece.paris.fr/fr/wiki/howto-elasticdata.html
+Pour pouvoir utiliser Kibana vous devez d'abord télécharger un serveur ElasticSearch (https://www.elastic.co/fr/downloads/elasticsearch) puis un serveur Kibana (https://www.elastic.co/fr/downloads/kibana) et lancer ces deux serveurs.
+Vous pourrez ensuite accéder à Kibana via localhost:5601.
 
-Les dataObjects seront écrits dans un module "module-example-elastic" généré par le plugin-wizard.
+>Remarque : il existe aussi un plugin Lutèce appelé ElasticSearch qui permet de déployer un serveur ElasticSearch.  
+
+Vous devrez écrire des dataObjects dans un module "module-example-elastic" généré par le plugin-wizard.
+Les instructions pour la création d'un dataObject se trouvent dans le wiki:
+http://fr.lutece.paris.fr/fr/wiki/howto-elasticdata.html.
+Une fois votre dataObject créé, vous pouvez lancer l'indexation depuis la page : http://localhost:8084/lutece-test/jsp/admin/plugins/elasticdata/ManageElasticData.jsp?plugin_name=elasticdata.
+
+L'index ainsi créé peut être importé dans Kibana via l'onglet Management > Index Pattern > "+"  : décochez la case "Index contains time-based events" et saisissez la value que vous avez donné à votre index dans le bean, enfin cliquez sur "Create".
 
  **Exercice :**
 
-*  Créer un dashboard contenant des graphes représentant le coût des projets et le nombre de vues.
+*  Créer un dashboard contenant des graphes représentant le coût des projets et le nombre de vues. Vous devrez pour cela créer deux dataObjects.
 
-Vous pouvez également consulter les instructions du site d'Elastic pour comprendre le fonctionnement de Kibana et ElasticSearch : https://www.elastic.co/fr/
+Vous pouvez également consulter le site d'Elastic pour mieux comprendre le fonctionnement de Kibana et ElasticSearch : https://www.elastic.co/fr/
 
-**Note :** Ne pas oublier de créer la table kibana_dashboard (fichier kibana.properties) pour pouvoir stocker les dashboards créés. Ne pas oublier également d'activer les nouveaux plugins.
+**Note :** Ne pas oublier d'exécuter les scripts SQL des nouveaux plugins afin de créer la table kibana_dashboard. Ne pas oublier également d'activer les nouveaux plugins.
 
 Une fois les dashboards créés depuis kibana sur localhost:5601, vous pouvez les importer depuis la page http://localhost:8084/lutece-test/jsp/admin/plugins/kibana/ManageDashboards.jsp, puis les afficher depuis http://localhost:8084/lutece-test/jsp/admin/plugins/kibana/KibanaDashboard.jsp.
 
+Vous trouverez la solution de cette étape sur le repository https://github.com/lutece-platform/lutece-dev-module-example-elastic.
  # 7. Finalisation du plugin
 
 
