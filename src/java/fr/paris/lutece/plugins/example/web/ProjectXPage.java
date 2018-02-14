@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2017, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@
  * License 1.0
  */
 package fr.paris.lutece.plugins.example.web;
- 
+
 import fr.paris.lutece.plugins.example.business.Project;
 import fr.paris.lutece.plugins.example.business.ProjectHome;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
@@ -46,34 +46,34 @@ import fr.paris.lutece.portal.service.message.SiteMessage;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
 
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest; 
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * This class provides the user interface to manage Project xpages ( manage, create, modify, remove )
  */
-@Controller( xpageName = "project" , pageTitleI18nKey = "example.xpage.project.pageTitle" , pagePathI18nKey = "example.xpage.project.pagePathLabel" )
+@Controller( xpageName = "project", pageTitleI18nKey = "example.xpage.project.pageTitle", pagePathI18nKey = "example.xpage.project.pagePathLabel" )
 public class ProjectXPage extends MVCApplication
 {
     // Templates
-    private static final String TEMPLATE_MANAGE_PROJECTS="/skin/plugins/example/manage_projects.html";
-    private static final String TEMPLATE_CREATE_PROJECT="/skin/plugins/example/create_project.html";
-    private static final String TEMPLATE_MODIFY_PROJECT="/skin/plugins/example/modify_project.html";
-    
+    private static final String TEMPLATE_MANAGE_PROJECTS = "/skin/plugins/example/manage_projects.html";
+    private static final String TEMPLATE_CREATE_PROJECT = "/skin/plugins/example/create_project.html";
+    private static final String TEMPLATE_MODIFY_PROJECT = "/skin/plugins/example/modify_project.html";
+
     // JSP
     private static final String JSP_PAGE_PORTAL = "jsp/site/Portal.jsp";
-    
+
     // Parameters
-    private static final String PARAMETER_ID_PROJECT="id";
+    private static final String PARAMETER_ID_PROJECT = "id";
     private static final String PARAM_ACTION = "action";
     private static final String PARAM_PAGE = "page";
-    
+
     // Markers
     private static final String MARK_PROJECT_LIST = "project_list";
     private static final String MARK_PROJECT = "project";
-    
+
     // Message
     private static final String MESSAGE_CONFIRM_REMOVE_PROJECT = "example.message.confirmRemoveProject";
-    
+
     // Views
     private static final String VIEW_MANAGE_PROJECTS = "manageProjects";
     private static final String VIEW_CREATE_PROJECT = "createProject";
@@ -81,7 +81,7 @@ public class ProjectXPage extends MVCApplication
 
     // Actions
     private static final String ACTION_CREATE_PROJECT = "createProject";
-    private static final String ACTION_MODIFY_PROJECT= "modifyProject";
+    private static final String ACTION_MODIFY_PROJECT = "modifyProject";
     private static final String ACTION_REMOVE_PROJECT = "removeProject";
     private static final String ACTION_CONFIRM_REMOVE_PROJECT = "confirmRemoveProject";
 
@@ -89,16 +89,16 @@ public class ProjectXPage extends MVCApplication
     private static final String INFO_PROJECT_CREATED = "example.info.project.created";
     private static final String INFO_PROJECT_UPDATED = "example.info.project.updated";
     private static final String INFO_PROJECT_REMOVED = "example.info.project.removed";
-    
+
     // Session variable to store working values
     private Project _project;
-    
+
     @View( value = VIEW_MANAGE_PROJECTS, defaultView = true )
     public XPage getManageProjects( HttpServletRequest request )
     {
         _project = null;
-        Map<String, Object> model = getModel(  );
-        model.put( MARK_PROJECT_LIST, ProjectHome.getProjectsList(  ) );
+        Map<String, Object> model = getModel( );
+        model.put( MARK_PROJECT_LIST, ProjectHome.getProjectsList( ) );
 
         return getXPage( TEMPLATE_MANAGE_PROJECTS, getLocale( request ), model );
     }
@@ -106,15 +106,16 @@ public class ProjectXPage extends MVCApplication
     /**
      * Returns the form to create a project
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code of the project form
      */
     @View( VIEW_CREATE_PROJECT )
     public XPage getCreateProject( HttpServletRequest request )
     {
-        _project = ( _project != null ) ? _project : new Project(  );
+        _project = ( _project != null ) ? _project : new Project( );
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_PROJECT, _project );
            
         return getXPage( TEMPLATE_CREATE_PROJECT, getLocale( request ), model );
@@ -123,7 +124,8 @@ public class ProjectXPage extends MVCApplication
     /**
      * Process the data capture form of a new project
      *
-     * @param request The Http Request
+     * @param request
+     *            The Http Request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_CREATE_PROJECT )
@@ -144,10 +146,10 @@ public class ProjectXPage extends MVCApplication
     }
 
     /**
-     * Manages the removal form of a project whose identifier is in the http
-     * request
+     * Manages the removal form of a project whose identifier is in the http request
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      * @throws fr.paris.lutece.portal.service.message.SiteMessageException
      */
@@ -159,15 +161,16 @@ public class ProjectXPage extends MVCApplication
         url.addParameter( PARAM_PAGE, MARK_PROJECT );
         url.addParameter( PARAM_ACTION, ACTION_REMOVE_PROJECT );
         url.addParameter( PARAMETER_ID_PROJECT, nId );
-        
-        SiteMessageService.setMessage(request, MESSAGE_CONFIRM_REMOVE_PROJECT, SiteMessage.TYPE_CONFIRMATION, url.getUrl(  ));
+
+        SiteMessageService.setMessage( request, MESSAGE_CONFIRM_REMOVE_PROJECT, SiteMessage.TYPE_CONFIRMATION, url.getUrl( ) );
         return null;
     }
 
     /**
      * Handles the removal form of a project
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage projects
      */
     @Action( ACTION_REMOVE_PROJECT )
@@ -183,7 +186,8 @@ public class ProjectXPage extends MVCApplication
     /**
      * Returns the form to update info about a project
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The HTML form to update info
      */
     @View( VIEW_MODIFY_PROJECT )
@@ -191,12 +195,12 @@ public class ProjectXPage extends MVCApplication
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_PROJECT ) );
 
-        if ( _project == null  || ( _project.getId( ) != nId ))
+        if ( _project == null || ( _project.getId( ) != nId ) )
         {
             _project = ProjectHome.findByPrimaryKey( nId );
         }
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_PROJECT, _project );
         
         return getXPage( TEMPLATE_MODIFY_PROJECT, getLocale( request ), model );
@@ -205,7 +209,8 @@ public class ProjectXPage extends MVCApplication
     /**
      * Process the change form of a project
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_MODIFY_PROJECT )

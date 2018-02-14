@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2017, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,6 @@
  *
  * License 1.0
  */
- 
 package fr.paris.lutece.plugins.example.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -45,53 +44,71 @@ public interface IProjectDAO
 {
     /**
      * Insert a new record in the table.
-     * @param project instance of the Project object to insert
-     * @param plugin the Plugin
+     * 
+     * @param project
+     *            instance of the Project object to insert
+     * @param plugin
+     *            the Plugin
      */
     void insert( Project project, Plugin plugin );
 
     /**
      * Update the record in the table
-     * @param project the reference of the Project
-     * @param plugin the Plugin
+     * 
+     * @param project
+     *            the reference of the Project
+     * @param plugin
+     *            the Plugin
      */
     void store( Project project, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nKey The identifier of the Project to delete
-     * @param plugin the Plugin
+     * 
+     * @param nKey
+     *            The identifier of the Project to delete
+     * @param plugin
+     *            the Plugin
      */
     void delete( int nKey, Plugin plugin );
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Load the data from the table
-     * @param nKey The identifier of the project
-     * @param plugin the Plugin
+     * 
+     * @param nKey
+     *            The identifier of the project
+     * @param plugin
+     *            the Plugin
      * @return The instance of the project
      */
     Project load( int nKey, Plugin plugin );
 
     /**
      * Load the data of all the project objects and returns them as a list
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the data of all the project objects
      */
     List<Project> selectProjectsList( Plugin plugin );
-    
+
     /**
      * Load the id of all the project objects and returns them as a list
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the id of all the project objects
      */
     List<Integer> selectIdProjectsList( Plugin plugin );
-    
+
     /**
      * Load the data of all the project objects and returns them as a referenceList
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The referenceList which contains the data of all the project objects
      */
     ReferenceList selectProjectsReferenceList( Plugin plugin );

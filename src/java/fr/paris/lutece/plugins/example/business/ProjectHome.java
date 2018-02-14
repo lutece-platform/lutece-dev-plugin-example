@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2017, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- package fr.paris.lutece.plugins.example.business;
+package fr.paris.lutece.plugins.example.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -52,14 +52,16 @@ public final class ProjectHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private ProjectHome(  )
+    private ProjectHome( )
     {
     }
 
     /**
      * Create an instance of the project class
-     * @param project The instance of the Project which contains the informations to store
-     * @return The  instance of project which has been created with its primary key.
+     * 
+     * @param project
+     *            The instance of the Project which contains the informations to store
+     * @return The instance of project which has been created with its primary key.
      */
     public static Project create( Project project )
     {
@@ -70,8 +72,10 @@ public final class ProjectHome
 
     /**
      * Update of the project which is specified in parameter
-     * @param project The instance of the Project which contains the data to store
-     * @return The instance of the  project which has been updated
+     * 
+     * @param project
+     *            The instance of the Project which contains the data to store
+     * @return The instance of the project which has been updated
      */
     public static Project update( Project project )
     {
@@ -82,7 +86,9 @@ public final class ProjectHome
 
     /**
      * Remove the project whose identifier is specified in parameter
-     * @param nKey The project Id
+     * 
+     * @param nKey
+     *            The project Id
      */
     public static void remove( int nKey )
     {
@@ -91,39 +97,43 @@ public final class ProjectHome
 
     /**
      * Returns an instance of a project whose identifier is specified in parameter
-     * @param nKey The project primary key
+     * 
+     * @param nKey
+     *            The project primary key
      * @return an instance of Project
      */
     public static Project findByPrimaryKey( int nKey )
     {
-        return _dao.load( nKey, _plugin);
+        return _dao.load( nKey, _plugin );
     }
 
     /**
      * Load the data of all the project objects and returns them as a list
+     * 
      * @return the list which contains the data of all the project objects
      */
     public static List<Project> getProjectsList( )
     {
         return _dao.selectProjectsList( _plugin );
     }
-    
+
     /**
      * Load the id of all the project objects and returns them as a list
+     * 
      * @return the list which contains the id of all the project objects
      */
     public static List<Integer> getIdProjectsList( )
     {
         return _dao.selectIdProjectsList( _plugin );
     }
-    
+
     /**
      * Load the data of all the project objects and returns them as a referenceList
+     * 
      * @return the referenceList which contains the data of all the project objects
      */
     public static ReferenceList getProjectsReferenceList( )
     {
-        return _dao.selectProjectsReferenceList(_plugin );
+        return _dao.selectProjectsReferenceList( _plugin );
     }
 }
-

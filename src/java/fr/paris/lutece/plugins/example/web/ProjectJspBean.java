@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2017, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -92,20 +92,22 @@ public class ProjectJspBean extends ManageProjectJspBean
     private static final String INFO_PROJECT_CREATED = "example.info.project.created";
     private static final String INFO_PROJECT_UPDATED = "example.info.project.updated";
     private static final String INFO_PROJECT_REMOVED = "example.info.project.removed";
-    
+
     // Session variable to store working values
     private Project _project;
-    
+
     /**
      * Build the Manage View
-     * @param request The HTTP request
+     * 
+     * @param request
+     *            The HTTP request
      * @return The page
      */
     @View( value = VIEW_MANAGE_PROJECTS, defaultView = true )
     public String getManageProjects( HttpServletRequest request )
     {
         _project = null;
-        List<Project> listProjects = ProjectHome.getProjectsList(  );
+        List<Project> listProjects = ProjectHome.getProjectsList( );
         Map<String, Object> model = getPaginatedListModel( request, MARK_PROJECT_LIST, listProjects, JSP_MANAGE_PROJECTS );
 
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_PROJECTS, TEMPLATE_MANAGE_PROJECTS, model );
@@ -114,15 +116,16 @@ public class ProjectJspBean extends ManageProjectJspBean
     /**
      * Returns the form to create a project
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code of the project form
      */
     @View( VIEW_CREATE_PROJECT )
     public String getCreateProject( HttpServletRequest request )
     {
-        _project = ( _project != null ) ? _project : new Project(  );
+        _project = ( _project != null ) ? _project : new Project( );
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_PROJECT, _project );
 
         return getPage( PROPERTY_PAGE_TITLE_CREATE_PROJECT, TEMPLATE_CREATE_PROJECT, model );
@@ -131,7 +134,8 @@ public class ProjectJspBean extends ManageProjectJspBean
     /**
      * Process the data capture form of a new project
      *
-     * @param request The Http Request
+     * @param request
+     *            The Http Request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_CREATE_PROJECT )
@@ -146,16 +150,16 @@ public class ProjectJspBean extends ManageProjectJspBean
         }
 
         ProjectHome.create( _project );
-        addInfo( INFO_PROJECT_CREATED, getLocale(  ) );
+        addInfo( INFO_PROJECT_CREATED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_PROJECTS );
     }
 
     /**
-     * Manages the removal form of a project whose identifier is in the http
-     * request
+     * Manages the removal form of a project whose identifier is in the http request
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      */
     @Action( ACTION_CONFIRM_REMOVE_PROJECT )
@@ -165,7 +169,7 @@ public class ProjectJspBean extends ManageProjectJspBean
         UrlItem url = new UrlItem( getActionUrl( ACTION_REMOVE_PROJECT ) );
         url.addParameter( PARAMETER_ID_PROJECT, nId );
 
-        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_PROJECT, url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_PROJECT, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
 
         return redirect( request, strMessageUrl );
     }
@@ -173,7 +177,8 @@ public class ProjectJspBean extends ManageProjectJspBean
     /**
      * Handles the removal form of a project
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage projects
      */
     @Action( ACTION_REMOVE_PROJECT )
@@ -181,7 +186,7 @@ public class ProjectJspBean extends ManageProjectJspBean
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_PROJECT ) );
         ProjectHome.remove( nId );
-        addInfo( INFO_PROJECT_REMOVED, getLocale(  ) );
+        addInfo( INFO_PROJECT_REMOVED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_PROJECTS );
     }
@@ -189,7 +194,8 @@ public class ProjectJspBean extends ManageProjectJspBean
     /**
      * Returns the form to update info about a project
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The HTML form to update info
      */
     @View( VIEW_MODIFY_PROJECT )
@@ -197,12 +203,12 @@ public class ProjectJspBean extends ManageProjectJspBean
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_PROJECT ) );
 
-        if ( _project == null || ( _project.getId(  ) != nId ))
+        if ( _project == null || ( _project.getId( ) != nId ) )
         {
             _project = ProjectHome.findByPrimaryKey( nId );
         }
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_PROJECT, _project );
 
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_PROJECT, TEMPLATE_MODIFY_PROJECT, model );
@@ -211,7 +217,8 @@ public class ProjectJspBean extends ManageProjectJspBean
     /**
      * Process the change form of a project
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_MODIFY_PROJECT )
@@ -226,7 +233,7 @@ public class ProjectJspBean extends ManageProjectJspBean
         }
 
         ProjectHome.update( _project );
-        addInfo( INFO_PROJECT_UPDATED, getLocale(  ) );
+        addInfo( INFO_PROJECT_UPDATED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_PROJECTS );
     }
