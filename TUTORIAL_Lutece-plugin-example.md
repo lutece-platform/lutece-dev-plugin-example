@@ -477,7 +477,7 @@ Also modify the ** version ** tag of the plugin-example with the current version
 
 Build again your project "plugin-example", with the 'install' option.
 
- `$mvn clean lutece:exploded install`
+ `$mvn clean install`
 
 > The INSTALL option is necessary for Maven to register your project in its local repository (and use this local version instead of other versions in public repositories).
 > The CLEAN option assures you to build from scratch you project. It can be omited to speed up the build but this could be a source of trouble.

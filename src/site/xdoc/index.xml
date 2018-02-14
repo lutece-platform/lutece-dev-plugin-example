@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>Plugin example</title>
+    </properties>
+    <head>
+	<meta name="keywords" content="dev, example, tutorial" />
+    </head>
+    <body>
+	<section name="Plugin example">
+            <!--
+            <p>
+                <img src="images/example.png" />
+            </p>
+            -->
+            <subsection name="Introduction">
+                <p>This is an example Lutèce plugin.</p>
+		<p>This application was generated with the Lutèce pluginWizard, and upgraded to demonstrate the jointly implementation of others plugin.</p>
+		<p>A step-by-step tutorial is available : consult the "Lutece_example_tutorial.md" file.</p>
+            </subsection>
+            <subsection name="Configuration">
+                <ul>
+			<li>JDK1.8</li>
+			<li>Maven 3.x</li>
+			<li>Ant</li>
+			<li>MySQL 5.x</li>
+			<li>Tomcat 8.x</li>
+			<li>Git and svn</li>
+			<li>NetBeans or Eclipse</li>
+		</ul>
+            </subsection>
+            <subsection name="Usage">
+                <p></p>
+            </subsection>
+        </section>
+    </body>
+</document>
+

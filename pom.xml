@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <artifactId>lutece-global-pom</artifactId>
+        <groupId>fr.paris.lutece.tools</groupId>
+        <version>6.1.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fr.paris.lutece.plugins</groupId>
+    <artifactId>plugin-example</artifactId>
+    <packaging>lutece-plugin</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>Lutece example plugin</name>
+
+    <repositories>
+        <repository>
+            <id>lutece</id>
+            <name>luteceRepository</name>
+            <url>https://dev.lutece.paris.fr/maven_repository</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>fr.paris.lutece</groupId>
+            <artifactId>lutece-core</artifactId>
+            <version>[7.0.0,)</version>
+            <type>lutece-core</type>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <componentName>example</componentName>
+        <jiraProjectName>EXAMPLE</jiraProjectName>
+        <jiraComponentId></jiraComponentId>
+    </properties>
+
+    <scm>
+        <connection>scm:git:https://github.com/lutece-platform/lutece-dev-plugin-example.git</connection>
+        <developerConnection>scm:git:https://github.com/lutece-platform/lutece-dev-plugin-example.git</developerConnection>
+        <url>https://github.com/lutece-platform/lutece-dev-plugin-example.git</url>
+    </scm>
+
+</project>

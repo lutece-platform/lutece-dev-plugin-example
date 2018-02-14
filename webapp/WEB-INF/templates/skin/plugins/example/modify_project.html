@@ -1,0 +1,50 @@
+<#include "project_tabs.html" />
+<@tabs tab="project" />
+
+<div class="row" >
+    <div class="col-sm-12">
+
+    <form class="form-horizontal" role="form" method="post" action="jsp/site/Portal.jsp?page=project">
+        <fieldset>
+            <legend>#i18n{example.modify_project.title{i18n_close}</legend>
+
+            <@messages errors=errors />
+            <input type="hidden" id="id" name="id" value="${project.id}"/>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="name" >#i18n{example.modify_project.labelName} * :</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="name" name="name"  maxlength="50" value="${project.name}" tabindex="0" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="description" >#i18n{example.modify_project.labelDescription} * :</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="description" name="description"  maxlength="255" value="${project.description}" tabindex="1" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="image_url" >#i18n{example.modify_project.labelImageUrl} * :</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="image_url" name="image_url"  maxlength="255" value="${project.imageUrl}" tabindex="2" />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button name="action_modifyProject" class="btn btn-primary" type="submit" tabindex="3" >
+                        #i18n{portal.util.labelModify}
+                    </button>
+                    <button name="view_manageProjects" class="btn" type="submit" >
+                        #i18n{portal.util.labelCancel}
+                    </button>	
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+    </div>  
+
+</div>
+
+  

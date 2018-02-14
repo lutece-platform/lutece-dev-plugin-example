@@ -467,7 +467,7 @@ Modifiez également la balise **version** du plugin-example avec le numéro de v
 
 Compilez à nouveau votre projet "plugin-example".
 
- `$mvn clean lutece:exploded install -DskipTests -Dmaven.test.skip=true`
+ `$mvn clean install  -Dmaven.test.skip=true`
 
 > L'option INSTALL est nécessaire pour que Maven prenne en compte votre projet dans son repository local et non le projet publié sur github. Les tests sont ignorés car la base de données n'est pas encore initialisée.
 
