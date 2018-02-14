@@ -1,0 +1,56 @@
+<#include "project_tabs.html" />
+<@tabs tab="project" />
+
+<div class="row" >
+    <div class="col-sm-12">
+
+        <@messages infos=infos />
+
+        <form method="post"  action="jsp/site/Portal.jsp?page=project">
+            <button name="view_createProject" class="btn btn-primary pull-right" type="submit">
+                <span class="fa fa-plus"></span>
+                #i18n{example.manage_projects.buttonAdd}
+            </button>
+        </form>
+
+    <h4>#i18n{example.manage_projects.title{i18n_close}</h4>
+        
+    <table class="table table-condensed table-striped">
+        <tr>
+            <input type="hidden" id="id" name="id"/>
+            <th>#i18n{example.manage_projects.columnName}</th>
+            <th>#i18n{example.manage_projects.columnDescription}</th>
+            <th>#i18n{example.manage_projects.columnImageUrl}</th>
+            <th>#i18n{portal.util.labelActions}</th>
+        </tr>
+            <#list project_list as project >
+        <tr>
+            <input type="hidden" id="id" name="id" />
+            <td>
+                ${project.name}
+            </td>    
+            <td>
+                ${project.description}
+            </td>    
+            <td>
+                ${project.imageUrl}
+            </td>    
+        <td>
+            <a href="jsp/site/Portal.jsp?page=project&view=modifyProject&id=${project.id}"
+               class="btn btn-primary btn-sm" title="#i18n{portal.util.labelModify}">
+                <span class="fa fa-pencil-square-o"></span>
+            </a>
+
+            <a href="jsp/site/Portal.jsp?page=project&action=confirmRemoveProject&id=${project.id}"
+               class="btn btn-danger btn-sm" title="#i18n{portal.util.labelDelete}" >
+                <span class="fa fa-trash-o"></span>
+            </a>
+        </td>
+        </tr>
+        </#list>
+    </table>
+    
+    </div>
+</div>
+
+  

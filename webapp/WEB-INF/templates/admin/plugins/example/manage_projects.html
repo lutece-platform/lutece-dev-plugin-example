@@ -1,0 +1,44 @@
+<#include "manageproject_tabs.html" />
+<@tabs tab="project" />
+
+<@box>
+    <@boxHeader i18nTitleKey="example.manage_projects.title">        
+        <@tform class="form-inline pull-right" method="post" name="manage_projects" action="jsp/admin/plugins/example/ManageProjects.jsp">
+            <@actionButtons button1Name="view_createProject" icon1="icon-plus icon-white" i18nValue1Key="example.manage_projects.buttonAdd" />
+        </@tform>
+    </@boxHeader>
+    <@boxBody>    
+    <@messages infos=infos />
+    <@paginationAdmin paginator=paginator combo=1 />
+
+    <@table>
+        <tr>
+            <th>#i18n{example.manage_projects.columnName}</th>
+            <th>#i18n{example.manage_projects.columnDescription}</th>
+            <th>#i18n{example.manage_projects.columnImageUrl}</th>
+            <th>#i18n{portal.util.labelActions}</th>
+        </tr>
+<#list project_list as project >
+        <tr>
+        <td>
+            ${project.name}
+        </td>
+        <td>
+            ${project.description}
+        </td>
+        <td>
+            ${project.imageUrl}
+        </td>
+        <td>
+            <@aButton href='jsp/admin/plugins/example/ManageProjects.jsp?view=modifyProject&id=${project.id}' buttonIcon='edit' title='#i18n{portal.util.labelModify}' hideTitle=['all'] />
+            <@aButton href='jsp/admin/plugins/example/ManageProjects.jsp?view=confirmRemoveProject&id=${project.id}' buttonIcon='trash' title='#i18n{portal.util.labelDelete}' hideTitle=['all'] />
+        </td>
+        </tr>
+</#list>
+    </@table>
+
+    <@paginationAdmin paginator=paginator />
+
+  </@boxBody>
+</@box>
+
