@@ -1,4 +1,4 @@
-![](http://dev.lutece.paris.fr/jenkins/buildStatus/icon?job=plugin-example-deploy)
+![](https://dev.lutece.paris.fr/jenkins/buildStatus/icon?job=plugin-example-deploy)
 # Plugin example
 
 ## Introduction
@@ -11,26 +11,21 @@ A step-by-step tutorial is available : consult the "Lutece_example_tutorial.md" 
 
 ## Configuration
 
-JDK1.8
-
-Maven 3.x
-
-Ant
-
-MySQL 5.x
-
-Tomcat 8.x
-
-Git and svn
-
-NetBeans or Eclipse
+ 
+* JDK1.8
+* Maven 3.x
+* Ant
+* MySQL 5.x
+* Tomcat 8.x
+* Git and svn
+* NetBeans or Eclipse
 
 ## Usage
 
 
 
 
-[Maven documentation and reports](http://dev.lutece.paris.fr/plugins/plugin-example/)
+[Maven documentation and reports](https://dev.lutece.paris.fr/plugins/plugin-example/)
 
 
 

@@ -1,0 +1,11 @@
+<#macro tabs tab >
+<div>
+    <ul class="nav nav-tabs">
+        <li <#if tab="project">class="active"</#if>>
+            <a href="jsp/site/Portal.jsp?page=project">
+                #i18n{example.manage_projects.pageTitle}
+            </a>
+        </li>
+    </ul>
+</div>
+</#macro>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>Plugin example</title>
+    </properties>
+    <head>
+	<meta name="keywords" content="dev, exemple, tutoriel" />
+    </head>
+    <body>
+        <section name="Plugin example">
+            <!--
+            <p>
+                <img src="images/example.png" />
+            </p>
+            -->
+            <subsection name="Introduction">
+                <p>Cette application est un exemple de plugin Lutèce.</p>
+		<p>Ce plugin a été généré avec le générateur de plugin "pluginWizard" de Lutèce, et complété par des mises à jour pour ajouter des fonctionnalités, et des intégrations d'autres plugins lutèce.</p>
+		<p>Un tutoriel présente les différentes étapes de réalisation de ce plugin : 
+consultez le fichier "Lutece_example_tutorial_fr.md".</p>
+            </subsection>
+            <subsection name="Configuration">
+		<p>Configuration recommandée : </p>
+                <ul>
+			<li>JDK1.8</li>
+			<li>Maven 3.x</li>
+			<li>Ant</li>
+			<li>MySQL 5.x</li>
+			<li>Tomcat 8.x</li>
+			<li>(Git et svn)</li>
+			<li>NetBeans ou Eclipse</li>
+		</ul>
+            </subsection>
+            <subsection name="Usage">
+                <p></p>
+            </subsection>
+        </section>
+    </body>
+</document>
+

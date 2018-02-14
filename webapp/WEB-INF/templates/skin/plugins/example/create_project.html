@@ -1,0 +1,49 @@
+<#include "project_tabs.html" />
+<@tabs tab="project" />
+
+<div class="row" >
+    <div class="col-sm-12">
+
+    <form class="form-horizontal" role="form" method="post" action="jsp/site/Portal.jsp?page=project">
+        <fieldset>
+            <legend>#i18n{example.create_project.title{i18n_close}</legend>
+
+            <@messages errors=errors />
+            <input type="hidden" id="id" name="id"/>  
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="name" >#i18n{example.create_project.labelName} * :</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="name" name="name" value="${project.name!''}"  maxlength="50" tabindex="0" />
+                    <span class="help-block">#i18n{example.create_project.labelName.help}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="description" >#i18n{example.create_project.labelDescription} * :</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="description" name="description" value="${project.description!''}"  maxlength="255" tabindex="1" />
+                    <span class="help-block">#i18n{example.create_project.labelDescription.help}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="image_url" >#i18n{example.create_project.labelImageUrl} * :</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="image_url" name="image_url" value="${project.imageUrl!''}"  maxlength="255" tabindex="2" />
+                    <span class="help-block">#i18n{example.create_project.labelImageUrl.help}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button name="action_createProject" class="btn btn-primary" type="submit" tabindex="3">
+                        #i18n{portal.util.labelCreate}
+                    </button>
+                    <button name="view_manageProjects" class="btn" type="submit" >
+                        #i18n{portal.util.labelCancel}
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    </div>
+</div>
+
+  
