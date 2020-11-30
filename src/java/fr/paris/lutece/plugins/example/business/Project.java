@@ -34,7 +34,9 @@
 package fr.paris.lutece.plugins.example.business;
 
 import javax.validation.constraints.*;
-import org.hibernate.validator.constraints.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 /**
@@ -54,11 +56,11 @@ public class Project implements Serializable
     @NotEmpty( message = "#i18n{example.validation.project.Description.notEmpty}" )
     @Size( max = 255, message = "#i18n{example.validation.project.Description.size}" )
     private String _strDescription;
-    @URL( message = "#i18n{portal.validation.message.url}" )
+    //@URL( message = "#i18n{portal.validation.message.url}" )
     @NotEmpty( message = "#i18n{example.validation.project.ImageUrl.notEmpty}" )
     @Size( max = 255, message = "#i18n{example.validation.project.ImageUrl.size}" )
     private String _strImageUrl;
-    
+
     @Min ( value = 5 , message = "#i18n{example.validation.project.cost.range}" )
     @Max ( value = 25 , message = "#i18n{example.validation.project.cost.range}" )
     private int _nCost;
@@ -67,7 +69,7 @@ public class Project implements Serializable
 
     /**
      * Returns the Id
-     * 
+     *
      * @return The Id
      */
     public int getId( )
@@ -77,7 +79,7 @@ public class Project implements Serializable
 
     /**
      * Sets the Id
-     * 
+     *
      * @param nId
      *            The Id
      */
@@ -88,7 +90,7 @@ public class Project implements Serializable
 
     /**
      * Returns the Name
-     * 
+     *
      * @return The Name
      */
     public String getName( )
@@ -98,7 +100,7 @@ public class Project implements Serializable
 
     /**
      * Sets the Name
-     * 
+     *
      * @param strName
      *            The Name
      */
@@ -109,7 +111,7 @@ public class Project implements Serializable
 
     /**
      * Returns the Description
-     * 
+     *
      * @return The Description
      */
     public String getDescription( )
@@ -119,7 +121,7 @@ public class Project implements Serializable
 
     /**
      * Sets the Description
-     * 
+     *
      * @param strDescription
      *            The Description
      */
@@ -130,7 +132,7 @@ public class Project implements Serializable
 
     /**
      * Returns the ImageUrl
-     * 
+     *
      * @return The ImageUrl
      */
     public String getImageUrl( )
@@ -140,7 +142,7 @@ public class Project implements Serializable
 
     /**
      * Sets the ImageUrl
-     * 
+     *
      * @param strImageUrl
      *            The ImageUrl
      */
@@ -148,11 +150,11 @@ public class Project implements Serializable
     {
         _strImageUrl = strImageUrl;
     }
-    
+
     /**
      * Sets the cost
      * @param nCost The cost
-     */ 
+     */
     public void setCost(int nCost) {
         this._nCost = nCost;
     }
@@ -161,21 +163,22 @@ public class Project implements Serializable
      * Returns the cost
      * @return The cost
      */
-    public int getCost( ) 
+    public int getCost( )
     {
         return _nCost;
     }
-    
-    
+
+
     /**
-     * Cost control : 
-     * 
+     * Cost control :
+     *
      * @return true if cost is a mutiple of 5, false otherwise
      */
-    public boolean isCostValid( ) 
+    @JsonIgnore
+    public boolean isCostValid( )
     {
         return ( _nCost % 5 == 0  );
     }
-    
-    
+
+
 }
