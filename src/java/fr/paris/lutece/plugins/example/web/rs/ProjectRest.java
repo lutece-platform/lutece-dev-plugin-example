@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2023, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -63,10 +63,10 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 @Path( RestConstants.BASE_PATH + "example" )
 public class ProjectRest
 {
-	private ObjectMapper _mapper = new ObjectMapper();
-	static final Logger LOGGER = Logger.getLogger( RestConstants.REST_LOGGER );
+    private ObjectMapper _mapper = new ObjectMapper( );
+    static final Logger LOGGER = Logger.getLogger( RestConstants.REST_LOGGER );
 
-   /**
+    /**
      * get project list
      *
      * @return the json file of the project list
@@ -94,7 +94,7 @@ public class ProjectRest
     @Produces( MediaType.APPLICATION_JSON )
     public String getProjectById( @PathParam( "id" ) int nId ) throws SiteMessageException
     {
-    	try
+        try
         {
             Project project = ProjectHome.findByPrimaryKey( nId );
             return _mapper.writeValueAsString( project );
@@ -110,52 +110,57 @@ public class ProjectRest
      * 
      * @param nId
      * @return the json file of the project stats
-     * @throws SiteMessageException 
+     * @throws SiteMessageException
      */
     @GET
-    @Path("/projects_stats/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getProjectStatsById(@PathParam("id") int nId) throws SiteMessageException {
+    @Path( "/projects_stats/{id}" )
+    @Produces( MediaType.APPLICATION_JSON )
+    public String getProjectStatsById( @PathParam( "id" ) int nId ) throws SiteMessageException
+    {
 
+        ObjectMapper mapper = new ObjectMapper( );
+        try
+        {
 
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-                    
-            return mapper.writeValueAsString( getExtendedProject( ProjectHome.findByPrimaryKey(nId) ) );
-            
-        } catch (NumberFormatException e) {
-            return JSONUtil.formatError("Invalid project number", 3);
-        } catch (Exception e) {
-            return JSONUtil.formatError("project not found", 1);
+            return mapper.writeValueAsString( getExtendedProject( ProjectHome.findByPrimaryKey( nId ) ) );
+
+        }
+        catch( NumberFormatException e )
+        {
+            return JSONUtil.formatError( "Invalid project number", 3 );
+        }
+        catch( Exception e )
+        {
+            return JSONUtil.formatError( "project not found", 1 );
         }
     }
 
     /**
-     * get project stats 
+     * get project stats
      * 
      * @param project
      * @return the extended project
      */
-    private ExtendedProject getExtendedProject(Project project) {
-        
-        // get the HitService in the spring context
-        HitService hs = SpringContextService.getBean(HitService.BEAN_SERVICE);
+    private ExtendedProject getExtendedProject( Project project )
+    {
 
-        String strIdExtendableResource = String.valueOf(project.getId()); // extend resource ID
+        // get the HitService in the spring context
+        HitService hs = SpringContextService.getBean( HitService.BEAN_SERVICE );
+
+        String strIdExtendableResource = String.valueOf( project.getId( ) ); // extend resource ID
         String strExtendableResourceType = Project.PROPERTY_RESOURCE_TYPE; // extend resource type
 
         // search nb of hits
-        Hit hit = hs.findByParameters(strIdExtendableResource, strExtendableResourceType);
-        if (hit == null) {
-            hit = new Hit();
+        Hit hit = hs.findByParameters( strIdExtendableResource, strExtendableResourceType );
+        if ( hit == null )
+        {
+            hit = new Hit( );
         }
-        
-        ExtendedProject extProject = (ExtendedProject)project;
-        extProject.setHit(hit);
-        
+
+        ExtendedProject extProject = (ExtendedProject) project;
+        extProject.setHit( hit );
+
         return extProject;
     }
-
- 
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2023, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;
 
-
 public class ProjectExtendableResourceService implements IExtendableResourceService
 {
     private String MESSAGE_KEY_PROJECT_RESOURCE_TYPE_DESCRIPTION = "example.extend.resource.typeDescription";
@@ -77,7 +76,7 @@ public class ProjectExtendableResourceService implements IExtendableResourceServ
      * {@inheritDoc}
      */
     @Override
-    public String getResourceType(  )
+    public String getResourceType( )
     {
         return Project.PROPERTY_RESOURCE_TYPE;
     }
@@ -87,23 +86,23 @@ public class ProjectExtendableResourceService implements IExtendableResourceServ
      */
     @Override
     public String getResourceTypeDescription( Locale locale )
-            
+
     {
         String s = I18nService.getLocalizedString( MESSAGE_KEY_PROJECT_RESOURCE_TYPE_DESCRIPTION, locale );
         return s;
     }
 
-        /**
-        * {@inheritDoc}
-        */
-        @Override
-        public String getResourceUrl( String strIdResource, String strResourceType )
-        {
-            String strUrl="";
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getResourceUrl( String strIdResource, String strResourceType )
+    {
+        String strUrl = "";
 
-            // get the URL
-            // ...
+        // get the URL
+        // ...
 
-            return strUrl;
-        }
+        return strUrl;
+    }
 }

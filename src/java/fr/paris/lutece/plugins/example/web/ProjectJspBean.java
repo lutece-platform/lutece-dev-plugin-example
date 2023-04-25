@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2023, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -149,14 +149,14 @@ public class ProjectJspBean extends ManageProjectJspBean
         {
             return redirectView( request, VIEW_CREATE_PROJECT );
         }
-        
+
         // Specific constraint : cost must be a multiple of 5
-        if ( !_project.isCostValid() ) {
+        if ( !_project.isCostValid( ) )
+        {
             addError( _project.MESSAGE_INVALID_COST );
-            
-            return  redirectView( request, VIEW_CREATE_PROJECT );
+
+            return redirectView( request, VIEW_CREATE_PROJECT );
         }
-        
 
         ProjectHome.create( _project );
         addInfo( INFO_PROJECT_CREATED, getLocale( ) );
@@ -217,19 +217,20 @@ public class ProjectJspBean extends ManageProjectJspBean
             _project = ProjectHome.findByPrimaryKey( nId );
         }
 
-        // Specific constraint 
-        if ( !_project.isCostValid() ) {
+        // Specific constraint
+        if ( !_project.isCostValid( ) )
+        {
             addError( _project.MESSAGE_INVALID_COST );
-            
-            return  redirectView( request, VIEW_CREATE_PROJECT );
+
+            return redirectView( request, VIEW_CREATE_PROJECT );
         }
-        
-        Map<String, Object> model = getModel(  );
+
+        Map<String, Object> model = getModel( );
         model.put( MARK_PROJECT, _project );
 
         // ajout de la gestion du plugin extend
-        ExtendableResourcePluginActionManager.fillModel( request, getUser( ), model, String.valueOf(nId), Project.PROPERTY_RESOURCE_TYPE );
-        
+        ExtendableResourcePluginActionManager.fillModel( request, getUser( ), model, String.valueOf( nId ), Project.PROPERTY_RESOURCE_TYPE );
+
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_PROJECT, TEMPLATE_MODIFY_PROJECT, model );
     }
 
@@ -252,10 +253,11 @@ public class ProjectJspBean extends ManageProjectJspBean
         }
 
         // Specific constraint : cost must be a multiple of 5
-        if ( !_project.isCostValid() ) {
+        if ( !_project.isCostValid( ) )
+        {
             addError( _project.MESSAGE_INVALID_COST );
-            
-            return  redirectView( request, VIEW_CREATE_PROJECT );
+
+            return redirectView( request, VIEW_CREATE_PROJECT );
         }
 
         ProjectHome.update( _project );

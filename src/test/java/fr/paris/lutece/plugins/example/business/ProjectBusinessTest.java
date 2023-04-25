@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2023, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,10 +57,10 @@ public class ProjectBusinessTest extends LuteceTestCase
         // Create test
         ProjectHome.create( project );
         Project projectStored = ProjectHome.findByPrimaryKey( project.getId( ) );
-        assertEquals( projectStored.getName() , project.getName( ) );
-        assertEquals( projectStored.getDescription() , project.getDescription( ) );
-        assertEquals( projectStored.getImageUrl() , project.getImageUrl( ) );
-        assertEquals( projectStored.getCost() , project.getCost( ) );
+        assertEquals( projectStored.getName( ), project.getName( ) );
+        assertEquals( projectStored.getDescription( ), project.getDescription( ) );
+        assertEquals( projectStored.getImageUrl( ), project.getImageUrl( ) );
+        assertEquals( projectStored.getCost( ), project.getCost( ) );
 
         // Update test
         project.setName( NAME2 );
@@ -69,10 +69,10 @@ public class ProjectBusinessTest extends LuteceTestCase
         project.setCost( COST2 );
         ProjectHome.update( project );
         projectStored = ProjectHome.findByPrimaryKey( project.getId( ) );
-        assertEquals( projectStored.getName() , project.getName( ) );
-        assertEquals( projectStored.getDescription() , project.getDescription( ) );
-        assertEquals( projectStored.getImageUrl() , project.getImageUrl( ) );
-        assertEquals( projectStored.getCost() , project.getCost( ) );
+        assertEquals( projectStored.getName( ), project.getName( ) );
+        assertEquals( projectStored.getDescription( ), project.getDescription( ) );
+        assertEquals( projectStored.getImageUrl( ), project.getImageUrl( ) );
+        assertEquals( projectStored.getCost( ), project.getCost( ) );
 
         // List test
         ProjectHome.getProjectsList( );

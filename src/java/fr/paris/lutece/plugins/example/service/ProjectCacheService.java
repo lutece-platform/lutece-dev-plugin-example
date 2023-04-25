@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2023, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,16 +42,18 @@ import fr.paris.lutece.portal.service.security.LuteceUser;
  *
  * @author leridons
  */
-public class ProjectCacheService extends AbstractCacheableService {
+public class ProjectCacheService extends AbstractCacheableService
+{
 
     private static final String SERVICE_NAME = "Project Cache Service";
-    private static ProjectCacheService _instance = new ProjectCacheService();
+    private static ProjectCacheService _instance = new ProjectCacheService( );
 
     /**
      * init
      */
-    public ProjectCacheService() {
-        initCache();
+    public ProjectCacheService( )
+    {
+        initCache( );
     }
 
     /**
@@ -59,7 +61,8 @@ public class ProjectCacheService extends AbstractCacheableService {
      * 
      * @return the instance
      */
-    public static ProjectCacheService getInstance() {
+    public static ProjectCacheService getInstance( )
+    {
 
         return _instance;
     }
@@ -69,7 +72,8 @@ public class ProjectCacheService extends AbstractCacheableService {
      * 
      * @return the service name
      */
-    public String getName() {
+    public String getName( )
+    {
         return SERVICE_NAME;
     }
 
@@ -80,15 +84,17 @@ public class ProjectCacheService extends AbstractCacheableService {
      * @param user
      * @return the project
      */
-    public Project getResource(String strId, LuteceUser user) {
+    public Project getResource( String strId, LuteceUser user )
+    {
 
-        String cacheKey = getCacheKey(strId, user);
+        String cacheKey = getCacheKey( strId, user );
 
-        Project r = (Project) getFromCache(cacheKey);
-        if (r == null) {
-            r = ProjectHome.findByPrimaryKey(Integer.parseInt(strId));
+        Project r = (Project) getFromCache( cacheKey );
+        if ( r == null )
+        {
+            r = ProjectHome.findByPrimaryKey( Integer.parseInt( strId ) );
 
-            putInCache(cacheKey, r);
+            putInCache( cacheKey, r );
         }
         return r;
     }
@@ -100,18 +106,22 @@ public class ProjectCacheService extends AbstractCacheableService {
      * @param user
      * @return the key
      */
-    private static String getCacheKey(String strId, LuteceUser user) {
-        StringBuilder sbKey = new StringBuilder();
-        sbKey.append("[project:").append(strId).append("][user:");
+    private static String getCacheKey( String strId, LuteceUser user )
+    {
+        StringBuilder sbKey = new StringBuilder( );
+        sbKey.append( "[project:" ).append( strId ).append( "][user:" );
 
-        if (user != null) {
-            sbKey.append(user.getName());
-        } else {
-            sbKey.append("public");
+        if ( user != null )
+        {
+            sbKey.append( user.getName( ) );
         }
-        sbKey.append("]");
+        else
+        {
+            sbKey.append( "public" );
+        }
+        sbKey.append( "]" );
 
-        return sbKey.toString();
+        return sbKey.toString( );
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2023, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,8 +45,8 @@ import java.util.Locale;
 /**
  * This is the business class for the object Project
  */
-public class Project implements Localizable, IExtendableResource {
-
+public class Project implements Localizable, IExtendableResource
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -63,13 +63,13 @@ public class Project implements Localizable, IExtendableResource {
     @NotEmpty( message = "#i18n{example.validation.project.Description.notEmpty}" )
     @Size( max = 255, message = "#i18n{example.validation.project.Description.size}" )
     private String _strDescription;
-    //@URL( message = "#i18n{portal.validation.message.url}" )
+    // @URL( message = "#i18n{portal.validation.message.url}" )
     @NotEmpty( message = "#i18n{example.validation.project.ImageUrl.notEmpty}" )
     @Size( max = 255, message = "#i18n{example.validation.project.ImageUrl.size}" )
     private String _strImageUrl;
 
-    @Min ( value = 5 , message = "#i18n{example.validation.project.cost.range}" )
-    @Max ( value = 25 , message = "#i18n{example.validation.project.cost.range}" )
+    @Min( value = 5, message = "#i18n{example.validation.project.cost.range}" )
+    @Max( value = 25, message = "#i18n{example.validation.project.cost.range}" )
     private int _nCost;
 
     public static final String MESSAGE_INVALID_COST = "#i18n{example.validation.project.cost.range}";
@@ -160,21 +160,24 @@ public class Project implements Localizable, IExtendableResource {
 
     /**
      * Sets the cost
-     * @param nCost The cost
+     * 
+     * @param nCost
+     *            The cost
      */
-    public void setCost(int nCost) {
+    public void setCost( int nCost )
+    {
         this._nCost = nCost;
     }
 
     /**
      * Returns the cost
+     * 
      * @return The cost
      */
     public int getCost( )
     {
         return _nCost;
     }
-
 
     /**
      * Cost control :
@@ -184,12 +187,12 @@ public class Project implements Localizable, IExtendableResource {
     @JsonIgnore
     public boolean isCostValid( )
     {
-        return ( _nCost % 5 == 0  );
+        return ( _nCost % 5 == 0 );
     }
 
-
     @Override
-    public void setLocale(Locale locale) {
+    public void setLocale( Locale locale )
+    {
         this._locale = locale;
     }
 
@@ -198,8 +201,9 @@ public class Project implements Localizable, IExtendableResource {
      */
     @Override
     @JsonIgnore
-    public String getIdExtendableResource() {
-        return Integer.toString(_nId);
+    public String getIdExtendableResource( )
+    {
+        return Integer.toString( _nId );
     }
 
     /**
@@ -207,7 +211,8 @@ public class Project implements Localizable, IExtendableResource {
      */
     @Override
     @JsonIgnore
-    public String getExtendableResourceType() {
+    public String getExtendableResourceType( )
+    {
         return PROPERTY_RESOURCE_TYPE;
     }
 
@@ -216,19 +221,22 @@ public class Project implements Localizable, IExtendableResource {
      */
     @Override
     @JsonIgnore
-    public String getExtendableResourceName() {
+    public String getExtendableResourceName( )
+    {
         return _strName;
     }
 
     @Override
     @JsonIgnore
-    public String getExtendableResourceDescription() {
+    public String getExtendableResourceDescription( )
+    {
         return _strDescription;
     }
 
     @Override
     @JsonIgnore
-    public String getExtendableResourceImageUrl() {
+    public String getExtendableResourceImageUrl( )
+    {
         return _strImageUrl;
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2023, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,11 +57,11 @@ import javax.servlet.http.HttpServletRequest;
 public class ProjectXPage extends MVCApplication
 {
     // Templates
-    private static final String TEMPLATE_MANAGE_PROJECTS="/skin/plugins/example/manage_projects.html";
-    private static final String TEMPLATE_CREATE_PROJECT="/skin/plugins/example/create_project.html";
-    private static final String TEMPLATE_MODIFY_PROJECT="/skin/plugins/example/modify_project.html";
-    private static final String TEMPLATE_DETAIL_PROJECT="/skin/plugins/example/detail_project.html";
-    
+    private static final String TEMPLATE_MANAGE_PROJECTS = "/skin/plugins/example/manage_projects.html";
+    private static final String TEMPLATE_CREATE_PROJECT = "/skin/plugins/example/create_project.html";
+    private static final String TEMPLATE_MODIFY_PROJECT = "/skin/plugins/example/modify_project.html";
+    private static final String TEMPLATE_DETAIL_PROJECT = "/skin/plugins/example/detail_project.html";
+
     // JSP
     private static final String JSP_PAGE_PORTAL = "jsp/site/Portal.jsp";
 
@@ -121,7 +121,7 @@ public class ProjectXPage extends MVCApplication
 
         Map<String, Object> model = getModel( );
         model.put( MARK_PROJECT, _project );
-           
+
         return getXPage( TEMPLATE_CREATE_PROJECT, getLocale( request ), model );
     }
 
@@ -206,7 +206,7 @@ public class ProjectXPage extends MVCApplication
 
         Map<String, Object> model = getModel( );
         model.put( MARK_PROJECT, _project );
-        
+
         return getXPage( TEMPLATE_MODIFY_PROJECT, getLocale( request ), model );
     }
 
@@ -237,7 +237,8 @@ public class ProjectXPage extends MVCApplication
     /**
      * Returns the form to create a project
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code of the project form
      */
     @View( VIEW_DETAIL_PROJECT )
@@ -245,12 +246,12 @@ public class ProjectXPage extends MVCApplication
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_PROJECT ) );
 
-        if ( _project == null  || ( _project.getId( ) != nId ))
+        if ( _project == null || ( _project.getId( ) != nId ) )
         {
-            _project =  ProjectCacheService.getInstance().getResource(String.valueOf(nId), null);
+            _project = ProjectCacheService.getInstance( ).getResource( String.valueOf( nId ), null );
         }
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_PROJECT, _project );
 
         return getXPage( TEMPLATE_DETAIL_PROJECT, getLocale( request ), model );

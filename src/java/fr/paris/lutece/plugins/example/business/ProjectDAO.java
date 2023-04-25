@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2023, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -85,12 +85,12 @@ public final class ProjectDAO implements IProjectDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
         project.setId( newPrimaryKey( plugin ) );
         int nIndex = 1;
-        
-        daoUtil.setInt( nIndex++ , project.getId( ) );
-        daoUtil.setString( nIndex++ , project.getName( ) );
-        daoUtil.setString( nIndex++ , project.getDescription( ) );
-        daoUtil.setString( nIndex++ , project.getImageUrl( ) );
-        daoUtil.setInt(nIndex++ , project.getCost( ) );
+
+        daoUtil.setInt( nIndex++, project.getId( ) );
+        daoUtil.setString( nIndex++, project.getName( ) );
+        daoUtil.setString( nIndex++, project.getDescription( ) );
+        daoUtil.setString( nIndex++, project.getImageUrl( ) );
+        daoUtil.setInt( nIndex++, project.getCost( ) );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
@@ -143,13 +143,13 @@ public final class ProjectDAO implements IProjectDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
         int nIndex = 1;
-        
-        daoUtil.setInt( nIndex++ , project.getId( ) );
-        daoUtil.setString( nIndex++ , project.getName( ) );
-        daoUtil.setString( nIndex++ , project.getDescription( ) );
-        daoUtil.setString( nIndex++ , project.getImageUrl( ) );
-        daoUtil.setInt( nIndex++ , project.getCost( ) );
-        daoUtil.setInt( nIndex , project.getId( ) );
+
+        daoUtil.setInt( nIndex++, project.getId( ) );
+        daoUtil.setString( nIndex++, project.getName( ) );
+        daoUtil.setString( nIndex++, project.getDescription( ) );
+        daoUtil.setString( nIndex++, project.getImageUrl( ) );
+        daoUtil.setInt( nIndex++, project.getCost( ) );
+        daoUtil.setInt( nIndex, project.getId( ) );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
