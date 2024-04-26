@@ -7,5 +7,10 @@
     <bean id="example.projectDAO" class="fr.paris.lutece.plugins.example.business.ProjectDAO" />
     <bean id="example.ProjectRest" class="fr.paris.lutece.plugins.example.web.rs.ProjectRest" />
     <bean id="example.ProjectExtendableResourceService" class="fr.paris.lutece.plugins.example.service.ProjectExtendableResourceService" />
+    
+    <bean id="example.projectWFBean.wfbeanservice" class="fr.paris.lutece.plugins.workflowbean.WorkflowBeanService">
+        <constructor-arg index="0" value="EXAMPLE_PROJECT_RESOURCE" />
+        <constructor-arg index="1" type="int"><value>1</value></constructor-arg>  <!-- : the worlkflow ID (key) -->
+    </bean>
 
 </beans>
