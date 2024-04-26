@@ -25,7 +25,27 @@
     <div class="form-group text-center">
         ${extendableResourceActionsHtml!} 
     </div>
+    
+    <!-- workflow -->
+    <div class="form-group text-center">
 
+        statut : <#if projectWFBean.state??><@tag  color='warning'>${projectWFBean.state.name}</@tag><#else> not set</#if>   
+        
+        <!-- actions -->
+        <#if projectWFBean.actions??>actions :
+        <#list projectWFBean.actions as action >
+            <@aButton href="jsp/admin/plugins/example/ManageProjects.jsp?action=processAction&id_action=${action.id}&id=${projectWFBean.resource.id}"
+                        title="${action.name}" alt="${action.name}"  size='md' />
+            <!--  img src="image?resource_type=workflow_icon_img&id=${action.icon.id}" -->
+             </a>
+        </#list>
+        <#else>no action
+        </#if>
+        
+        <!-- affichage historique ressource -->
+        History : ${projectWFBean.history! }
+     </div>
+     
     </@boxBody>
 </@box>
 

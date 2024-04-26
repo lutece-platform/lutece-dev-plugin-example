@@ -35,8 +35,11 @@ package fr.paris.lutece.plugins.example.web;
 
 import fr.paris.lutece.plugins.example.business.Project;
 import fr.paris.lutece.plugins.example.business.ProjectHome;
+import fr.paris.lutece.plugins.workflowbean.WorkflowBean;
+import fr.paris.lutece.plugins.workflowbean.WorkflowBeanService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
@@ -55,10 +58,10 @@ import javax.servlet.http.HttpServletRequest;
  * This class provides the user interface to manage Project features ( manage, create, modify, remove )
  */
 @Controller( controllerJsp = "ManageProjects.jsp", controllerPath = "jsp/admin/plugins/example/", right = "PROJECT_MANAGEMENT" )
-public class ProjectJspBean extends PaginatedJspBean<Integer, Project> 
+public class ProjectJspBean extends PaginatedJspBean<Integer, WorkflowBean<Project>>
 {
 	private static final long serialVersionUID = 1L;
-    
+
     // Templates
     private static final String TEMPLATE_MANAGE_PROJECTS = "/admin/plugins/example/manage_projects.html";
     private static final String TEMPLATE_CREATE_PROJECT = "/admin/plugins/example/create_project.html";
@@ -66,6 +69,7 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
 
     // Parameters
     private static final String PARAMETER_ID_PROJECT = "id";
+	private static final String PARAMETER_ID_ACTION = "id_action";
 
     // Properties for page titles
     private static final String PROPERTY_PAGE_TITLE_MANAGE_PROJECTS = "example.manage_projects.pageTitle";
@@ -75,6 +79,7 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
     // Markers
     private static final String MARK_PROJECT_LIST = "project_list";
     private static final String MARK_PROJECT = "project";
+    private static final String MARK_PROJECT_WFBEAN = "projectWFBean";
 
     private static final String JSP_MANAGE_PROJECTS = "jsp/admin/plugins/example/ManageProjects.jsp";
 
@@ -94,18 +99,24 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
     private static final String ACTION_MODIFY_PROJECT = "modifyProject";
     private static final String ACTION_REMOVE_PROJECT = "removeProject";
     private static final String ACTION_CONFIRM_REMOVE_PROJECT = "confirmRemoveProject";
+	private static final String ACTION_PROCESS_WORKFLOW_ACTION = "processAction";
 
     // Infos
     private static final String INFO_PROJECT_CREATED = "example.info.project.created";
     private static final String INFO_PROJECT_UPDATED = "example.info.project.updated";
     private static final String INFO_PROJECT_REMOVED = "example.info.project.removed";
 
+    // Workflow
+    private static final String PROJECT_WFBEANSERVICE = "example.projectWFBean.wfbeanservice";
+    private WorkflowBeanService<Project> _wfBeanService = SpringContextService.getBean( PROJECT_WFBEANSERVICE );
+
     // Session variable to store working values
     private Project _project;
+    WorkflowBean<Project> _projectWFBean;
 
     /**
      * Build the Manage View
-     * 
+     *
      * @param request
      *            The HTTP request
      * @return The page
@@ -120,17 +131,18 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_PROJECTS, TEMPLATE_MANAGE_PROJECTS, model );
     }
 
-	
+
     @Override
-    List<Project> getItemsFromIds( List<Integer> listIds )
+    List<WorkflowBean<Project>> getItemsFromIds( List<Integer> listIds )
     {
         List<Project> listProject = ProjectHome.getProjectsListByIds( listIds );
 
         // keep original order
         return listProject.stream( ).sorted( Comparator.comparingInt( notif -> listIds.indexOf( notif.getId( ) ) ) )
-                  .collect( Collectors.toList( ) );
+        		   .map( b -> _wfBeanService.createWorkflowBean( b, b.getId( ), getUser( ) ) )
+        		   .collect( Collectors.toList( ) );
     }
-    
+
     /**
      * Returns the form to create a project
      *
@@ -166,16 +178,18 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
         {
             return redirectView( request, VIEW_CREATE_PROJECT );
         }
-        
+
         // Specific constraint : cost must be a multiple of 5
         if ( !_project.isCostValid() ) {
             addError( _project.MESSAGE_INVALID_COST );
-            
+
             return  redirectView( request, VIEW_CREATE_PROJECT );
         }
-        
+
 
         ProjectHome.create( _project );
+        _projectWFBean = _wfBeanService.createWorkflowBean( _project, _project.getId( ), getUser( ) );
+
         addInfo( INFO_PROJECT_CREATED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_PROJECTS );
@@ -232,21 +246,25 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
         if ( _project == null || ( _project.getId( ) != nId ) )
         {
             _project = ProjectHome.findByPrimaryKey( nId );
+            _projectWFBean = _wfBeanService.createWorkflowBean( _project, _project.getId( ), getUser( ) );
         }
 
-        // Specific constraint 
-        if ( !_project.isCostValid() ) {
+        _wfBeanService.addHistory( _projectWFBean, request, getLocale( ) );
+
+        // Specific constraint
+        if ( !_project.isCostValid( ) )
+        {
             addError( _project.MESSAGE_INVALID_COST );
-            
+
             return  redirectView( request, VIEW_CREATE_PROJECT );
         }
-        
-        Map<String, Object> model = getModel(  );
-        model.put( MARK_PROJECT, _project );
+
+        Map<String, Object> model = getModel( );
+        model.put( MARK_PROJECT_WFBEAN, _projectWFBean );
 
         // ajout de la gestion du plugin extend
         ExtendableResourcePluginActionManager.fillModel( request, getUser( ), model, String.valueOf(nId), Project.PROPERTY_RESOURCE_TYPE );
-        
+
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_PROJECT, TEMPLATE_MODIFY_PROJECT, model );
     }
 
@@ -271,7 +289,7 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
         // Specific constraint : cost must be a multiple of 5
         if ( !_project.isCostValid() ) {
             addError( _project.MESSAGE_INVALID_COST );
-            
+
             return  redirectView( request, VIEW_CREATE_PROJECT );
         }
 
@@ -280,4 +298,29 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
 
         return redirectView( request, VIEW_MANAGE_PROJECTS );
     }
+
+    /**
+     * process a workflow action
+     *
+     * @param request
+     *            The Http request
+     * @return the targeted view template content
+     */
+    @Action( ACTION_PROCESS_WORKFLOW_ACTION )
+    public String doProcessAction( HttpServletRequest request )
+    {
+        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_PROJECT ) );
+        int nAction = Integer.parseInt( request.getParameter( PARAMETER_ID_ACTION ) );
+
+        if ( _project == null || ( _project.getId( ) != nId ) )
+        {
+            Project project = ProjectHome.findByPrimaryKey( nId );
+            _projectWFBean = _wfBeanService.createWorkflowBean( _project, _project.getId( ), getUser( ) );
+        }
+
+        _wfBeanService.processAction(_projectWFBean, nAction, request, getLocale( ) );
+
+        return redirect( request, VIEW_MODIFY_PROJECT, PARAMETER_ID_PROJECT, nId );
+    }
+
 }
