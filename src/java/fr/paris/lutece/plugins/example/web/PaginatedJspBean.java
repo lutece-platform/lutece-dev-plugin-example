@@ -52,7 +52,7 @@ public abstract class PaginatedJspBean<S, T> extends MVCAdminJspBean
 	private static final long serialVersionUID = 1L;
 
 	// Properties
-	private final String PROPERTY_DEFAULT_LIST_ITEM_PER_PAGE = getPlugin( ).getName( ) +   ".listItems.itemsPerPage";
+	private final String PROPERTY_SUFFIX_DEFAULT_LIST_ITEM_PER_PAGE = ".listItems.itemsPerPage";
 
 	// Parameters
 	private static final String PARAMETER_PAGE_INDEX = "page_index";
@@ -82,7 +82,7 @@ public abstract class PaginatedJspBean<S, T> extends MVCAdminJspBean
 	 */
 	protected Map<String, Object> getPaginatedListModel( HttpServletRequest request, String strBookmark, List<S> list, String strManageJsp )
 	{
-		final int nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( PROPERTY_DEFAULT_LIST_ITEM_PER_PAGE, 50 );
+		final int nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( getPlugin( ).getName( ) + PROPERTY_SUFFIX_DEFAULT_LIST_ITEM_PER_PAGE, 50 );
 		_strCurrentPageIndex = AbstractPaginator.getPageIndex( request, AbstractPaginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
 		_nItemsPerPage = AbstractPaginator.getItemsPerPage( request, AbstractPaginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage, nDefaultItemsPerPage );
 
