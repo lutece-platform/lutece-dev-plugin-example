@@ -18,23 +18,23 @@
             <th>#i18n{example.manage_projects.columnImageUrl}</th>
             <th>#i18n{portal.util.labelActions}</th>
         </tr>
-<#list project_list as project >
-        <tr>
-        <td>
-            ${project.name}
-        </td>
-        <td>
-            ${project.description}
-        </td>
-        <td>
-            ${project.imageUrl}
-        </td>
-        <td>
-            <@aButton href='jsp/admin/plugins/example/ManageProjects.jsp?view=modifyProject&id=${project.id}' buttonIcon='edit' title='#i18n{portal.util.labelModify}' hideTitle=['all'] />
-            <@aButton href='jsp/admin/plugins/example/ManageProjects.jsp?view=confirmRemoveProject&id=${project.id}' buttonIcon='trash' title='#i18n{portal.util.labelDelete}' hideTitle=['all'] />
-        </td>
-        </tr>
-</#list>
+        <#list project_list as project >
+                <tr>
+                <td>
+                    ${project.name}
+                </td>
+                <td>
+                    ${project.description}
+                </td>
+                <td>
+                    ${project.imageUrl}
+                </td>
+                <td>
+                    <@aButton href='jsp/admin/plugins/example/ManageProjects.jsp?view=modifyProject&id=${project.id}' buttonIcon='edit' title='#i18n{portal.util.labelModify}' hideTitle=['all'] />
+                    <@aButton href='jsp/admin/plugins/example/ManageProjects.jsp?view=confirmRemoveProject&id=${project.id}' buttonIcon='trash' title='#i18n{portal.util.labelDelete}' hideTitle=['all'] />
+                </td>
+                </tr>
+        </#list>
     </@table>
 
     <@paginationAdmin paginator=paginator />

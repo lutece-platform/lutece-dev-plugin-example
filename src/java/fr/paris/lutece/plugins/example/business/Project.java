@@ -33,26 +33,18 @@
  */
 package fr.paris.lutece.plugins.example.business;
 
-import fr.paris.lutece.portal.service.i18n.Localizable;
-import fr.paris.lutece.portal.service.resource.IExtendableResource;
-import javax.validation.constraints.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Locale;
 
 /**
  * This is the business class for the object Project
  */
-public class Project implements Localizable, IExtendableResource {
-
-
+public class Project implements Serializable
+{
     private static final long serialVersionUID = 1L;
-
-    public static final String PROPERTY_RESOURCE_TYPE = "Project_resource_type";
 
     // Variables declarations
     private int _nId;
-    private Locale _locale;
 
     @NotEmpty( message = "#i18n{example.validation.project.Name.notEmpty}" )
     @Size( max = 50, message = "#i18n{example.validation.project.Name.size}" )
@@ -65,12 +57,6 @@ public class Project implements Localizable, IExtendableResource {
     @NotEmpty( message = "#i18n{example.validation.project.ImageUrl.notEmpty}" )
     @Size( max = 255, message = "#i18n{example.validation.project.ImageUrl.size}" )
     private String _strImageUrl;
-
-    @Min ( value = 5 , message = "#i18n{example.validation.project.cost.range}" )
-    @Max ( value = 25 , message = "#i18n{example.validation.project.cost.range}" )
-    private int _nCost;
-
-    public static final String MESSAGE_INVALID_COST = "#i18n{example.validation.project.cost.range}";
 
     /**
      * Returns the Id
@@ -155,79 +141,4 @@ public class Project implements Localizable, IExtendableResource {
     {
         _strImageUrl = strImageUrl;
     }
-
-    /**
-     * Sets the cost
-     * @param nCost The cost
-     */
-    public void setCost(int nCost) {
-        this._nCost = nCost;
-    }
-
-    /**
-     * Returns the cost
-     * @return The cost
-     */
-    public int getCost( )
-    {
-        return _nCost;
-    }
-
-
-    /**
-     * Cost control :
-     *
-     * @return true if cost is a mutiple of 5, false otherwise
-     */
-    @JsonIgnore
-    public boolean isCostValid( )
-    {
-        return ( _nCost % 5 == 0  );
-    }
-
-
-    @Override
-    public void setLocale(Locale locale) {
-        this._locale = locale;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @JsonIgnore
-    public String getIdExtendableResource() {
-        return Integer.toString(_nId);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @JsonIgnore
-    public String getExtendableResourceType() {
-        return PROPERTY_RESOURCE_TYPE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @JsonIgnore
-    public String getExtendableResourceName() {
-        return _strName;
-    }
-
-    @Override
-    @JsonIgnore
-    public String getExtendableResourceDescription() {
-        return _strDescription;
-    }
-
-    @Override
-    @JsonIgnore
-    public String getExtendableResourceImageUrl() {
-        return _strImageUrl;
-    }
-
 }

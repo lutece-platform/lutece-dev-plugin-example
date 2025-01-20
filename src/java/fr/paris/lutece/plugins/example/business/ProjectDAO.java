@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.example.business;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.sql.DAOUtil;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,17 +44,18 @@ import java.util.List;
 /**
  * This class provides Data Access methods for Project objects
  */
+@ApplicationScoped
 public final class ProjectDAO implements IProjectDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_project ) FROM example_project";
-    private static final String SQL_QUERY_SELECT = "SELECT id_project, name, description, image_url, cost FROM example_project WHERE id_project = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO example_project ( id_project, name, description, image_url, cost ) VALUES ( ?, ?, ?, ?, ? ) ";
+    private static final String SQL_QUERY_SELECT = "SELECT id_project, name, description, image_url FROM example_project WHERE id_project = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO example_project ( id_project, name, description, image_url ) VALUES ( ?, ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM example_project WHERE id_project = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE example_project SET id_project = ?, name = ?, description = ?, image_url = ?, cost = ? WHERE id_project = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_project, name, description, image_url, cost FROM example_project";
+    private static final String SQL_QUERY_UPDATE = "UPDATE example_project SET id_project = ?, name = ?, description = ?, image_url = ? WHERE id_project = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_project, name, description, image_url FROM example_project";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_project FROM example_project";
-    private static final String SQL_QUERY_SELECTALL_BY_IDS = "SELECT id_project  FROM example_project";
+	private static final String SQL_QUERY_SELECTALL_BY_IDS = "SELECT id_project, name, description, image_url FROM example_project WHERE id_project IN (";
 
     /**
      * Generates a new primary key
@@ -87,11 +89,10 @@ public final class ProjectDAO implements IProjectDAO
         project.setId( newPrimaryKey( plugin ) );
         int nIndex = 1;
 
-        daoUtil.setInt( nIndex++ , project.getId( ) );
-        daoUtil.setString( nIndex++ , project.getName( ) );
-        daoUtil.setString( nIndex++ , project.getDescription( ) );
-        daoUtil.setString( nIndex++ , project.getImageUrl( ) );
-        daoUtil.setInt(nIndex++ , project.getCost( ) );
+        daoUtil.setInt( nIndex++, project.getId( ) );
+        daoUtil.setString( nIndex++, project.getName( ) );
+        daoUtil.setString( nIndex++, project.getDescription( ) );
+        daoUtil.setString( nIndex++, project.getImageUrl( ) );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
@@ -117,7 +118,6 @@ public final class ProjectDAO implements IProjectDAO
             project.setName( daoUtil.getString( nIndex++ ) );
             project.setDescription( daoUtil.getString( nIndex++ ) );
             project.setImageUrl( daoUtil.getString( nIndex++ ) );
-            project.setCost( daoUtil.getInt( nIndex++ ) );
         }
 
         daoUtil.free( );
@@ -145,12 +145,11 @@ public final class ProjectDAO implements IProjectDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
         int nIndex = 1;
 
-        daoUtil.setInt( nIndex++ , project.getId( ) );
-        daoUtil.setString( nIndex++ , project.getName( ) );
-        daoUtil.setString( nIndex++ , project.getDescription( ) );
-        daoUtil.setString( nIndex++ , project.getImageUrl( ) );
-        daoUtil.setInt( nIndex++ , project.getCost( ) );
-        daoUtil.setInt( nIndex , project.getId( ) );
+        daoUtil.setInt( nIndex++, project.getId( ) );
+        daoUtil.setString( nIndex++, project.getName( ) );
+        daoUtil.setString( nIndex++, project.getDescription( ) );
+        daoUtil.setString( nIndex++, project.getImageUrl( ) );
+        daoUtil.setInt( nIndex, project.getId( ) );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
@@ -272,7 +271,6 @@ public final class ProjectDAO implements IProjectDAO
         project.setName( daoUtil.getString( nIndex++ ) );
         project.setDescription( daoUtil.getString( nIndex++ ) );
         project.setImageUrl( daoUtil.getString( nIndex++ ) );
-        project.setCost( daoUtil.getInt( nIndex++ ) );
 
         return project;
 	}

@@ -40,7 +40,6 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
-import fr.paris.lutece.portal.web.resource.ExtendableResourcePluginActionManager;
 import fr.paris.lutece.util.url.UrlItem;
 
 import java.util.Comparator;
@@ -49,7 +48,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This class provides the user interface to manage Project features ( manage, create, modify, remove )
@@ -166,14 +165,6 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
         {
             return redirectView( request, VIEW_CREATE_PROJECT );
         }
-        
-        // Specific constraint : cost must be a multiple of 5
-        if ( !_project.isCostValid() ) {
-            addError( _project.MESSAGE_INVALID_COST );
-            
-            return  redirectView( request, VIEW_CREATE_PROJECT );
-        }
-        
 
         ProjectHome.create( _project );
         addInfo( INFO_PROJECT_CREATED, getLocale( ) );
@@ -234,19 +225,9 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
             _project = ProjectHome.findByPrimaryKey( nId );
         }
 
-        // Specific constraint 
-        if ( !_project.isCostValid() ) {
-            addError( _project.MESSAGE_INVALID_COST );
-            
-            return  redirectView( request, VIEW_CREATE_PROJECT );
-        }
-        
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_PROJECT, _project );
 
-        // ajout de la gestion du plugin extend
-        ExtendableResourcePluginActionManager.fillModel( request, getUser( ), model, String.valueOf(nId), Project.PROPERTY_RESOURCE_TYPE );
-        
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_PROJECT, TEMPLATE_MODIFY_PROJECT, model );
     }
 
@@ -266,13 +247,6 @@ public class ProjectJspBean extends PaginatedJspBean<Integer, Project>
         if ( !validateBean( _project, VALIDATION_ATTRIBUTES_PREFIX ) )
         {
             return redirect( request, VIEW_MODIFY_PROJECT, PARAMETER_ID_PROJECT, _project.getId( ) );
-        }
-
-        // Specific constraint : cost must be a multiple of 5
-        if ( !_project.isCostValid() ) {
-            addError( _project.MESSAGE_INVALID_COST );
-            
-            return  redirectView( request, VIEW_CREATE_PROJECT );
         }
 
         ProjectHome.update( _project );
