@@ -1,0 +1,25 @@
+<#include "manageproject_tabs.html" />
+<@tabs tab="project" />
+
+<@box>
+    <@boxHeader i18nTitleKey="example.modify_project.title"></@boxHeader>
+    <@boxBody>
+    <@tform class="form-horizontal" method="post" name="modify_project" action="jsp/admin/plugins/example/ManageProjects.jsp">
+        <@messages errors=errors />
+        <input type="hidden" id="id" name="id" value="${project.id}"/>
+
+        <@formGroup labelKey='#i18n{example.modify_project.labelName}' helpKey='#i18n{example.modify_project.labelName.help}' mandatory=true>
+	        <@input type='text' name='name' value=project.name!'' />
+	</@formGroup>
+        <@formGroup labelKey='#i18n{example.modify_project.labelDescription}' helpKey='#i18n{example.modify_project.labelDescription.help}' mandatory=true>
+	        <@input type='text' name='description' value=project.description!'' />
+	</@formGroup>
+        <@formGroup labelKey='#i18n{example.modify_project.labelImageUrl}' helpKey='#i18n{example.modify_project.labelImageUrl.help}' mandatory=true>
+	        <@input type='text' name='image_url' value=project.imageUrl!'' />
+	</@formGroup>
+
+        <@actionButtons button1Name="action_modifyProject" button2Name="view_manageProjects"/>
+    </@tform>
+    </@boxBody>
+</@box>
+
