@@ -58,6 +58,12 @@ public class Project implements Serializable
     @Size( max = 255, message = "#i18n{example.validation.project.ImageUrl.size}" )
     private String _strImageUrl;
 
+    @Min ( value = 5 , message = "#i18n{example.validation.project.cost.range}" )
+    @Max ( value = 25 , message = "#i18n{example.validation.project.cost.range}" )
+    private int _nCost;
+
+    public static final String MESSAGE_INVALID_COST = "#i18n{example.validation.project.cost.range}";
+
     /**
      * Returns the Id
      *
@@ -140,5 +146,33 @@ public class Project implements Serializable
     public void setImageUrl( String strImageUrl )
     {
         _strImageUrl = strImageUrl;
+    }
+
+    /**
+     * Sets the cost
+     * @param nCost The cost
+     */ 
+    public void setCost( int nCost ) 
+    {
+        this._nCost = nCost;
+    }
+
+    /**
+     * Returns the cost
+     * @return The cost
+     */
+    public int getCost( ) 
+    {
+        return _nCost;
+    }
+    
+    /**
+     * Cost control : 
+     * 
+     * @return true if cost is a mutiple of 5, false otherwise
+     */
+    public boolean isCostValid( ) 
+    {
+        return ( _nCost % 5 == 0  );
     }
 }
