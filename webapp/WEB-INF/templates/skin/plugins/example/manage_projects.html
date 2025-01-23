@@ -5,7 +5,7 @@
     <div class="m-1 col-sm-12">
         <@messages infos=infos />
         <h4>#i18n{example.manage_projects.title}</h4>
-        <form method="post" action="jsp/site/Portal.jsp?page=project">
+        <form class="m-2" method="post" action="jsp/site/Portal.jsp?page=project">
             <button name="view_createProject" class="btn btn-primary pull-right" type="submit">
                 <span class="fa fa-plus"></span>
                 #i18n{example.manage_projects.buttonAdd}
@@ -14,12 +14,12 @@
         
         <div class="row" >
             <#list project_list as project >
-                <div class="m-2 col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <figure class="text-center">
-                        <img class="rounded img-thumbnail" src="${project.imageUrl}">
-                        <figcaption class="figure-caption fs-5 text-wrap">${project.name}</figcaption>
-                    </figure>
-                </div>
+                <a class="card col-xs-12 col-sm-6 col-md-4 col-lg-3 mx-1" href="jsp/site/Portal.jsp?page=project&view=detailsProject&id=${project.id}">
+                    <img class="card-img-top" src="${project.imageUrl}">
+                    <div class="card-body">
+                        <h5 class="card-title">${project.name}</h5>
+                    </div>
+                </a>
             </#list>
         </div>
     </div>
