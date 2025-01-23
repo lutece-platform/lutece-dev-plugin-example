@@ -2,10 +2,8 @@
 <@tabs tab="project" />
 
 <div class="row" >
-    <div class="col-sm-12">
-
-    <@messages infos=infos />
-
+    <div class="m-1 col-sm-12">
+        <@messages infos=infos />
         <h4>#i18n{example.manage_projects.title}</h4>
         <form method="post" action="jsp/site/Portal.jsp?page=project">
             <button name="view_createProject" class="btn btn-primary pull-right" type="submit">
@@ -14,41 +12,15 @@
             </button>
         </form>
         
-        <table class="table table-condensed table-striped">
-            <tr>
-                <input type="hidden" id="id" name="id"/>
-                <th>#i18n{example.manage_projects.columnName}</th>
-                <th>#i18n{example.manage_projects.columnDescription}</th>
-                <th>#i18n{example.manage_projects.columnImageUrl}</th>
-                <th>#i18n{portal.util.labelActions}</th>
-            </tr>
+        <div class="row" >
             <#list project_list as project >
-                <tr>
-                    <input type="hidden" id="id" name="id" />
-                    <td>
-                        ${project.name}
-                    </td>    
-                    <td>
-                        ${project.description}
-                    </td>    
-                    <td>
-                        ${project.imageUrl}
-                    </td>    
-                    <td>
-                        <a href="jsp/site/Portal.jsp?page=project&view=modifyProject&id=${project.id}"
-                            class="btn btn-primary btn-sm" title="#i18n{portal.util.labelModify}">
-                            <span class="fa fa-pencil-square-o"></span>
-                        </a>
-                        <a href="jsp/site/Portal.jsp?page=project&action=confirmRemoveProject&id=${project.id}"
-                            class="btn btn-danger btn-sm" title="#i18n{portal.util.labelDelete}" >
-                            <span class="fa fa-trash-o"></span>
-                        </a>
-                    </td>
-                </tr>
+                <div class="m-2 col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <figure class="text-center">
+                        <img class="rounded img-thumbnail" src="${project.imageUrl}">
+                        <figcaption class="figure-caption fs-5 text-wrap">${project.name}</figcaption>
+                    </figure>
+                </div>
             </#list>
-        </table>
-    
+        </div>
     </div>
 </div>
-
-  
