@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.example.web;
 
 import fr.paris.lutece.plugins.example.business.Project;
 import fr.paris.lutece.plugins.example.business.ProjectHome;
+//import fr.paris.lutece.plugins.example.service.ProjectCacheService;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.portal.util.mvc.xpage.MVCApplication;
@@ -47,10 +48,15 @@ import fr.paris.lutece.portal.service.message.SiteMessageException;
 
 import java.util.Map;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
 
 /**
  * This class provides the user interface to manage Project xpages ( manage, create, modify, remove )
  */
+
+@SessionScoped
+@Named( "example.xpage.project" )
 @Controller( xpageName = "project", pageTitleI18nKey = "example.xpage.project.pageTitle", pagePathI18nKey = "example.xpage.project.pagePathLabel" )
 public class ProjectXPage extends MVCApplication
 {
@@ -245,6 +251,7 @@ public class ProjectXPage extends MVCApplication
 
         if ( _project == null  || ( _project.getId( ) != nId ))
         {
+            //_project =  ProjectCacheService.getInstance().getResource(String.valueOf(nId), null);
             _project = ProjectHome.findByPrimaryKey( nId );
         }
 

@@ -2,9 +2,9 @@
 
 <jsp:include page="../../AdminHeader.jsp" />
 
-<jsp:useBean id="manageproject" scope="session" class="fr.paris.lutece.plugins.example.web.ManageProjectJspBean" />
+<%@page import="fr.paris.lutece.plugins.example.web.ManageProjectJspBean"%>
 
-<% manageproject.init( request, manageproject.RIGHT_MANAGEPROJECT ); %>
-<%= manageproject.getManageProjectHome ( request ) %>
+${ ProjectJspBean.init( pageContext.request, ProjectJspBean.RIGHT_MANAGE_DUMMY ) }
+${ ProjectJspBean.getManageDaemons( pageContext.request ) }
 
 <%@ include file="../../AdminFooter.jsp" %>

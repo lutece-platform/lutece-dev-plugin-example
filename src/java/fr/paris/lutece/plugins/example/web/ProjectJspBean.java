@@ -49,10 +49,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
 
 /**
  * This class provides the user interface to manage Project features ( manage, create, modify, remove )
  */
+@SessionScoped
+@Named
 @Controller( controllerJsp = "ManageProjects.jsp", controllerPath = "jsp/admin/plugins/example/", right = "PROJECT_MANAGEMENT" )
 public class ProjectJspBean extends PaginatedJspBean<Integer, Project> 
 {

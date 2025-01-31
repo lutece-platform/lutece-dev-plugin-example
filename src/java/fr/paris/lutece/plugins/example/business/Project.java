@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.example.business;
 
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * This is the business class for the object Project
@@ -171,7 +172,8 @@ public class Project implements Serializable
      * 
      * @return true if cost is a mutiple of 5, false otherwise
      */
-    public boolean isCostValid( ) 
+    @JsonIgnore
+    public boolean isCostValid( )
     {
         return ( _nCost % 5 == 0  );
     }
