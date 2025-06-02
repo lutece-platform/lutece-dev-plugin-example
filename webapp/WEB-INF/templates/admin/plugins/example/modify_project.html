@@ -4,20 +4,20 @@
     <@boxBody>
     <@tform class="form-horizontal" method="post" name="modify_project" action="jsp/admin/plugins/example/ManageProjects.jsp">
         <@messages errors=errors />
-        <input type="hidden" id="id" name="id" value="${project.id}"/>
+        <input type="hidden" id="id" name="id" value="${projectWFBean.resource.id}"/>
 
         <@formGroup labelKey='#i18n{example.modify_project.labelName}' helpKey='#i18n{example.modify_project.labelName.help}' mandatory=true>
-	        <@input type='text' name='name' value=project.name!'' />
-	</@formGroup>
+            <@input type='text' name='name' value=projectWFBean.resource.name!'' />
+    </@formGroup>
         <@formGroup labelKey='#i18n{example.modify_project.labelDescription}' helpKey='#i18n{example.modify_project.labelDescription.help}' mandatory=true>
-	        <@input type='text' name='description' value=project.description!'' />
-	</@formGroup>
+            <@input type='text' name='description' value=projectWFBean.resource.description!'' />
+    </@formGroup>
         <@formGroup labelKey='#i18n{example.modify_project.labelImageUrl}' helpKey='#i18n{example.modify_project.labelImageUrl.help}' mandatory=true>
-	        <@input type='text' name='image_url' value=project.imageUrl!'' />
-	</@formGroup>
+            <@input type='text' name='image_url' value=projectWFBean.resource.imageUrl!'' />
+    </@formGroup>
         <@formGroup labelKey='#i18n{example.modify_project.labelCost}' helpKey='#i18n{example.modify_project.labelCost.help}' mandatory=true>
-	        <@input type='text' name='cost' value=project.cost!'' />
-	</@formGroup>
+            <@input type='text' name='cost' value=projectWFBean.resource.cost!'' />
+    </@formGroup>
         
         <@actionButtons button1Name="action_modifyProject" button2Name="view_manageProjects"/>
     </@tform>

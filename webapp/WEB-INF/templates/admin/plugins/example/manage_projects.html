@@ -21,17 +21,17 @@
 <#list project_list as project >
         <tr>
         <td>
-            ${project.name}
+            ${project.resource.name}
         </td>
         <td>
-            ${project.description}
+            ${project.resource.description}
         </td>
         <td>
-            ${project.imageUrl}
+            ${project.resource.imageUrl}
         </td>
         <td>
-            <@aButton href='jsp/admin/plugins/example/ManageProjects.jsp?view=modifyProject&id=${project.id}' buttonIcon='edit' title='#i18n{portal.util.labelModify}' hideTitle=['all'] />
-            <@aButton href='jsp/admin/plugins/example/ManageProjects.jsp?view=confirmRemoveProject&id=${project.id}' buttonIcon='trash' title='#i18n{portal.util.labelDelete}' hideTitle=['all'] />
+            <@aButton href='jsp/admin/plugins/example/ManageProjects.jsp?view=modifyProject&id=${project.resource.id}' buttonIcon='edit' title='#i18n{portal.util.labelModify}' hideTitle=['all'] />
+            <@aButton href='jsp/admin/plugins/example/ManageProjects.jsp?view=confirmRemoveProject&id=${project.resource.id}' buttonIcon='trash' title='#i18n{portal.util.labelDelete}' hideTitle=['all'] />
         </td>
         </tr>
 </#list>

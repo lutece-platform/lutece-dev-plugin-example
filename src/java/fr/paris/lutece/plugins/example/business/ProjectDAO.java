@@ -53,7 +53,7 @@ public final class ProjectDAO implements IProjectDAO
     private static final String SQL_QUERY_UPDATE = "UPDATE example_project SET id_project = ?, name = ?, description = ?, image_url = ?, cost = ? WHERE id_project = ?";
     private static final String SQL_QUERY_SELECTALL = "SELECT id_project, name, description, image_url, cost FROM example_project";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_project FROM example_project";
-    private static final String SQL_QUERY_SELECTALL_BY_IDS = "SELECT id_project  FROM example_project";
+    private static final String SQL_QUERY_SELECTALL_BY_IDS = "SELECT id_project, name, description, image_url, cost FROM example_project WHERE id_project IN ( ";
 
     /**
      * Generates a new primary key
@@ -234,7 +234,7 @@ public final class ProjectDAO implements IProjectDAO
             }
 
             final String placeHolders = builder.deleteCharAt( builder.length( ) - 1 ).toString( );
-            final String stmt = SQL_QUERY_SELECTALL_BY_IDS + placeHolders + ")";
+            final String stmt = SQL_QUERY_SELECTALL_BY_IDS + placeHolders + " )";
 
             try ( final DAOUtil daoUtil = new DAOUtil( stmt, plugin ) )
             {
@@ -280,3 +280,4 @@ public final class ProjectDAO implements IProjectDAO
 
 
 }
+
